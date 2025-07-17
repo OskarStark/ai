@@ -4,19 +4,20 @@ CHANGELOG
 0.1
 ---
 
+ * Rename namespace from `Bridge\Google` to `Bridge\Gemini` for consistency with provider naming
  * Add support for Albert API for French/EU data sovereignty
  * Add unified abstraction layer for interacting with various AI models and providers
  * Add support for 13+ AI providers:
    - OpenAI (GPT-4, GPT-3.5, DALL·E, Whisper)
    - Anthropic (Claude models via native API and AWS Bedrock)
-   - Google (Gemini models with server-side tools support)
+   - Gemini (Gemini models with server-side tools support)
    - Azure (OpenAI and Meta Llama models)
    - AWS Bedrock (Anthropic Claude, Meta Llama, Amazon Nova)
    - Mistral AI (language models and embeddings)
    - Meta Llama (via Azure, Ollama, Replicate, AWS Bedrock)
    - Ollama (local model hosting)
    - Replicate (cloud-based model hosting)
-   - OpenRouter (Google Gemini, DeepSeek R1)
+   - OpenRouter (Gemini, DeepSeek R1)
    - Voyage AI (specialized embeddings)
    - HuggingFace (extensive model support with multiple tasks)
    - TransformersPHP (local PHP-based transformer models)

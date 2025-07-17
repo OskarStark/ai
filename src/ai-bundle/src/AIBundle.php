@@ -31,7 +31,7 @@ use Symfony\AI\AIBundle\Profiler\TraceableToolbox;
 use Symfony\AI\AIBundle\Security\Attribute\IsGrantedTool;
 use Symfony\AI\Platform\Bridge\Anthropic\PlatformFactory as AnthropicPlatformFactory;
 use Symfony\AI\Platform\Bridge\Azure\OpenAI\PlatformFactory as AzureOpenAIPlatformFactory;
-use Symfony\AI\Platform\Bridge\Google\PlatformFactory as GooglePlatformFactory;
+use Symfony\AI\Platform\Bridge\Gemini\PlatformFactory as GeminiPlatformFactory;
 use Symfony\AI\Platform\Bridge\Mistral\PlatformFactory as MistralPlatformFactory;
 use Symfony\AI\Platform\Bridge\OpenAI\PlatformFactory as OpenAIPlatformFactory;
 use Symfony\AI\Platform\Bridge\OpenRouter\PlatformFactory as OpenRouterPlatformFactory;
@@ -196,10 +196,10 @@ final class AIBundle extends AbstractBundle
             return;
         }
 
-        if ('google' === $type) {
-            $platformId = 'symfony_ai.platform.google';
+        if ('gemini' === $type) {
+            $platformId = 'symfony_ai.platform.gemini';
             $definition = (new Definition(Platform::class))
-                ->setFactory(GooglePlatformFactory::class.'::create')
+                ->setFactory(GeminiPlatformFactory::class.'::create')
                 ->setAutowired(true)
                 ->setLazy(true)
                 ->addTag('proxy', ['interface' => PlatformInterface::class])
