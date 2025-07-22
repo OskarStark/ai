@@ -34,7 +34,7 @@ Configuration
                     class: 'Symfony\AI\Platform\Bridge\OpenAI\GPT'
                     name: !php/const Symfony\AI\Platform\Bridge\OpenAI\GPT::GPT_4O_MINI
 
-**Advanced Example with Anthropic, Azure, Google and multiple agents**
+**Advanced Example with Anthropic, Azure, Gemini and multiple agents**
 
 .. code-block:: yaml
 
@@ -50,7 +50,7 @@ Configuration
                     deployment: '%env(AZURE_OPENAI_GPT)%'
                     api_key: '%env(AZURE_OPENAI_KEY)%'
                     api_version: '%env(AZURE_GPT_VERSION)%'
-            google:
+            gemini:
                 api_key: '%env(GOOGLE_API_KEY)%'
         agent:
             rag:
