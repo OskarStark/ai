@@ -73,13 +73,13 @@ usually defined by the specific models and their documentation.
     * `OpenAI's GPT`_ with `OpenAI`_ and `Azure`_ as Platform
     * `Anthropic's Claude`_ with `Anthropic`_ and `AWS Bedrock`_ as Platform
     * `Meta's Llama`_ with `Azure`_, `Ollama`_, `Replicate`_ and `AWS Bedrock`_ as Platform
-    * `Google's Gemini`_ with `Google`_ and `OpenRouter`_ as Platform
+    * `Google's Gemini`_ with `Gemini`_ and `OpenRouter`_ as Platform
     * `DeepSeek's R1`_ with `OpenRouter`_ as Platform
     * `Amazon's Nova`_ with `AWS Bedrock`_ as Platform
     * `Mistral's Mistral`_ with `Mistral`_ as Platform
     * `Albert API`_ models with `Albert`_ as Platform (French government's sovereign AI gateway)
 * **Embeddings Models**
-    * `Google's Text Embeddings`_ with `Google`_
+    * `Google's Text Embeddings`_ with `Gemini`_
     * `OpenAI's Text Embeddings`_ with `OpenAI`_ and `Azure`_ as Platform
     * `Voyage's Embeddings`_ with `Voyage`_ as Platform
     * `Mistral Embed`_ with `Mistral`_ as Platform
@@ -263,7 +263,7 @@ Server Tools
 
 Some platforms provide built-in server-side tools for enhanced capabilities without custom implementations:
 
-1. **[Google Gemini](google-gemini-server-tools.md)** - URL Context, Google Search, Code Execution
+1. **[Gemini](gemini-server-tools.md)** - URL Context, Google Search, Code Execution
 
 Parallel Platform Calls
 -----------------------
@@ -304,7 +304,7 @@ which can be useful to speed up the processing::
 .. _`Ollama`: https://ollama.com/
 .. _`Replicate`: https://replicate.com/
 .. _`Google's Gemini`: https://gemini.google.com/
-.. _`Google`: https://ai.google.dev/
+.. _`Gemini`: https://ai.google.dev/
 .. _`OpenRouter`: https://www.openrouter.ai/
 .. _`DeepSeek's R1`: https://www.deepseek.com/
 .. _`Amazon's Nova`: https://nova.amazon.com
