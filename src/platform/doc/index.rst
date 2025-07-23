@@ -69,26 +69,78 @@ usually defined by the specific models and their documentation.
 
 **Supported Models & Platforms**
 
-* **Language Models**
-    * `OpenAI's GPT`_ with `OpenAI`_ and `Azure`_ as Platform
-    * `Anthropic's Claude`_ with `Anthropic`_ and `AWS Bedrock`_ as Platform
-    * `Meta's Llama`_ with `Azure`_, `Ollama`_, `Replicate`_ and `AWS Bedrock`_ as Platform
-    * `Google's Gemini`_ with `Google`_ and `OpenRouter`_ as Platform
-    * `DeepSeek's R1`_ with `OpenRouter`_ as Platform
-    * `Amazon's Nova`_ with `AWS Bedrock`_ as Platform
-    * `Mistral's Mistral`_ with `Mistral`_ as Platform
-    * `Albert API`_ models with `Albert`_ as Platform (French government's sovereign AI gateway)
-* **Embeddings Models**
-    * `Google's Text Embeddings`_ with `Google`_
-    * `OpenAI's Text Embeddings`_ with `OpenAI`_ and `Azure`_ as Platform
-    * `Voyage's Embeddings`_ with `Voyage`_ as Platform
-    * `Mistral Embed`_ with `Mistral`_ as Platform
-* **Other Models**
-    * `OpenAI's Dall·E`_ with `OpenAI`_ as Platform
-    * `OpenAI's Whisper`_ with `OpenAI`_ and `Azure`_ as Platform
-    * `LM Studio Catalog`_ and `HuggingFace`_ Models  with `LM Studio`_ as Platform.
-    * All models provided by `HuggingFace`_ can be listed with a command in the examples folder,
-      and also filtered, e.g. ``php examples/huggingface/_model-listing.php --provider=hf-inference --task=object-detection``
+**Language Models**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 50 20
+
+   * - Model
+     - Supported Platforms
+     - Notes
+   * - `OpenAI's GPT`_
+     - `OpenAI`_, `Azure`_
+     - 
+   * - `Anthropic's Claude`_
+     - `Anthropic`_, `AWS Bedrock`_
+     - 
+   * - `Meta's Llama`_
+     - `Azure`_, `Ollama`_, `Replicate`_, `AWS Bedrock`_
+     - 
+   * - `Google's Gemini`_
+     - `Google`_, `OpenRouter`_
+     - 
+   * - `DeepSeek's R1`_
+     - `OpenRouter`_
+     - 
+   * - `Amazon's Nova`_
+     - `AWS Bedrock`_
+     - 
+   * - `Mistral's Mistral`_
+     - `Mistral`_
+     - 
+   * - `Albert API`_ models
+     - `Albert`_
+     - French government's sovereign AI gateway
+
+**Embeddings Models**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 40 60
+
+   * - Model
+     - Supported Platforms
+   * - `Google's Text Embeddings`_
+     - `Google`_
+   * - `OpenAI's Text Embeddings`_
+     - `OpenAI`_, `Azure`_
+   * - `Voyage's Embeddings`_
+     - `Voyage`_
+   * - `Mistral Embed`_
+     - `Mistral`_
+
+**Other Models**
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 50 20
+
+   * - Model
+     - Supported Platforms
+     - Notes
+   * - `OpenAI's Dall·E`_
+     - `OpenAI`_
+     - Image generation
+   * - `OpenAI's Whisper`_
+     - `OpenAI`_, `Azure`_
+     - Speech-to-text
+   * - `LM Studio Catalog`_ and `HuggingFace`_ Models
+     - `LM Studio`_
+     - 
+   * - `HuggingFace`_ Models
+     - 
+     - Can be listed with command: ``php examples/huggingface/_model-listing.php --provider=hf-inference --task=object-detection``
 
 See `GitHub`_ for planned support of other models and platforms.
 
