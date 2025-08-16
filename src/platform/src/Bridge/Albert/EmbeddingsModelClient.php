@@ -12,7 +12,6 @@
 namespace Symfony\AI\Platform\Bridge\Albert;
 
 use Symfony\AI\Platform\Bridge\OpenAi\Embeddings;
-use Symfony\AI\Platform\Exception\InvalidArgumentException;
 use Symfony\AI\Platform\Model;
 use Symfony\AI\Platform\ModelClientInterface;
 use Symfony\AI\Platform\Result\RawHttpResult;
@@ -29,8 +28,6 @@ final readonly class EmbeddingsModelClient implements ModelClientInterface
         #[\SensitiveParameter] private string $apiKey,
         private string $baseUrl,
     ) {
-        '' !== $apiKey || throw new InvalidArgumentException('The API key must not be empty.');
-        '' !== $baseUrl || throw new InvalidArgumentException('The base URL must not be empty.');
     }
 
     public function supports(Model $model): bool
