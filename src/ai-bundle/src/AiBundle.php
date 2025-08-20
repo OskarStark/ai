@@ -363,6 +363,15 @@ final class AiBundle extends AbstractBundle
      */
     private function processAgentConfig(string $name, array $config, ContainerBuilder $container): void
     {
+        // Validate that system_prompt and json_prompt are not used together
+        if (isset($config['system_prompt']) && isset($config['json_prompt']) && 
+            null !== $config['system_prompt'] && null !== $config['json_prompt']) {
+            throw new InvalidArgumentException(\sprintf(
+                'Agent "%s" cannot use both "system_prompt" and "json_prompt" options. Please use only one.',
+                $name
+            ));
+        }
+
         // MODEL
         ['class' => $modelClass, 'name' => $modelName, 'options' => $options] = $config['model'];
 
@@ -468,7 +477,7 @@ final class AiBundle extends AbstractBundle
             $jsonPromptData = $config['json_prompt'];
             
             if ('file' === $jsonPromptData['type']) {
-                // Handle file path - resolve it relative to kernel.project_dir
+                // Handle file path - must be absolute or use %kernel.project_dir% parameter
                 $filePath = $jsonPromptData['value'];
                 
                 // Create a factory definition that will load the JSON file at runtime
@@ -476,7 +485,6 @@ final class AiBundle extends AbstractBundle
                 $jsonPromptInputProcessorDefinition->setFactory([__CLASS__, 'createJsonPromptInputProcessor']);
                 $jsonPromptInputProcessorDefinition->setArguments([
                     $filePath,
-                    new Reference('kernel.project_dir'),
                     new Reference('logger', ContainerInterface::IGNORE_ON_INVALID_REFERENCE),
                 ]);
             } else {
@@ -489,8 +497,9 @@ final class AiBundle extends AbstractBundle
             
             $inputProcessors[] = $jsonPromptInputProcessorDefinition;
         }
+        
         // SYSTEM PROMPT
-        elseif (\is_string($config['system_prompt'])) {
+        if (\is_string($config['system_prompt'])) {
             $systemPromptInputProcessorDefinition = new Definition(SystemPromptInputProcessor::class, [
                 $config['system_prompt'],
                 $config['include_tools'] ? new Reference('ai.toolbox.'.$name) : null,
@@ -877,18 +886,12 @@ final class AiBundle extends AbstractBundle
     /**
      * Factory method to create a JsonPromptInputProcessor from a file path.
      *
-     * @param string $filePath The file path (can be relative to project dir)
-     * @param string $projectDir The kernel.project_dir parameter
+     * @param string $filePath The absolute file path (use %kernel.project_dir% parameter for relative paths)
      * @param LoggerInterface $logger The logger service
      * @return JsonPromptInputProcessor
      */
-    public static function createJsonPromptInputProcessor(string $filePath, string $projectDir, LoggerInterface $logger): JsonPromptInputProcessor
+    public static function createJsonPromptInputProcessor(string $filePath, LoggerInterface $logger): JsonPromptInputProcessor
     {
-        // Resolve the file path relative to project directory
-        if (!str_starts_with($filePath, '/')) {
-            $filePath = $projectDir . '/' . $filePath;
-        }
-        
         if (!file_exists($filePath)) {
             throw new InvalidArgumentException(\sprintf('JSON prompt file "%s" does not exist.', $filePath));
         }

@@ -17,6 +17,7 @@ use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\AI\AiBundle\AiBundle;
+use Symfony\AI\AiBundle\Exception\InvalidArgumentException;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -228,7 +229,7 @@ class AiBundleTest extends TestCase
                 'agent' => [
                     'file_json_agent' => [
                         'model' => ['class' => 'Symfony\AI\Platform\Bridge\OpenAi\Gpt'],
-                        'json_prompt' => 'prompts/assistant.json',
+                        'json_prompt' => '%kernel.project_dir%/prompts/assistant.json',
                     ],
                 ],
             ],
@@ -250,8 +251,10 @@ class AiBundleTest extends TestCase
                 // Verify it uses the factory method
                 $factory = $processor->getFactory();
                 $this->assertEquals(['Symfony\AI\AiBundle\AiBundle', 'createJsonPromptInputProcessor'], $factory);
-                // Verify the file path is passed
-                $this->assertEquals('prompts/assistant.json', $processor->getArgument(0));
+                // Verify the file path is passed with parameter
+                $this->assertEquals('%kernel.project_dir%/prompts/assistant.json', $processor->getArgument(0));
+                // Verify only 2 arguments now (file path and logger)
+                $this->assertCount(2, $processor->getArguments());
                 break;
             }
         }
@@ -261,38 +264,20 @@ class AiBundleTest extends TestCase
 
     public function testJsonPromptAndSystemPromptAreMutuallyExclusive()
     {
-        // Test that json_prompt is used when both are provided
-        $container = $this->buildContainer([
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Agent "mixed_agent" cannot use both "system_prompt" and "json_prompt" options. Please use only one.');
+        
+        $this->buildContainer([
             'ai' => [
                 'agent' => [
                     'mixed_agent' => [
                         'model' => ['class' => 'Symfony\AI\Platform\Bridge\OpenAi\Gpt'],
                         'json_prompt' => ['role' => 'assistant'],
-                        'system_prompt' => 'This should be ignored',
+                        'system_prompt' => 'This should cause an error',
                     ],
                 ],
             ],
         ]);
-
-        $agentDefinition = $container->getDefinition('ai.agent.mixed_agent');
-        $inputProcessors = $agentDefinition->getArgument(2);
-        
-        // Verify only JSON processor is present, not system prompt processor
-        $hasJsonProcessor = false;
-        $hasSystemProcessor = false;
-        
-        foreach ($inputProcessors as $processor) {
-            if ($processor instanceof Definition) {
-                if ($processor->getClass() === 'Symfony\AI\Agent\InputProcessor\JsonPromptInputProcessor') {
-                    $hasJsonProcessor = true;
-                } elseif ($processor->getClass() === 'Symfony\AI\Agent\InputProcessor\SystemPromptInputProcessor') {
-                    $hasSystemProcessor = true;
-                }
-            }
-        }
-        
-        $this->assertTrue($hasJsonProcessor, 'Should have JSON processor');
-        $this->assertFalse($hasSystemProcessor, 'Should not have system prompt processor when JSON prompt is set');
     }
 
     public function testCacheStoreWithCustomStrategyAndKeyCanBeConfigured()
@@ -469,7 +454,7 @@ class AiBundleTest extends TestCase
                     ],
                     'json_file_agent' => [
                         'model' => ['class' => 'Symfony\AI\Platform\Bridge\OpenAi\Gpt'],
-                        'json_prompt' => 'config/prompts/specialist.json',
+                        'json_prompt' => '%kernel.project_dir%/config/prompts/specialist.json',
                     ],
                 ],
                 'store' => [
