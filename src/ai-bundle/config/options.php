@@ -105,6 +105,27 @@ return static function (DefinitionConfigurator $configurator): void {
                             ->defaultNull()
                             ->info('The default system prompt of the agent')
                         ->end()
+                        ->variableNode('json_prompt')
+                            ->info('JSON-structured prompt: can be an array (converted to JSON) or a string path to a JSON file')
+                            ->beforeNormalization()
+                                ->always(function ($v) {
+                                    // If it's a string that looks like a file path, keep it as is
+                                    if (\is_string($v)) {
+                                        return ['type' => 'file', 'value' => $v];
+                                    }
+                                    // If it's an array, it's inline JSON data
+                                    if (\is_array($v)) {
+                                        return ['type' => 'inline', 'value' => $v];
+                                    }
+                                    return $v;
+                                })
+                            ->end()
+                            ->validate()
+                                ->ifTrue(fn ($v) => !\is_array($v) || !isset($v['type']) || !\in_array($v['type'], ['file', 'inline'], true))
+                                ->thenInvalid('json_prompt must be either an array (inline JSON) or a string (file path)')
+                            ->end()
+                            ->defaultNull()
+                        ->end()
                         ->booleanNode('include_tools')
                             ->info('Include tool definitions at the end of the system prompt')
                             ->defaultFalse()

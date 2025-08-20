@@ -11,8 +11,10 @@
 
 namespace Symfony\AI\AiBundle;
 
+use Psr\Log\LoggerInterface;
 use Symfony\AI\Agent\Agent;
 use Symfony\AI\Agent\AgentInterface;
+use Symfony\AI\Agent\InputProcessor\JsonPromptInputProcessor;
 use Symfony\AI\Agent\InputProcessor\SystemPromptInputProcessor;
 use Symfony\AI\Agent\InputProcessorInterface;
 use Symfony\AI\Agent\OutputProcessorInterface;
@@ -461,8 +463,34 @@ final class AiBundle extends AbstractBundle
             $outputProcessors[] = new Reference('ai.agent.structured_output_processor');
         }
 
+        // JSON PROMPT
+        if (isset($config['json_prompt']) && null !== $config['json_prompt']) {
+            $jsonPromptData = $config['json_prompt'];
+            
+            if ('file' === $jsonPromptData['type']) {
+                // Handle file path - resolve it relative to kernel.project_dir
+                $filePath = $jsonPromptData['value'];
+                
+                // Create a factory definition that will load the JSON file at runtime
+                $jsonPromptInputProcessorDefinition = new Definition(JsonPromptInputProcessor::class);
+                $jsonPromptInputProcessorDefinition->setFactory([__CLASS__, 'createJsonPromptInputProcessor']);
+                $jsonPromptInputProcessorDefinition->setArguments([
+                    $filePath,
+                    new Reference('kernel.project_dir'),
+                    new Reference('logger', ContainerInterface::IGNORE_ON_INVALID_REFERENCE),
+                ]);
+            } else {
+                // Handle inline JSON data
+                $jsonPromptInputProcessorDefinition = new Definition(JsonPromptInputProcessor::class, [
+                    $jsonPromptData['value'],
+                    new Reference('logger', ContainerInterface::IGNORE_ON_INVALID_REFERENCE),
+                ]);
+            }
+            
+            $inputProcessors[] = $jsonPromptInputProcessorDefinition;
+        }
         // SYSTEM PROMPT
-        if (\is_string($config['system_prompt'])) {
+        elseif (\is_string($config['system_prompt'])) {
             $systemPromptInputProcessorDefinition = new Definition(SystemPromptInputProcessor::class, [
                 $config['system_prompt'],
                 $config['include_tools'] ? new Reference('ai.toolbox.'.$name) : null,
@@ -844,6 +872,35 @@ final class AiBundle extends AbstractBundle
                 $container->setDefinition('ai.store.'.$type.'.'.$name, $definition);
             }
         }
+    }
+
+    /**
+     * Factory method to create a JsonPromptInputProcessor from a file path.
+     *
+     * @param string $filePath The file path (can be relative to project dir)
+     * @param string $projectDir The kernel.project_dir parameter
+     * @param LoggerInterface $logger The logger service
+     * @return JsonPromptInputProcessor
+     */
+    public static function createJsonPromptInputProcessor(string $filePath, string $projectDir, LoggerInterface $logger): JsonPromptInputProcessor
+    {
+        // Resolve the file path relative to project directory
+        if (!str_starts_with($filePath, '/')) {
+            $filePath = $projectDir . '/' . $filePath;
+        }
+        
+        if (!file_exists($filePath)) {
+            throw new InvalidArgumentException(\sprintf('JSON prompt file "%s" does not exist.', $filePath));
+        }
+        
+        $jsonContent = file_get_contents($filePath);
+        $jsonData = json_decode($jsonContent, true);
+        
+        if (json_last_error() !== \JSON_ERROR_NONE) {
+            throw new InvalidArgumentException(\sprintf('Invalid JSON in prompt file "%s": %s', $filePath, json_last_error_msg()));
+        }
+        
+        return new JsonPromptInputProcessor($jsonData, $logger);
     }
 
     /**

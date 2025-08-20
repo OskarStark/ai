@@ -177,6 +177,124 @@ class AiBundleTest extends TestCase
         $this->assertSame('ai.store.distance_calculator.my_cache_store_with_custom_strategy', (string) $definition->getArgument(1));
     }
 
+    public function testAgentWithInlineJsonPrompt()
+    {
+        $container = $this->buildContainer([
+            'ai' => [
+                'agent' => [
+                    'json_agent' => [
+                        'model' => ['class' => 'Symfony\AI\Platform\Bridge\OpenAi\Gpt'],
+                        'json_prompt' => [
+                            'role' => 'coding assistant',
+                            'expertise' => ['PHP', 'Symfony'],
+                            'style' => 'concise',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+        $this->assertTrue($container->hasDefinition('ai.agent.json_agent'));
+        $agentDefinition = $container->getDefinition('ai.agent.json_agent');
+        
+        // Check that input processors are configured
+        $inputProcessors = $agentDefinition->getArgument(2);
+        $this->assertNotEmpty($inputProcessors);
+        
+        // Find the JSON prompt processor
+        $hasJsonProcessor = false;
+        foreach ($inputProcessors as $processor) {
+            if ($processor instanceof Definition && 
+                $processor->getClass() === 'Symfony\AI\Agent\InputProcessor\JsonPromptInputProcessor') {
+                $hasJsonProcessor = true;
+                // Verify the JSON data is passed correctly
+                $jsonData = $processor->getArgument(0);
+                $this->assertEquals([
+                    'role' => 'coding assistant',
+                    'expertise' => ['PHP', 'Symfony'],
+                    'style' => 'concise',
+                ], $jsonData);
+                break;
+            }
+        }
+        
+        $this->assertTrue($hasJsonProcessor, 'JsonPromptInputProcessor should be configured');
+    }
+
+    public function testAgentWithJsonPromptFile()
+    {
+        $container = $this->buildContainer([
+            'ai' => [
+                'agent' => [
+                    'file_json_agent' => [
+                        'model' => ['class' => 'Symfony\AI\Platform\Bridge\OpenAi\Gpt'],
+                        'json_prompt' => 'prompts/assistant.json',
+                    ],
+                ],
+            ],
+        ]);
+
+        $this->assertTrue($container->hasDefinition('ai.agent.file_json_agent'));
+        $agentDefinition = $container->getDefinition('ai.agent.file_json_agent');
+        
+        // Check that input processors are configured
+        $inputProcessors = $agentDefinition->getArgument(2);
+        $this->assertNotEmpty($inputProcessors);
+        
+        // Find the JSON prompt processor
+        $hasJsonProcessor = false;
+        foreach ($inputProcessors as $processor) {
+            if ($processor instanceof Definition && 
+                $processor->getClass() === 'Symfony\AI\Agent\InputProcessor\JsonPromptInputProcessor') {
+                $hasJsonProcessor = true;
+                // Verify it uses the factory method
+                $factory = $processor->getFactory();
+                $this->assertEquals(['Symfony\AI\AiBundle\AiBundle', 'createJsonPromptInputProcessor'], $factory);
+                // Verify the file path is passed
+                $this->assertEquals('prompts/assistant.json', $processor->getArgument(0));
+                break;
+            }
+        }
+        
+        $this->assertTrue($hasJsonProcessor, 'JsonPromptInputProcessor with file should be configured');
+    }
+
+    public function testJsonPromptAndSystemPromptAreMutuallyExclusive()
+    {
+        // Test that json_prompt is used when both are provided
+        $container = $this->buildContainer([
+            'ai' => [
+                'agent' => [
+                    'mixed_agent' => [
+                        'model' => ['class' => 'Symfony\AI\Platform\Bridge\OpenAi\Gpt'],
+                        'json_prompt' => ['role' => 'assistant'],
+                        'system_prompt' => 'This should be ignored',
+                    ],
+                ],
+            ],
+        ]);
+
+        $agentDefinition = $container->getDefinition('ai.agent.mixed_agent');
+        $inputProcessors = $agentDefinition->getArgument(2);
+        
+        // Verify only JSON processor is present, not system prompt processor
+        $hasJsonProcessor = false;
+        $hasSystemProcessor = false;
+        
+        foreach ($inputProcessors as $processor) {
+            if ($processor instanceof Definition) {
+                if ($processor->getClass() === 'Symfony\AI\Agent\InputProcessor\JsonPromptInputProcessor') {
+                    $hasJsonProcessor = true;
+                } elseif ($processor->getClass() === 'Symfony\AI\Agent\InputProcessor\SystemPromptInputProcessor') {
+                    $hasSystemProcessor = true;
+                }
+            }
+        }
+        
+        $this->assertTrue($hasJsonProcessor, 'Should have JSON processor');
+        $this->assertFalse($hasSystemProcessor, 'Should not have system prompt processor when JSON prompt is set');
+    }
+
     public function testCacheStoreWithCustomStrategyAndKeyCanBeConfigured()
     {
         $container = $this->buildContainer([
@@ -336,6 +454,22 @@ class AiBundleTest extends TestCase
                     'another_agent' => [
                         'model' => ['class' => 'Symfony\AI\Platform\Bridge\Anthropic\Claude', 'name' => 'claude-3-opus-20240229'],
                         'system_prompt' => 'Be concise.',
+                    ],
+                    'json_example_agent' => [
+                        'model' => ['class' => 'Symfony\AI\Platform\Bridge\OpenAi\Gpt'],
+                        'json_prompt' => [
+                            'persona' => 'expert developer',
+                            'guidelines' => [
+                                'code_style' => 'PSR-12',
+                                'documentation' => true,
+                                'testing' => 'PHPUnit',
+                            ],
+                            'response_format' => 'markdown',
+                        ],
+                    ],
+                    'json_file_agent' => [
+                        'model' => ['class' => 'Symfony\AI\Platform\Bridge\OpenAi\Gpt'],
+                        'json_prompt' => 'config/prompts/specialist.json',
                     ],
                 ],
                 'store' => [
