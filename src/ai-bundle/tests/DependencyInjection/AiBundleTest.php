@@ -253,8 +253,8 @@ class AiBundleTest extends TestCase
                 $this->assertEquals(['Symfony\AI\AiBundle\AiBundle', 'createJsonPromptInputProcessor'], $factory);
                 // Verify the file path is passed with parameter
                 $this->assertEquals('%kernel.project_dir%/prompts/assistant.json', $processor->getArgument(0));
-                // Verify only 2 arguments now (file path and logger)
-                $this->assertCount(2, $processor->getArguments());
+                // Verify 3 arguments now (file path, toolbox/null, and logger)
+                $this->assertCount(3, $processor->getArguments());
                 break;
             }
         }

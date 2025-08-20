@@ -21,6 +21,7 @@ use Symfony\AI\Agent\OutputProcessorInterface;
 use Symfony\AI\Agent\Toolbox\Attribute\AsTool;
 use Symfony\AI\Agent\Toolbox\FaultTolerantToolbox;
 use Symfony\AI\Agent\Toolbox\Tool\Agent as AgentTool;
+use Symfony\AI\Agent\Toolbox\ToolboxInterface;
 use Symfony\AI\Agent\Toolbox\ToolFactory\ChainFactory;
 use Symfony\AI\Agent\Toolbox\ToolFactory\MemoryToolFactory;
 use Symfony\AI\AiBundle\Exception\InvalidArgumentException;
@@ -485,12 +486,14 @@ final class AiBundle extends AbstractBundle
                 $jsonPromptInputProcessorDefinition->setFactory([__CLASS__, 'createJsonPromptInputProcessor']);
                 $jsonPromptInputProcessorDefinition->setArguments([
                     $filePath,
+                    $config['include_tools'] ? new Reference('ai.toolbox.'.$name) : null,
                     new Reference('logger', ContainerInterface::IGNORE_ON_INVALID_REFERENCE),
                 ]);
             } else {
                 // Handle inline JSON data
                 $jsonPromptInputProcessorDefinition = new Definition(JsonPromptInputProcessor::class, [
                     $jsonPromptData['value'],
+                    $config['include_tools'] ? new Reference('ai.toolbox.'.$name) : null,
                     new Reference('logger', ContainerInterface::IGNORE_ON_INVALID_REFERENCE),
                 ]);
             }
@@ -887,10 +890,11 @@ final class AiBundle extends AbstractBundle
      * Factory method to create a JsonPromptInputProcessor from a file path.
      *
      * @param string $filePath The absolute file path (use %kernel.project_dir% parameter for relative paths)
+     * @param ToolboxInterface|null $toolbox The toolbox to append tool definitions (optional)
      * @param LoggerInterface $logger The logger service
      * @return JsonPromptInputProcessor
      */
-    public static function createJsonPromptInputProcessor(string $filePath, LoggerInterface $logger): JsonPromptInputProcessor
+    public static function createJsonPromptInputProcessor(string $filePath, ?ToolboxInterface $toolbox, LoggerInterface $logger): JsonPromptInputProcessor
     {
         if (!file_exists($filePath)) {
             throw new InvalidArgumentException(\sprintf('JSON prompt file "%s" does not exist.', $filePath));
@@ -903,7 +907,7 @@ final class AiBundle extends AbstractBundle
             throw new InvalidArgumentException(\sprintf('Invalid JSON in prompt file "%s": %s', $filePath, json_last_error_msg()));
         }
         
-        return new JsonPromptInputProcessor($jsonData, $logger);
+        return new JsonPromptInputProcessor($jsonData, $toolbox, $logger);
     }
 
     /**
