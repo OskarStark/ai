@@ -236,4 +236,21 @@ final class StoreTest extends TestCase
         $this->assertCount(1, $results);
         $this->assertSame([], $results[0]->metadata->getArrayCopy());
     }
+
+    public function testDrop()
+    {
+        $httpClient = new MockHttpClient(function (string $method, string $url, array $options) {
+            $this->assertSame('POST', $method);
+            $this->assertStringContainsString('?', $url);
+            $this->assertSame('DROP TABLE IF EXISTS test_table', $options['query']['query']);
+            $this->assertSame('test_db', $options['query']['database']);
+            $this->assertSame('JSON', $options['query']['default_format']);
+
+            return new MockResponse('');
+        });
+
+        $store = new Store($httpClient, 'test_db', 'test_table');
+
+        $store->drop();
+    }
 }
