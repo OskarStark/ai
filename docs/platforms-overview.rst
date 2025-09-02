@@ -10,10 +10,11 @@ The following table shows which capabilities are supported by each platform:
 
 .. list-table:: **Platform Capabilities**
    :header-rows: 1
-   :widths: 20 10 10 10 10 10 10 10 10 10 10
+   :widths: 20 8 10 10 10 10 10 10 10 10 10 10
    :class: platform-matrix
 
    * - Platform
+     - Type
      - Chat
      - Embeddings
      - Images
@@ -25,6 +26,7 @@ The following table shows which capabilities are supported by each platform:
      - STT
      - Structured
    * - **OpenAI**
+     - Remote
      - ✅
      - ✅
      - ✅
@@ -36,6 +38,7 @@ The following table shows which capabilities are supported by each platform:
      - ✅
      - ✅
    * - **Anthropic**
+     - Remote
      - ✅
      - ❌
      - ✅
@@ -47,6 +50,7 @@ The following table shows which capabilities are supported by each platform:
      - ❌
      - ❌
    * - **Google Gemini**
+     - Remote
      - ✅
      - ✅
      - ✅
@@ -58,6 +62,7 @@ The following table shows which capabilities are supported by each platform:
      - ❌
      - ✅
    * - **AWS Bedrock**
+     - Remote
      - ✅
      - ❌
      - ✅
@@ -69,6 +74,7 @@ The following table shows which capabilities are supported by each platform:
      - ❌
      - ❌
    * - **Azure OpenAI**
+     - Remote
      - ✅
      - ✅
      - ✅
@@ -80,6 +86,7 @@ The following table shows which capabilities are supported by each platform:
      - ✅
      - ✅
    * - **Mistral AI**
+     - Remote
      - ✅
      - ✅
      - ✅
@@ -91,6 +98,7 @@ The following table shows which capabilities are supported by each platform:
      - ❌
      - ✅
    * - **Ollama**
+     - Local
      - ✅
      - ✅
      - ✅
@@ -102,6 +110,7 @@ The following table shows which capabilities are supported by each platform:
      - ❌
      - ✅
    * - **Voyage AI**
+     - Remote
      - ❌
      - ✅
      - ❌
@@ -113,6 +122,7 @@ The following table shows which capabilities are supported by each platform:
      - ❌
      - ❌
    * - **ElevenLabs**
+     - Remote
      - ❌
      - ❌
      - ❌
@@ -124,6 +134,7 @@ The following table shows which capabilities are supported by each platform:
      - ✅
      - ❌
    * - **Cerebras**
+     - Remote
      - ✅
      - ❌
      - ❌
@@ -135,6 +146,7 @@ The following table shows which capabilities are supported by each platform:
      - ❌
      - ❌
    * - **HuggingFace**
+     - Remote
      - ✅
      - ✅
      - ✅
@@ -146,6 +158,7 @@ The following table shows which capabilities are supported by each platform:
      - ✅
      - ❌
    * - **Replicate**
+     - Remote
      - ✅
      - ✅
      - ✅
@@ -157,6 +170,7 @@ The following table shows which capabilities are supported by each platform:
      - ❌
      - ❌
    * - **LM Studio**
+     - Local
      - ✅
      - ✅
      - ❌
@@ -168,6 +182,7 @@ The following table shows which capabilities are supported by each platform:
      - ❌
      - ❌
    * - **OpenRouter**
+     - Remote
      - ✅
      - ❌
      - ✅
@@ -179,6 +194,7 @@ The following table shows which capabilities are supported by each platform:
      - ❌
      - ❌
    * - **Vertex AI**
+     - Remote
      - ✅
      - ✅
      - ✅
@@ -190,6 +206,7 @@ The following table shows which capabilities are supported by each platform:
      - ❌
      - ✅
    * - **Albert**
+     - Remote
      - ✅
      - ❌
      - ❌
@@ -201,6 +218,7 @@ The following table shows which capabilities are supported by each platform:
      - ❌
      - ❌
    * - **TransformersPhp**
+     - Local
      - ✅
      - ✅
      - ✅
@@ -751,6 +769,7 @@ Cerebras Models
 Capability Legend
 -----------------
 
+* **Type**: Remote (cloud-based API) or Local (self-hosted)
 * **Chat**: Text generation and conversation capabilities
 * **Embeddings**: Vector embeddings for semantic search and similarity
 * **Images**: Image input processing (vision models)
