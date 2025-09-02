@@ -13,5 +13,8 @@
     },
     "config": {
         "sort-packages": true
+    },
+    "require": {
+        "symfony/config": "^7.3"
     }
 }
