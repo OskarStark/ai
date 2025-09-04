@@ -57,7 +57,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Symfony\\AI\\Store\\": "src/"
+            "Symfony\\AI\\Store\\": "src/",
+            "Symfony\\AI\\Store\\Test\\": "src/Test/"
         }
     },
     "autoload-dev": {
