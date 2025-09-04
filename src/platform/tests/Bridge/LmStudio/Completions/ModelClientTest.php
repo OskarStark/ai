@@ -86,4 +86,25 @@ class ModelClientTest extends TestCase
         $client->request(new Completions('test-model'), $payload, ['temperature' => 0.7]);
     }
 
+    public function testItUsesEventSourceHttpClient()
+    {
+        $httpClient = new MockHttpClient();
+        $client = new ModelClient($httpClient, 'http://localhost:1234');
+
+        $reflection = new \ReflectionProperty($client, 'httpClient');
+        $reflection->setAccessible(true);
+
+        $this->assertInstanceOf(EventSourceHttpClient::class, $reflection->getValue($client));
+    }
+
+    public function testItKeepsExistingEventSourceHttpClient()
+    {
+        $eventSourceHttpClient = new EventSourceHttpClient(new MockHttpClient());
+        $client = new ModelClient($eventSourceHttpClient, 'http://localhost:1234');
+
+        $reflection = new \ReflectionProperty($client, 'httpClient');
+        $reflection->setAccessible(true);
+
+        $this->assertSame($eventSourceHttpClient, $reflection->getValue($client));
+    }
 }
