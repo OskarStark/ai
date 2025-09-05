@@ -27,7 +27,7 @@ final class ChainTransformerTest extends TestCase
             public function __invoke(iterable $documents, array $options = []): iterable
             {
                 foreach ($documents as $document) {
-                    yield new TextDocument($document->id, $document->content.'-A');
+                    yield $document->withContent($document->content.'-A');
                 }
             }
         };
@@ -36,7 +36,7 @@ final class ChainTransformerTest extends TestCase
             public function __invoke(iterable $documents, array $options = []): iterable
             {
                 foreach ($documents as $document) {
-                    yield new TextDocument($document->id, $document->content.'-B');
+                    yield $document->withContent($document->content.'-B');
                 }
             }
         };

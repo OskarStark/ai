@@ -247,4 +247,52 @@ final class TextDocumentTest extends TestCase
 
         new TextDocument(Uuid::v4(), '   ');
     }
+
+    #[TestDox('withContent returns new document with updated content')]
+    public function testWithContent()
+    {
+        $id = Uuid::v4();
+        $originalContent = 'Original content';
+        $newContent = 'New content';
+        $metadata = new Metadata(['title' => 'Test Document']);
+
+        $document = new TextDocument($id, $originalContent, $metadata);
+        $newDocument = $document->withContent($newContent);
+
+        $this->assertNotSame($document, $newDocument);
+        $this->assertSame($id, $newDocument->id);
+        $this->assertSame($newContent, $newDocument->content);
+        $this->assertSame($metadata, $newDocument->metadata);
+        $this->assertSame($originalContent, $document->content);
+    }
+
+    #[TestDox('withContent validates new content is not empty')]
+    public function testWithContentValidatesContent()
+    {
+        $document = new TextDocument(Uuid::v4(), 'Original content');
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The content shall not be an empty string.');
+
+        $document->withContent('   ');
+    }
+
+    #[TestDox('withContent preserves metadata reference')]
+    public function testWithContentPreservesMetadataReference()
+    {
+        $id = Uuid::v4();
+        $originalContent = 'Original content';
+        $newContent = 'New content';
+        $metadata = new Metadata(['title' => 'Test Document']);
+
+        $document = new TextDocument($id, $originalContent, $metadata);
+        $newDocument = $document->withContent($newContent);
+
+        $this->assertSame($metadata, $document->metadata);
+        $this->assertSame($metadata, $newDocument->metadata);
+
+        $metadata['author'] = 'John Doe';
+        $this->assertSame('John Doe', $document->metadata['author']);
+        $this->assertSame('John Doe', $newDocument->metadata['author']);
+    }
 }
