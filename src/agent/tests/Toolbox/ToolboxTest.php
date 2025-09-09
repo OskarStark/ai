@@ -28,6 +28,7 @@ use Symfony\AI\Fixtures\Tool\ToolCustomException;
 use Symfony\AI\Fixtures\Tool\ToolDate;
 use Symfony\AI\Fixtures\Tool\ToolException;
 use Symfony\AI\Fixtures\Tool\ToolMisconfigured;
+use Symfony\AI\Fixtures\Tool\ToolMultipleInstances;
 use Symfony\AI\Fixtures\Tool\ToolNoAttribute1;
 use Symfony\AI\Fixtures\Tool\ToolNoParams;
 use Symfony\AI\Fixtures\Tool\ToolOptionalParam;
@@ -297,5 +298,31 @@ final class ToolboxTest extends TestCase
         ];
 
         $this->assertEquals($expected, $toolbox->getTools());
+    }
+
+    public function testMultipleToolInstancesWithSameClass()
+    {
+        // Create multiple instances of the same class with different configurations
+        $agent1 = new ToolMultipleInstances('Agent1', 'Handles user requests');
+        $agent2 = new ToolMultipleInstances('Agent2', 'Handles admin tasks');
+        $agent3 = new ToolMultipleInstances('Agent3', 'Handles notifications');
+
+        // Use memory factory to create tools with different names for each instance
+        $memoryFactory = (new MemoryToolFactory())
+            ->addTool(ToolMultipleInstances::class, 'agent_1', 'Agent 1 - Handles user requests')
+            ->addTool(ToolMultipleInstances::class, 'agent_2', 'Agent 2 - Handles admin tasks')
+            ->addTool(ToolMultipleInstances::class, 'agent_3', 'Agent 3 - Handles notifications');
+
+        $toolbox = new Toolbox([$agent1, $agent2, $agent3], $memoryFactory);
+
+        // Execute each tool by name - this should call the correct instance
+        $result1 = $toolbox->execute(new ToolCall('call_1', 'agent_1'));
+        $result2 = $toolbox->execute(new ToolCall('call_2', 'agent_2'));
+        $result3 = $toolbox->execute(new ToolCall('call_3', 'agent_3'));
+
+        // Each tool should return its own unique result based on its configuration
+        $this->assertSame('Agent Agent1: Handles user requests', $result1);
+        $this->assertSame('Agent Agent2: Handles admin tasks', $result2);
+        $this->assertSame('Agent Agent3: Handles notifications', $result3);
     }
 }

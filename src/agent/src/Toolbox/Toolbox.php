@@ -42,6 +42,13 @@ final class Toolbox implements ToolboxInterface
     private array $map;
 
     /**
+     * Mapping from tool metadata to tool instances.
+     *
+     * @var \WeakMap<Tool, object>
+     */
+    private \WeakMap $toolMapping;
+
+    /**
      * @param iterable<mixed> $tools
      */
     public function __construct(
@@ -60,9 +67,31 @@ final class Toolbox implements ToolboxInterface
             return $this->map;
         }
 
+        $this->toolMapping = new \WeakMap();
         $map = [];
+
+        // Build mapping by pairing tools with their metadata in order
+        $toolsByClass = [];
         foreach ($this->tools as $tool) {
-            foreach ($this->toolFactory->getTool($tool::class) as $metadata) {
+            $class = $tool::class;
+            if (!isset($toolsByClass[$class])) {
+                $toolsByClass[$class] = [];
+            }
+            $toolsByClass[$class][] = $tool;
+        }
+
+        // Now get metadata and map to tools in order
+        foreach ($this->tools as $tool) {
+            $class = $tool::class;
+            $metadataList = iterator_to_array($this->toolFactory->getTool($class));
+
+            // Find current tool index within its class
+            $toolIndex = array_search($tool, $toolsByClass[$class], true);
+
+            // Map the corresponding metadata (if available) to this tool
+            if (isset($metadataList[$toolIndex])) {
+                $metadata = $metadataList[$toolIndex];
+                $this->toolMapping[$metadata] = $tool;
                 $map[] = $metadata;
             }
         }
@@ -105,10 +134,11 @@ final class Toolbox implements ToolboxInterface
 
     private function getExecutable(Tool $metadata): object
     {
-        foreach ($this->tools as $tool) {
-            if ($tool instanceof $metadata->reference->class) {
-                return $tool;
-            }
+        // Ensure tools are loaded to initialize the mapping
+        $this->getTools();
+
+        if (isset($this->toolMapping[$metadata])) {
+            return $this->toolMapping[$metadata];
         }
 
         throw ToolNotFoundException::notFoundForReference($metadata->reference);
