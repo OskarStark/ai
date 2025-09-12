@@ -218,14 +218,14 @@ To use existing tools, you can register them as a service:
             $apiKey: '%env(SERP_API_KEY)%'
         Symfony\AI\Agent\Toolbox\Tool\SimilaritySearch: ~
         Symfony\AI\Agent\Toolbox\Tool\Tavily:
-          $apiKey: '%env(TAVILY_API_KEY)%'
+            $apiKey: '%env(TAVILY_API_KEY)%'
         Symfony\AI\Agent\Toolbox\Tool\Wikipedia: ~
         Symfony\AI\Agent\Toolbox\Tool\YouTubeTranscriber: ~
         Symfony\AI\Agent\Toolbox\Tool\Firecrawl:
-          $endpoint: '%env(FIRECRAWL_ENDPOINT)%'
-          $apiKey: '%env(FIRECRAWL_API_KEY)%'
+            $endpoint: '%env(FIRECRAWL_ENDPOINT)%'
+            $apiKey: '%env(FIRECRAWL_API_KEY)%'
         Symfony\AI\Agent\Toolbox\Tool\Brave:
-          $apiKey: '%env(BRAVE_API_KEY)%'
+            $apiKey: '%env(BRAVE_API_KEY)%'
 
 Custom tools can be registered by using the ``#[AsTool]`` attribute::
 
@@ -278,6 +278,7 @@ make sure you have `symfony/security-core` installed in your project.
             return 'ACME Corp.';
         }
     }
+
 The attribute ``IsGrantedTool`` can be added on class- or method-level - even multiple
 times. If multiple attributes apply to one tool call, a logical AND is used and all access
 decisions have to grant access.
