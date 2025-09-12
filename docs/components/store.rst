@@ -48,6 +48,7 @@ You can find more advanced usage in combination with an Agent using the store fo
 * `Similarity Search with Symfony Cache (RAG)`_
 * `Similarity Search with Typesense (RAG)`_
 * `Similarity Search with Weaviate (RAG)`_
+* `Similarity Search with Supabase (RAG)`_
 
 .. note::
 
@@ -70,6 +71,7 @@ Supported Stores
 * `Pinecone`_ (requires `probots-io/pinecone-php` as additional dependency)
 * `Postgres`_ (requires `ext-pdo`)
 * `Qdrant`_
+* `Supabase`_ (requires manual database setup)
 * `SurrealDB`_
 * `Symfony Cache`_ (requires `symfony/cache` as additional dependency)
 * `Typesense`_
@@ -137,6 +139,7 @@ This leads to a store implementing two methods::
 .. _`Similarity Search with Qdrant (RAG)`: https://github.com/symfony/ai/blob/main/examples/rag/qdrant.php
 .. _`Similarity Search with SurrealDB (RAG)`: https://github.com/symfony/ai/blob/main/examples/rag/surrealdb.php
 .. _`Similarity Search with Typesense (RAG)`: https://github.com/symfony/ai/blob/main/examples/rag/typesense.php
+.. _`Similarity Search with Supabase (RAG)`: https://github.com/symfony/ai/blob/main/examples/rag/supabase.php
 .. _`Similarity Search with Weaviate (RAG)`: https://github.com/symfony/ai/blob/main/examples/rag/weaviate.php
 .. _`Azure AI Search`: https://azure.microsoft.com/products/ai-services/ai-search
 .. _`Chroma`: https://www.trychroma.com/
@@ -154,3 +157,4 @@ This leads to a store implementing two methods::
 .. _`Typesense`: https://typesense.org/
 .. _`Symfony Cache`: https://symfony.com/doc/current/components/cache.html
 .. _`Weaviate`: https://weaviate.io/
+.. _`Supabase`: https://https://supabase.com/
