@@ -113,7 +113,7 @@ final readonly class Store implements ManagedStoreInterface, StoreInterface
     {
         return [
             'id' => $document->id->toRfc4122(),
-            'metadata' => json_encode($document->metadata->getArrayCopy(), \JSON_THROW_ON_ERROR),
+            'metadata' => json_encode($document->metadata->getArrayCopy(), flags: \JSON_THROW_ON_ERROR),
             'embedding' => $document->vector->getData(),
         ];
     }

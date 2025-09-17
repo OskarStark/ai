@@ -54,7 +54,7 @@ final readonly class ClaudeModelClient implements ModelClientInterface
         $request = [
             'modelId' => $this->getModelId($model),
             'contentType' => 'application/json',
-            'body' => json_encode(array_merge($options, $payload), \JSON_THROW_ON_ERROR),
+            'body' => json_encode(array_merge($options, $payload), flags: \JSON_THROW_ON_ERROR),
         ];
 
         return new RawBedrockResult($this->bedrockRuntimeClient->invokeModel(new InvokeModelRequest($request)));

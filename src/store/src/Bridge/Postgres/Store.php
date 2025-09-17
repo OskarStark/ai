@@ -119,7 +119,7 @@ final readonly class Store implements ManagedStoreInterface, StoreInterface
         foreach ($documents as $document) {
             $operation = [
                 'id' => $document->id->toRfc4122(),
-                'metadata' => json_encode($document->metadata->getArrayCopy(), \JSON_THROW_ON_ERROR),
+                'metadata' => json_encode($document->metadata->getArrayCopy(), flags: \JSON_THROW_ON_ERROR),
                 'vector' => $this->toPgvector($document->vector),
             ];
 

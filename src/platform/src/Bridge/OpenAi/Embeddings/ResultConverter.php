@@ -36,7 +36,7 @@ final class ResultConverter implements ResultConverterInterface
 
         if (!isset($data['data'])) {
             if ($result instanceof RawHttpResult) {
-                throw new RuntimeException(\sprintf('Response from OpenAI API does not contain "data" key. StatusCode: "%s". Response: "%s".', $result->getObject()->getStatusCode(), json_encode($result->getData(), \JSON_THROW_ON_ERROR)));
+                throw new RuntimeException(\sprintf('Response from OpenAI API does not contain "data" key. StatusCode: "%s". Response: "%s".', $result->getObject()->getStatusCode(), json_encode($result->getData(), flags: \JSON_THROW_ON_ERROR)));
             }
 
             throw new RuntimeException('Response does not contain data.');

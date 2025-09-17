@@ -38,7 +38,7 @@ class LlamaModelClient implements ModelClientInterface
         return new RawBedrockResult($this->bedrockRuntimeClient->invokeModel(new InvokeModelRequest([
             'modelId' => $this->getModelId($model),
             'contentType' => 'application/json',
-            'body' => json_encode($payload, \JSON_THROW_ON_ERROR),
+            'body' => json_encode($payload, flags: \JSON_THROW_ON_ERROR),
         ])));
     }
 

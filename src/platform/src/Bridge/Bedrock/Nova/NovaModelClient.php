@@ -50,7 +50,7 @@ class NovaModelClient implements ModelClientInterface
         $request = [
             'modelId' => $this->getModelId($model),
             'contentType' => 'application/json',
-            'body' => json_encode(array_merge($payload, $modelOptions), \JSON_THROW_ON_ERROR),
+            'body' => json_encode(array_merge($payload, $modelOptions), flags: \JSON_THROW_ON_ERROR),
         ];
 
         return new RawBedrockResult($this->bedrockRuntimeClient->invokeModel(new InvokeModelRequest($request)));

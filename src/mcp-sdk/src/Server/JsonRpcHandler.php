@@ -117,10 +117,10 @@ readonly class JsonRpcHandler
         $this->logger->info('Encoding response', ['response' => $response]);
 
         if ($response instanceof Response && [] === $response->result) {
-            return json_encode($response, \JSON_THROW_ON_ERROR | \JSON_FORCE_OBJECT);
+            return json_encode($response, flags: \JSON_THROW_ON_ERROR | \JSON_FORCE_OBJECT);
         }
 
-        return json_encode($response, \JSON_THROW_ON_ERROR);
+        return json_encode($response, flags: \JSON_THROW_ON_ERROR);
     }
 
     /**
