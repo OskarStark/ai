@@ -19,6 +19,37 @@ use Symfony\AI\Store\Document\TransformerInterface;
 use Symfony\AI\Store\Document\VectorizerInterface;
 
 /**
+ * The Indexer class orchestrates the document processing pipeline for AI-powered document storage and retrieval.
+ * 
+ * ## Transformers
+ * 
+ * Transformers are components that modify or enhance documents during the indexing process. They implement
+ * the TransformerInterface and are applied sequentially to all loaded documents before vectorization.
+ * 
+ * Common transformer use cases:
+ * - Text preprocessing (normalization, cleaning, formatting)
+ * - Content enrichment (adding metadata, extracting entities)
+ * - Document splitting or chunking for optimal vector storage
+ * - Content filtering based on quality or relevance criteria
+ * 
+ * Transformers receive an array of TextDocument objects and must return a modified array of TextDocument objects.
+ * The transformation pipeline allows for complex document processing workflows by chaining multiple transformers.
+ * 
+ * ## Source
+ * 
+ * The source parameter defines what content should be indexed. It provides flexible input specification:
+ * 
+ * - **null**: Load all available content from the loader (no filtering)
+ * - **string**: Load content from a specific source identifier (e.g., file path, URL, database table)
+ * - **array**: Load content from multiple source identifiers for batch processing
+ * 
+ * The source is passed to the LoaderInterface, which handles the actual content retrieval logic.
+ * This abstraction allows the same Indexer to work with different content sources (files, databases, APIs)
+ * by simply changing the loader implementation.
+ * 
+ * The withSource() method enables creating new Indexer instances with different source configurations
+ * while preserving other dependencies, supporting flexible indexing workflows.
+ *
  * @author Christopher Hertel <mail@christopher-hertel.de>
  * @author Oskar Stark <oskarstark@googlemail.com>
  */
