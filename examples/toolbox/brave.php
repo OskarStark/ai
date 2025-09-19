@@ -10,8 +10,8 @@
  */
 
 use Symfony\AI\Agent\Agent;
+use Symfony\AI\Agent\Bridge\Brave\Brave;
 use Symfony\AI\Agent\Toolbox\AgentProcessor;
-use Symfony\AI\Agent\Toolbox\Tool\Brave;
 use Symfony\AI\Agent\Toolbox\Tool\Clock;
 use Symfony\AI\Agent\Toolbox\Tool\Scraper;
 use Symfony\AI\Agent\Toolbox\Toolbox;
