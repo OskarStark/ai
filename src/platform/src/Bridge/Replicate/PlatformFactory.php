@@ -13,6 +13,7 @@ namespace Symfony\AI\Platform\Bridge\Replicate;
 
 use Symfony\AI\Platform\Bridge\Replicate\Contract\LlamaMessageBagNormalizer;
 use Symfony\AI\Platform\Contract;
+use Symfony\AI\Platform\ModelCatalog\ModelCatalogInterface;
 use Symfony\AI\Platform\Platform;
 use Symfony\Component\Clock\Clock;
 use Symfony\Component\HttpClient\HttpClient;
@@ -26,11 +27,13 @@ final class PlatformFactory
     public static function create(
         #[\SensitiveParameter] string $apiKey,
         ?HttpClientInterface $httpClient = null,
+        ModelCatalogInterface $modelCatalog = new ModelCatalog(),
         ?Contract $contract = null,
     ): Platform {
         return new Platform(
             [new LlamaModelClient(new Client($httpClient ?? HttpClient::create(), new Clock(), $apiKey))],
             [new LlamaResultConverter()],
+            $modelCatalog,
             $contract ?? Contract::create(new LlamaMessageBagNormalizer()),
         );
     }

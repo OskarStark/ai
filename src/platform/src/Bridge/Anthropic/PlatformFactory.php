@@ -13,6 +13,7 @@ namespace Symfony\AI\Platform\Bridge\Anthropic;
 
 use Symfony\AI\Platform\Bridge\Anthropic\Contract\AnthropicContract;
 use Symfony\AI\Platform\Contract;
+use Symfony\AI\Platform\ModelCatalog\ModelCatalogInterface;
 use Symfony\AI\Platform\Platform;
 use Symfony\Component\HttpClient\EventSourceHttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -25,6 +26,7 @@ final readonly class PlatformFactory
     public static function create(
         #[\SensitiveParameter] string $apiKey,
         ?HttpClientInterface $httpClient = null,
+        ModelCatalogInterface $modelCatalog = new ModelCatalog(),
         ?Contract $contract = null,
     ): Platform {
         $httpClient = $httpClient instanceof EventSourceHttpClient ? $httpClient : new EventSourceHttpClient($httpClient);
@@ -32,6 +34,7 @@ final readonly class PlatformFactory
         return new Platform(
             [new ModelClient($httpClient, $apiKey)],
             [new ResultConverter()],
+            $modelCatalog,
             $contract ?? AnthropicContract::create(),
         );
     }

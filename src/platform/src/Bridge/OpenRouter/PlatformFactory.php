@@ -15,6 +15,7 @@ use Symfony\AI\Platform\Bridge\Gemini\Contract\AssistantMessageNormalizer;
 use Symfony\AI\Platform\Bridge\Gemini\Contract\MessageBagNormalizer;
 use Symfony\AI\Platform\Bridge\Gemini\Contract\UserMessageNormalizer;
 use Symfony\AI\Platform\Contract;
+use Symfony\AI\Platform\ModelCatalog\ModelCatalogInterface;
 use Symfony\AI\Platform\Platform;
 use Symfony\Component\HttpClient\EventSourceHttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -27,6 +28,7 @@ final class PlatformFactory
     public static function create(
         #[\SensitiveParameter] string $apiKey,
         ?HttpClientInterface $httpClient = null,
+        ModelCatalogInterface $modelCatalog = new ModelCatalog(),
         ?Contract $contract = null,
     ): Platform {
         $httpClient = $httpClient instanceof EventSourceHttpClient ? $httpClient : new EventSourceHttpClient($httpClient);
@@ -34,6 +36,7 @@ final class PlatformFactory
         return new Platform(
             [new ModelClient($httpClient, $apiKey)],
             [new ResultConverter()],
+            $modelCatalog,
             $contract ?? Contract::create(
                 new AssistantMessageNormalizer(),
                 new MessageBagNormalizer(),

@@ -13,6 +13,7 @@ namespace Symfony\AI\Platform\Bridge\OpenAi;
 
 use Symfony\AI\Platform\Bridge\OpenAi\Contract\OpenAiContract;
 use Symfony\AI\Platform\Contract;
+use Symfony\AI\Platform\ModelCatalog\ModelCatalogInterface;
 use Symfony\AI\Platform\Platform;
 use Symfony\Component\HttpClient\EventSourceHttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -28,6 +29,7 @@ final readonly class PlatformFactory
     public static function create(
         #[\SensitiveParameter] string $apiKey,
         ?HttpClientInterface $httpClient = null,
+        ModelCatalogInterface $modelCatalog = new ModelCatalog(),
         ?Contract $contract = null,
         ?string $region = null,
     ): Platform {
@@ -46,6 +48,7 @@ final readonly class PlatformFactory
                 new DallE\ResultConverter(),
                 new Whisper\ResultConverter(),
             ],
+            $modelCatalog,
             $contract ?? OpenAiContract::create(),
         );
     }

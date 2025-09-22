@@ -12,6 +12,7 @@
 namespace Symfony\AI\Platform\Bridge\Azure\Meta;
 
 use Symfony\AI\Platform\Contract;
+use Symfony\AI\Platform\ModelCatalog\ModelCatalogInterface;
 use Symfony\AI\Platform\Platform;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -25,10 +26,11 @@ final readonly class PlatformFactory
         string $baseUrl,
         #[\SensitiveParameter] string $apiKey,
         ?HttpClientInterface $httpClient = null,
+        ModelCatalogInterface $modelCatalog = new ModelCatalog(),
         ?Contract $contract = null,
     ): Platform {
         $modelClient = new LlamaModelClient($httpClient ?? HttpClient::create(), $baseUrl, $apiKey);
 
-        return new Platform([$modelClient], [new LlamaResultConverter()], $contract);
+        return new Platform([$modelClient], [new LlamaResultConverter()], $modelCatalog, $contract);
     }
 }
