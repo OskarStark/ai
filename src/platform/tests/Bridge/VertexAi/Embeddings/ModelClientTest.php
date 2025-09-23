@@ -32,7 +32,6 @@ final class ModelClientTest extends TestCase
 {
     public function testItGeneratesTheEmbeddingSuccessfully()
     {
-        // Assert
         $expectedResponse = [
             'predictions' => [
                 ['embeddings' => ['values' => [0.3, 0.4, 0.4]]],
@@ -47,7 +46,6 @@ final class ModelClientTest extends TestCase
         // Act
         $result = $client->request($model, 'test payload');
 
-        // Assert
         $this->assertSame($expectedResponse, $result->getData());
     }
 }

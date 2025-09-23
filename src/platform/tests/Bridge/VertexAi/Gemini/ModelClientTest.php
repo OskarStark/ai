@@ -47,7 +47,6 @@ final class ModelClientTest extends TestCase
         $data = $result->getData();
         $info = $result->getObject()->getInfo();
 
-        // Assert
         $this->assertNotEmpty($data);
         $this->assertNotEmpty($info);
         $this->assertSame('POST', $info['http_method']);

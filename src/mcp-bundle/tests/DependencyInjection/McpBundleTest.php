@@ -148,10 +148,8 @@ class McpBundleTest extends TestCase
     {
         $container = $this->buildContainer([]);
 
-        // Test that the default page_size parameter is set to 20
         $this->assertSame(20, $container->getParameter('mcp.page_size'));
 
-        // Test that ToolListHandler is registered
         $this->assertTrue($container->hasDefinition('mcp.server.request_handler.tool_list'));
 
         $definition = $container->getDefinition('mcp.server.request_handler.tool_list');
@@ -166,7 +164,6 @@ class McpBundleTest extends TestCase
             ],
         ]);
 
-        // Test that the custom page_size parameter is set
         $this->assertSame(50, $container->getParameter('mcp.page_size'));
     }
 

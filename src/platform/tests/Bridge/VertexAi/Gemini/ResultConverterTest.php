@@ -45,7 +45,6 @@ final class ResultConverterTest extends TestCase
         // Act
         $result = $resultConverter->convert(new RawHttpResult($response));
 
-        // Assert
         $this->assertInstanceOf(TextResult::class, $result);
         $this->assertSame('Hello, world!', $result->getContent());
     }

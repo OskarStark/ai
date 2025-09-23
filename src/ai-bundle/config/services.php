@@ -61,7 +61,6 @@ return static function (ContainerConfigurator $container): void {
             ->factory([OllamaContract::class, 'create'])
         ->set('ai.platform.contract.perplexity', Contract::class)
             ->factory([PerplexityContract::class, 'create'])
-        // structured output
         ->set('ai.agent.response_format_factory', ResponseFormatFactory::class)
             ->args([
                 service('ai.platform.json_schema_factory'),
@@ -78,8 +77,6 @@ return static function (ContainerConfigurator $container): void {
                 service('ai.agent.response_format_factory'),
                 service('serializer'),
             ])
-
-        // tools
         ->set('ai.toolbox.abstract', Toolbox::class)
             ->abstract()
             ->args([
@@ -126,8 +123,6 @@ return static function (ContainerConfigurator $container): void {
                 service('expression_language')->nullOnInvalid(),
             ])
             ->tag('kernel.event_listener')
-
-        // profiler
         ->set('ai.data_collector', DataCollector::class)
             ->args([
                 tagged_iterator('ai.traceable_platform'),
@@ -141,19 +136,13 @@ return static function (ContainerConfigurator $container): void {
                 service('.inner'),
             ])
             ->tag('ai.traceable_toolbox')
-
-        // token usage processors
         ->set('ai.platform.token_usage_processor.anthropic', AnthropicTokenOutputProcessor::class)
         ->set('ai.platform.token_usage_processor.gemini', GeminiTokenOutputProcessor::class)
         ->set('ai.platform.token_usage_processor.mistral', MistralTokenOutputProcessor::class)
         ->set('ai.platform.token_usage_processor.openai', OpenAiTokenOutputProcessor::class)
         ->set('ai.platform.token_usage_processor.perplexity', PerplexityTokenOutputProcessor::class)
         ->set('ai.platform.token_usage_processor.vertexai', VertexAiTokenOutputProcessor::class)
-
-        // search result processors
         ->set('ai.platform.search_result_processor.perplexity', PerplexitySearchResultProcessor::class)
-
-        // commands
         ->set('ai.command.chat', ChatCommand::class)
             ->args([
                 tagged_locator('ai.agent', 'name'),

@@ -130,22 +130,18 @@ final class ImageSegmentationResultTest extends TestCase
 
         $this->assertCount(4, $result->segments);
 
-        // Test empty values
         $this->assertSame('', $result->segments[0]->label);
         $this->assertSame(0.0, $result->segments[0]->score);
         $this->assertSame('', $result->segments[0]->mask);
 
-        // Test uppercase and base64
         $this->assertSame('UPPERCASE', $result->segments[1]->label);
         $this->assertSame(1.0, $result->segments[1]->score);
         $this->assertSame('BASE64==', $result->segments[1]->mask);
 
-        // Test special characters and data URI
         $this->assertSame('special-chars_123', $result->segments[2]->label);
         $this->assertSame(0.5, $result->segments[2]->score);
         $this->assertStringStartsWith('data:image/png', $result->segments[2]->mask);
 
-        // Test unicode and long mask
         $this->assertSame('unicode_标签', $result->segments[3]->label);
         $this->assertSame(0.12345, $result->segments[3]->score);
         $this->assertStringContainsString('long_', $result->segments[3]->mask);

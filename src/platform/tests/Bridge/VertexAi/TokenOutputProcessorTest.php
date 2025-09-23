@@ -67,7 +67,6 @@ final class TokenOutputProcessorTest extends TestCase
         // Act
         $processor->processOutput($output);
 
-        // Assert
         $metadata = $output->result->getMetadata();
         $tokenUsage = $metadata->get('token_usage');
 
@@ -97,7 +96,6 @@ final class TokenOutputProcessorTest extends TestCase
         // Act
         $processor->processOutput($output);
 
-        // Assert
         $metadata = $output->result->getMetadata();
         $tokenUsage = $metadata->get('token_usage');
 
@@ -121,7 +119,6 @@ final class TokenOutputProcessorTest extends TestCase
         // Act
         $processor->processOutput($output);
 
-        // Assert
         $metadata = $output->result->getMetadata();
         $tokenUsage = $metadata->get('token_usage');
 

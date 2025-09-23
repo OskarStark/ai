@@ -46,7 +46,6 @@ final class RssFeedLoaderTest extends TestCase
         $documents = iterator_to_array($loader->load('https://feeds.feedburner.com/symfony/blog'));
         $this->assertCount(10, $documents);
 
-        // Test first document
         $firstDocument = $documents[0];
         $this->assertInstanceOf(TextDocument::class, $firstDocument);
         $this->assertStringStartsWith('Title: Save the date, SymfonyDay Montreal 2026!', $firstDocument->content);
@@ -139,7 +138,6 @@ XML;
         $loader = new RssFeedLoader($httpClient);
         $documents1 = iterator_to_array($loader->load('https://feeds.feedburner.com/symfony/blog'));
 
-        // Load same feed again
         $httpClient2 = new MockHttpClient([MockResponse::fromFile(__DIR__.'/../../fixtures/symfony-blog.rss')]);
         $loader2 = new RssFeedLoader($httpClient2);
         $documents2 = iterator_to_array($loader2->load('https://feeds.feedburner.com/symfony/blog'));
