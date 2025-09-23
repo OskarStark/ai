@@ -35,6 +35,7 @@ final class Chat
 
     public function say(string $base64audio): void
     {
+        // Convert base64 to temporary binary file
         $path = tempnam(sys_get_temp_dir(), 'audio-').'.wav';
         file_put_contents($path, base64_decode($base64audio));
 
