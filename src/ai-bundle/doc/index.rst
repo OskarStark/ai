@@ -145,6 +145,69 @@ Configuration
                 vectorizer: 'ai.vectorizer.mistral_embeddings'
                 store: 'ai.store.memory.research'
 
+Store Dependency Injection
+---------------------------
+
+When using multiple stores in your application, the AI Bundle provides flexible dependency injection through store aliases. 
+This allows you to inject specific stores into your services without conflicts, even when stores share the same name across different types.
+
+**Alias Generation**
+
+For each configured store, the bundle automatically creates two types of aliases:
+
+1. **Simple alias**: ``StoreInterface $storeName`` - Direct reference by store name
+2. **Type-prefixed alias**: ``StoreInterface $type_storeName`` - Reference with store type prefix
+
+**Example Configuration**
+
+.. code-block:: yaml
+
+    ai:
+        store:
+            memory:
+                main:
+                    strategy: 'cosine'
+                products:
+                    strategy: 'manhattan'
+            weaviate:
+                main:
+                    endpoint: 'http://localhost:8080'
+                    api_key: '%env(WEAVIATE_API_KEY)%'
+                    collection: 'documents'
+
+**Available Aliases**
+
+From the configuration above, the following aliases are automatically registered:
+
+- ``StoreInterface $main`` - References the memory store (first occurrence)
+- ``StoreInterface $memory_main`` - Explicitly references the memory store
+- ``StoreInterface $weaviate_main`` - Explicitly references the weaviate store
+- ``StoreInterface $products`` - References the memory products store
+- ``StoreInterface $memory_products`` - Explicitly references the memory products store
+
+**Service Injection**
+
+You can inject stores into your services using the generated aliases::
+
+    use Symfony\AI\Store\StoreInterface;
+
+    final readonly class DocumentService
+    {
+        public function __construct(
+            private StoreInterface $main,              // Uses memory store (first occurrence)
+            private StoreInterface $weaviate_main,     // Explicitly uses weaviate store  
+            private StoreInterface $memory_products,   // Explicitly uses memory products store
+        ) {
+        }
+    }
+
+**Conflict Resolution**
+
+When multiple stores share the same name (like ``main`` in the example), the simple alias (``$main``) will reference the first occurrence. 
+Use type-prefixed aliases (``$memory_main``, ``$weaviate_main``) for explicit disambiguation.
+
+This feature is particularly useful during migrations or when using different store types for different purposes while maintaining consistent naming conventions.
+
 Model Configuration
 -------------------
 
