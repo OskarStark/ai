@@ -61,6 +61,7 @@ return static function (ContainerConfigurator $container): void {
             ->factory([OllamaContract::class, 'create'])
         ->set('ai.platform.contract.perplexity', Contract::class)
             ->factory([PerplexityContract::class, 'create'])
+        // structured output
         ->set('ai.agent.response_format_factory', ResponseFormatFactory::class)
             ->args([
                 service('ai.platform.json_schema_factory'),
@@ -77,6 +78,8 @@ return static function (ContainerConfigurator $container): void {
                 service('ai.agent.response_format_factory'),
                 service('serializer'),
             ])
+
+        // tools
         ->set('ai.toolbox.abstract', Toolbox::class)
             ->abstract()
             ->args([

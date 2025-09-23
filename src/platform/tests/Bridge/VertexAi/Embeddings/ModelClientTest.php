@@ -43,7 +43,6 @@ final class ModelClientTest extends TestCase
 
         $model = new Model(Model::GEMINI_EMBEDDING_001, ['outputDimensionality' => 1536, 'task_type' => TaskType::CLASSIFICATION]);
 
-        // Act
         $result = $client->request($model, 'test payload');
 
         $this->assertSame($expectedResponse, $result->getData());

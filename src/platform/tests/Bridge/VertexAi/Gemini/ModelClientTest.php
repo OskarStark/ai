@@ -27,7 +27,6 @@ final class ModelClientTest extends TestCase
 {
     public function testItInvokesTheTextModelsSuccessfully()
     {
-        // Arrange
         $payload = [
             'content' => [
                 ['parts' => ['text' => 'Hello, world!']],
@@ -42,7 +41,6 @@ final class ModelClientTest extends TestCase
 
         $client = new ModelClient($httpClient, 'global', 'test');
 
-        // Act
         $result = $client->request(new Model(Model::GEMINI_2_0_FLASH), $payload);
         $data = $result->getData();
         $info = $result->getObject()->getInfo();
