@@ -50,7 +50,39 @@ function http_client(): HttpClientInterface
 
 function logger(): LoggerInterface
 {
-    return new ConsoleLogger(output());
+    $output = output();
+
+    return new class($output) extends ConsoleLogger {
+        private ConsoleOutput $output;
+
+        public function __construct(ConsoleOutput $output)
+        {
+            parent::__construct($output);
+            $this->output = $output;
+        }
+
+        /**
+         * @param Stringable|string $message
+         */
+        public function log($level, $message, array $context = []): void
+        {
+            // Call parent to handle the base logging
+            parent::log($level, $message, $context);
+
+            // Add context display for debug verbosity
+            if ($this->output->getVerbosity() >= ConsoleOutput::VERBOSITY_DEBUG && [] !== $context) {
+                // Filter out special keys that are already handled
+                $displayContext = array_filter($context, function ($key) {
+                    return !in_array($key, ['exception', 'error', 'object'], true);
+                }, \ARRAY_FILTER_USE_KEY);
+
+                if ([] !== $displayContext) {
+                    $contextMessage = '  '.json_encode($displayContext, \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE);
+                    $this->output->writeln(sprintf('<comment>%s</comment>', $contextMessage));
+                }
+            }
+        }
+    };
 }
 
 function output(): ConsoleOutput
