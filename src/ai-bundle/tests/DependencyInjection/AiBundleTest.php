@@ -2382,4 +2382,140 @@ class AiBundleTest extends TestCase
             ],
         ];
     }
+
+    #[TestDox('Agent with tools disabled does not get tool processors applied')]
+    public function testAgentWithToolsDisabledDoesNotGetToolProcessors()
+    {
+        $container = $this->buildContainer([
+            'ai' => [
+                'agent' => [
+                    'agent_with_tools_disabled' => [
+                        'model' => ['class' => Gpt::class, 'name' => 'gpt-4'],
+                        'tools' => false, // Tools explicitly disabled
+                    ],
+                    'agent_with_tools_enabled' => [
+                        'model' => ['class' => Gpt::class, 'name' => 'gpt-4'],
+                        'tools' => true, // Tools explicitly enabled
+                    ],
+                ],
+            ],
+        ]);
+
+        $disabledAgentId = 'ai.agent.agent_with_tools_disabled';
+        $enabledAgentId = 'ai.agent.agent_with_tools_enabled';
+
+        // Agent with tools disabled should have the tools disabled tag
+        $disabledAgentTags = $container->getDefinition($disabledAgentId)->getTags();
+        $this->assertArrayHasKey('ai.agent.tools_disabled', $disabledAgentTags);
+
+        // Agent with tools enabled should not have the tools disabled tag
+        $enabledAgentTags = $container->getDefinition($enabledAgentId)->getTags();
+        $this->assertArrayNotHasKey('ai.agent.tools_disabled', $enabledAgentTags);
+
+        // Build the complete processor pass to ensure processors are correctly assigned
+        $pass = new \Symfony\AI\AiBundle\DependencyInjection\ProcessorCompilerPass();
+        $pass->process($container);
+
+        // Check that the agent with tools disabled has no tool processors
+        $disabledAgentDefinition = $container->getDefinition($disabledAgentId);
+        $disabledInputProcessors = $disabledAgentDefinition->getArgument(2);
+        $disabledOutputProcessors = $disabledAgentDefinition->getArgument(3);
+
+        // The agent should have minimal processors (no tool processors)
+        $this->assertIsArray($disabledInputProcessors);
+        $this->assertIsArray($disabledOutputProcessors);
+
+        // Check that the agent with tools enabled has tool processors
+        $enabledAgentDefinition = $container->getDefinition($enabledAgentId);
+        $enabledInputProcessors = $enabledAgentDefinition->getArgument(2);
+        $enabledOutputProcessors = $enabledAgentDefinition->getArgument(3);
+
+        // The enabled agent should have tool processors
+        $this->assertIsArray($enabledInputProcessors);
+        $this->assertIsArray($enabledOutputProcessors);
+        
+        // The enabled agent should have more processors than the disabled one
+        $this->assertGreaterThanOrEqual(count($disabledInputProcessors), count($enabledInputProcessors));
+        $this->assertGreaterThanOrEqual(count($disabledOutputProcessors), count($enabledOutputProcessors));
+    }
+
+    #[TestDox('Tools false configuration prevents global tool processors from being applied')]
+    public function testToolsFalseConfigurationPreventsGlobalToolProcessors()
+    {
+        // First, let's create a container with a global tool processor to ensure it exists
+        $container = $this->buildContainer([
+            'ai' => [
+                'agent' => [
+                    'agent_with_disabled_tools' => [
+                        'model' => ['class' => Gpt::class, 'name' => 'gpt-4'],
+                        'tools' => false,
+                    ],
+                    'agent_with_default_tools' => [
+                        'model' => ['class' => Gpt::class, 'name' => 'gpt-4'],
+                        'tools' => true,
+                    ],
+                ],
+            ],
+        ]);
+
+        // Verify that both agents exist and have correct tool configuration
+        $disabledAgentId = 'ai.agent.agent_with_disabled_tools';
+        $enabledAgentId = 'ai.agent.agent_with_default_tools';
+
+        $this->assertTrue($container->hasDefinition($disabledAgentId));
+        $this->assertTrue($container->hasDefinition($enabledAgentId));
+
+        // Check that the disabled agent has the tools disabled tag
+        $disabledAgentDefinition = $container->getDefinition($disabledAgentId);
+        $disabledAgentTags = $disabledAgentDefinition->getTags();
+        $this->assertArrayHasKey('ai.agent.tools_disabled', $disabledAgentTags, 'Agent with tools: false should have tools_disabled tag');
+
+        // Check that the enabled agent does not have the tools disabled tag
+        $enabledAgentDefinition = $container->getDefinition($enabledAgentId);
+        $enabledAgentTags = $enabledAgentDefinition->getTags();
+        $this->assertArrayNotHasKey('ai.agent.tools_disabled', $enabledAgentTags, 'Agent with tools: true should not have tools_disabled tag');
+
+        // Apply the processor compiler pass to assign processors
+        $pass = new \Symfony\AI\AiBundle\DependencyInjection\ProcessorCompilerPass();
+        $pass->process($container);
+
+        // Check that the global tool processor exists
+        $this->assertTrue($container->hasDefinition('ai.tool.agent_processor'), 'Global tool processor should exist');
+
+        // Verify that the global tool processor is tagged for the enabled agent
+        $globalToolProcessor = $container->getDefinition('ai.tool.agent_processor');
+        $inputTags = $globalToolProcessor->getTag('ai.agent.input_processor');
+        $outputTags = $globalToolProcessor->getTag('ai.agent.output_processor');
+
+        $foundEnabledInputTag = false;
+        $foundEnabledOutputTag = false;
+        $foundDisabledInputTag = false;
+        $foundDisabledOutputTag = false;
+
+        foreach ($inputTags as $tag) {
+            if (($tag['agent'] ?? '') === $enabledAgentId) {
+                $foundEnabledInputTag = true;
+            }
+            if (($tag['agent'] ?? '') === $disabledAgentId) {
+                $foundDisabledInputTag = true;
+            }
+        }
+
+        foreach ($outputTags as $tag) {
+            if (($tag['agent'] ?? '') === $enabledAgentId) {
+                $foundEnabledOutputTag = true;
+            }
+            if (($tag['agent'] ?? '') === $disabledAgentId) {
+                $foundDisabledOutputTag = true;
+            }
+        }
+
+        // The enabled agent should have tool processor tags
+        $this->assertTrue($foundEnabledInputTag, 'Enabled agent should have input tool processor tag');
+        $this->assertTrue($foundEnabledOutputTag, 'Enabled agent should have output tool processor tag');
+
+        // The disabled agent should NOT have tool processor tags
+        $this->assertFalse($foundDisabledInputTag, 'Disabled agent should NOT have input tool processor tag');
+        $this->assertFalse($foundDisabledOutputTag, 'Disabled agent should NOT have output tool processor tag');
+    }
 }

@@ -614,6 +614,9 @@ final class AiBundle extends AbstractBundle
                     ->addTag('ai.agent.input_processor', ['agent' => $agentId, 'priority' => -10])
                     ->addTag('ai.agent.output_processor', ['agent' => $agentId, 'priority' => -10]);
             }
+        } else {
+            // Mark this agent as having tools disabled to prevent global tool processors from being applied
+            $agentDefinition->addTag('ai.agent.tools_disabled');
         }
 
         // STRUCTURED OUTPUT

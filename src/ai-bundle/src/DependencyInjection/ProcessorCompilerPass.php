@@ -21,10 +21,15 @@ class ProcessorCompilerPass implements CompilerPassInterface
     {
         $inputProcessors = $container->findTaggedServiceIds('ai.agent.input_processor');
         $outputProcessors = $container->findTaggedServiceIds('ai.agent.output_processor');
+        $agentsWithToolsDisabled = array_keys($container->findTaggedServiceIds('ai.agent.tools_disabled'));
 
         foreach ($container->findTaggedServiceIds('ai.agent') as $serviceId => $tags) {
             $agentInputProcessors = [];
             $agentOutputProcessors = [];
+            
+            // Check if this agent has tools disabled
+            $toolsDisabled = in_array($serviceId, $agentsWithToolsDisabled, true);
+            
             foreach ($inputProcessors as $processorId => $processorTags) {
                 foreach ($processorTags as $tag) {
                     if ('interface' === ($tag['tagged_by'] ?? null) && \count($processorTags) > 1) {
@@ -32,6 +37,14 @@ class ProcessorCompilerPass implements CompilerPassInterface
                     }
 
                     $agent = $tag['agent'] ?? null;
+                    // Skip global processors (agent === null) if tools are disabled for this agent
+                    if (null === $agent && $toolsDisabled) {
+                        // Check if this is a tool-related processor by examining the service ID
+                        if (str_contains($processorId, 'tool')) {
+                            continue;
+                        }
+                    }
+                    
                     if (null === $agent || $agent === $serviceId) {
                         $priority = $tag['priority'] ?? 0;
                         $agentInputProcessors[] = [$priority, new Reference($processorId)];
@@ -46,6 +59,14 @@ class ProcessorCompilerPass implements CompilerPassInterface
                     }
 
                     $agent = $tag['agent'] ?? null;
+                    // Skip global processors (agent === null) if tools are disabled for this agent
+                    if (null === $agent && $toolsDisabled) {
+                        // Check if this is a tool-related processor by examining the service ID
+                        if (str_contains($processorId, 'tool')) {
+                            continue;
+                        }
+                    }
+                    
                     if (null === $agent || $agent === $serviceId) {
                         $priority = $tag['priority'] ?? 0;
                         $agentOutputProcessors[] = [$priority, new Reference($processorId)];
