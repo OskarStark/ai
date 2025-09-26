@@ -54,6 +54,8 @@ final readonly class Vectorizer implements VectorizerInterface
             $this->logger->debug('Sequential vectorization completed', ['vector_count' => \count($vectors)]);
         }
 
+        $vectors = array_values($vectors); // Ensure sequential numeric keys
+
         $vectorDocuments = [];
         foreach ($documents as $i => $document) {
             $vectorDocuments[] = new VectorDocument($document->id, $vectors[$i], $document->metadata);
