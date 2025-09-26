@@ -2383,8 +2383,8 @@ class AiBundleTest extends TestCase
         ];
     }
 
-    #[TestDox('Agent with tools disabled does not get tool processors applied')]
-    public function testAgentWithToolsDisabledDoesNotGetToolProcessors()
+    #[TestDox('Agent with tools disabled has tools disabled tag')]
+    public function testAgentWithToolsDisabledHasToolsDisabledTag()
     {
         $container = $this->buildContainer([
             'ai' => [
@@ -2393,6 +2393,23 @@ class AiBundleTest extends TestCase
                         'model' => ['class' => Gpt::class, 'name' => 'gpt-4'],
                         'tools' => false, // Tools explicitly disabled
                     ],
+                ],
+            ],
+        ]);
+
+        $disabledAgentId = 'ai.agent.agent_with_tools_disabled';
+
+        // Agent with tools disabled should have the tools disabled tag
+        $disabledAgentTags = $container->getDefinition($disabledAgentId)->getTags();
+        $this->assertArrayHasKey('ai.agent.tools_disabled', $disabledAgentTags);
+    }
+
+    #[TestDox('Agent with tools enabled does not have tools disabled tag')]
+    public function testAgentWithToolsEnabledDoesNotHaveToolsDisabledTag()
+    {
+        $container = $this->buildContainer([
+            'ai' => [
+                'agent' => [
                     'agent_with_tools_enabled' => [
                         'model' => ['class' => Gpt::class, 'name' => 'gpt-4'],
                         'tools' => true, // Tools explicitly enabled
@@ -2401,42 +2418,11 @@ class AiBundleTest extends TestCase
             ],
         ]);
 
-        $disabledAgentId = 'ai.agent.agent_with_tools_disabled';
         $enabledAgentId = 'ai.agent.agent_with_tools_enabled';
-
-        // Agent with tools disabled should have the tools disabled tag
-        $disabledAgentTags = $container->getDefinition($disabledAgentId)->getTags();
-        $this->assertArrayHasKey('ai.agent.tools_disabled', $disabledAgentTags);
 
         // Agent with tools enabled should not have the tools disabled tag
         $enabledAgentTags = $container->getDefinition($enabledAgentId)->getTags();
         $this->assertArrayNotHasKey('ai.agent.tools_disabled', $enabledAgentTags);
-
-        // Build the complete processor pass to ensure processors are correctly assigned
-        $pass = new \Symfony\AI\AiBundle\DependencyInjection\ProcessorCompilerPass();
-        $pass->process($container);
-
-        // Check that the agent with tools disabled has no tool processors
-        $disabledAgentDefinition = $container->getDefinition($disabledAgentId);
-        $disabledInputProcessors = $disabledAgentDefinition->getArgument(2);
-        $disabledOutputProcessors = $disabledAgentDefinition->getArgument(3);
-
-        // The agent should have minimal processors (no tool processors)
-        $this->assertIsArray($disabledInputProcessors);
-        $this->assertIsArray($disabledOutputProcessors);
-
-        // Check that the agent with tools enabled has tool processors
-        $enabledAgentDefinition = $container->getDefinition($enabledAgentId);
-        $enabledInputProcessors = $enabledAgentDefinition->getArgument(2);
-        $enabledOutputProcessors = $enabledAgentDefinition->getArgument(3);
-
-        // The enabled agent should have tool processors
-        $this->assertIsArray($enabledInputProcessors);
-        $this->assertIsArray($enabledOutputProcessors);
-        
-        // The enabled agent should have more processors than the disabled one
-        $this->assertGreaterThanOrEqual(count($disabledInputProcessors), count($enabledInputProcessors));
-        $this->assertGreaterThanOrEqual(count($disabledOutputProcessors), count($enabledOutputProcessors));
     }
 
     #[TestDox('Tools false configuration prevents global tool processors from being applied')]
