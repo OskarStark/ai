@@ -13,6 +13,7 @@ namespace Symfony\AI\Platform\Bridge\OpenAi\Gpt;
 
 use Symfony\AI\Platform\Bridge\OpenAi\Gpt;
 use Symfony\AI\Platform\Exception\AuthenticationException;
+use Symfony\AI\Platform\Exception\BadRequestException;
 use Symfony\AI\Platform\Exception\ContentFilterException;
 use Symfony\AI\Platform\Exception\RateLimitExceededException;
 use Symfony\AI\Platform\Exception\RuntimeException;
@@ -48,6 +49,11 @@ final class ResultConverter implements ResultConverterInterface
         if (401 === $response->getStatusCode()) {
             $errorMessage = json_decode($response->getContent(false), true)['error']['message'];
             throw new AuthenticationException($errorMessage);
+        }
+
+        if (400 === $response->getStatusCode()) {
+            $errorMessage = json_decode($response->getContent(false), true)['error']['message'] ?? 'Bad Request';
+            throw new BadRequestException($errorMessage);
         }
 
         if (429 === $response->getStatusCode()) {
