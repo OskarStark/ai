@@ -11,6 +11,7 @@
 
 namespace Symfony\AI\Platform\Bridge\ElevenLabs;
 
+use Symfony\AI\Platform\Capability;
 use Symfony\AI\Platform\Exception\InvalidArgumentException;
 use Symfony\AI\Platform\Model;
 use Symfony\AI\Platform\ModelClientInterface;
@@ -41,7 +42,7 @@ final readonly class ElevenLabsClient implements ModelClientInterface
             throw new InvalidArgumentException(\sprintf('The payload must be an array, received "%s".', get_debug_type($payload)));
         }
 
-        if (\in_array($model->getName(), [ElevenLabs::SCRIBE_V1, ElevenLabs::SCRIBE_V1_EXPERIMENTAL], true)) {
+        if ($model->supports(Capability::SPEECH_TO_TEXT)) {
             return $this->doSpeechToTextRequest($model, $payload);
         }
 
