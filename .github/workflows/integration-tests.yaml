@@ -106,6 +106,9 @@ jobs:
             - run: composer run-script auto-scripts --no-interaction
               working-directory: demo
 
+            - run: bin/console cache:clear
+              working-directory: demo
+
             - name: Run demo tests
               working-directory: demo
               run: vendor/bin/phpunit

@@ -11,6 +11,7 @@
 
 namespace Symfony\AI\Platform\Bridge\Cerebras;
 
+use Symfony\AI\Platform\Contract;
 use Symfony\AI\Platform\ModelCatalog\ModelCatalogInterface;
 use Symfony\AI\Platform\Platform;
 use Symfony\Component\HttpClient\EventSourceHttpClient;
@@ -25,6 +26,7 @@ final readonly class PlatformFactory
         #[\SensitiveParameter] string $apiKey,
         ?HttpClientInterface $httpClient = null,
         ModelCatalogInterface $modelCatalog = new ModelCatalog(),
+        ?Contract $contract = null,
     ): Platform {
         $httpClient = $httpClient instanceof EventSourceHttpClient ? $httpClient : new EventSourceHttpClient($httpClient);
 
@@ -32,6 +34,7 @@ final readonly class PlatformFactory
             [new ModelClient($httpClient, $apiKey)],
             [new ResultConverter()],
             $modelCatalog,
+            $contract,
         );
     }
 }
