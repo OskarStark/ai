@@ -20,7 +20,7 @@ $platform = PlatformFactory::create(env('CEREBRAS_API_KEY'), http_client());
 
 $messages = new MessageBag(
     Message::forSystem('You are a helpful assistant.'),
-    Message::ofUser('How is the weather in Tokyo today?'),
+    Message::ofUser('What is the capital of Japan?'),
 );
 $result = $platform->invoke(new Model(Model::LLAMA3_1_8B), $messages);
 
