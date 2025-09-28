@@ -11,6 +11,7 @@
 
 namespace Symfony\AI\Platform\Bridge\Bedrock\Anthropic;
 
+use Symfony\AI\Platform\Bridge\Anthropic\Claude;
 use Symfony\AI\Platform\Bridge\Bedrock\RawBedrockResult;
 use Symfony\AI\Platform\Exception\RuntimeException;
 use Symfony\AI\Platform\Model;

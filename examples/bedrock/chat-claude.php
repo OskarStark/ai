@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-use Symfony\AI\Platform\Bridge\Bedrock\Anthropic\Claude;
+use Symfony\AI\Platform\Bridge\Anthropic\Claude;
 use Symfony\AI\Platform\Bridge\Bedrock\PlatformFactory;
 use Symfony\AI\Platform\Message\Message;
 use Symfony\AI\Platform\Message\MessageBag;
