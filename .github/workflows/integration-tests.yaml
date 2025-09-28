@@ -106,7 +106,7 @@ jobs:
             - run: composer run-script auto-scripts --no-interaction
               working-directory: demo
 
-            - run: bin/console cache:clear
+            - run: bin/console lint:container
               working-directory: demo
 
             - name: Run demo tests
