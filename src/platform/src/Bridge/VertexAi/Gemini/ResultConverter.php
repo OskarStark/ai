@@ -129,12 +129,15 @@ final readonly class ResultConverter implements ResultConverterInterface
     {
         $contentParts = $choice['content']['parts'];
 
-        if (1 === \count($contentParts)) {
-            $contentPart = $contentParts[0];
-
+        // If any part is a function call, return it immediately and ignore all other parts.
+        foreach ($contentParts as $contentPart) {
             if (isset($contentPart['functionCall'])) {
                 return new ToolCallResult($this->convertToolCall($contentPart['functionCall']));
             }
+        }
+
+        if (1 === \count($contentParts)) {
+            $contentPart = $contentParts[0];
 
             if (isset($contentPart['text'])) {
                 return new TextResult($contentPart['text']);

@@ -23,7 +23,7 @@ $platform = PlatformFactory::create(env('GOOGLE_CLOUD_LOCATION'), env('GOOGLE_CL
 
 $toolbox = new Toolbox([new Clock()], logger: logger());
 $processor = new AgentProcessor($toolbox);
-$agent = new Agent($platform, 'gemini-2.0-flash-lite', [$processor], [$processor], logger: logger());
+$agent = new Agent($platform, 'gemini-2.5-flash-lite', [$processor], [$processor], logger: logger());
 
 $messages = new MessageBag(Message::ofUser('What time is it?'));
 $result = $agent->call($messages);
