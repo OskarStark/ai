@@ -66,10 +66,11 @@ final class MultiAgent implements AgentInterface
     {
         $userMessages = $messages->withoutSystemMessage();
 
-        $userText = $userMessages->getUserMessageText();
-        if (null === $userText) {
+        $userMessage = $userMessages->getUserMessage();
+        if (null === $userMessage) {
             throw new RuntimeException('No user message found in conversation.');
         }
+        $userText = $userMessage->asText();
         $this->logger->debug('MultiAgent: Processing user message', ['user_text' => $userText]);
 
         $this->logger->debug('MultiAgent: Available agents for routing', ['agents' => array_map(fn ($handoff) => [
@@ -119,11 +120,6 @@ final class MultiAgent implements AgentInterface
         }
 
         $this->logger->debug('MultiAgent: Delegating to agent', ['agent_name' => $decision->agentName]);
-
-        $userMessage = $userMessages->getUserMessage();
-        if (null === $userMessage) {
-            throw new RuntimeException('No user message found in conversation.');
-        }
 
         // Call the selected agent with the original user question
         return $targetAgent->call(new MessageBag($userMessage), $options);

@@ -353,7 +353,8 @@ class MultiAgentTest extends TestCase
             ->method('call')
             ->with(
                 $this->callback(function (MessageBag $messages) {
-                    $text = $messages->getUserMessageText();
+                    $userMessage = $messages->getUserMessage();
+                    $text = $userMessage?->asText();
 
                     return str_contains($text, 'general-fallback: fallback agent for general/unmatched queries');
                 }),
