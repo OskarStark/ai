@@ -331,6 +331,24 @@ to skip the next LLM call by setting a result yourself::
         }
     });
 
+Tool Call Lifecycle Events
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you need to react more granularly to the lifecycle of individual tool calls, you can listen to the
+``ToolCallArgumentsResolved``, ``ToolCallSucceeded`` and ``ToolCallFailed`` events. These are dispatched at different stages::
+
+    $eventDispatcher->addListener(ToolCallArgumentsResolved::class, function (ToolCallArgumentsResolved $event): void {
+        // Let the client know, that the tool $event->toolCall->name was executed
+    });
+
+    $eventDispatcher->addListener(ToolCallSucceeded::class, function (ToolCallSucceeded $event): void {
+        // Let the client know, that the tool $event->toolCall->name successfully returned the result $event->result
+    });
+
+    $eventDispatcher->addListener(ToolCallFailed::class, function (ToolCallFailed $event): void {
+        // Let the client know, that the tool $event->toolCall->name failed with the exception: $event->exception
+    });
+
 Keeping Tool Messages
 ~~~~~~~~~~~~~~~~~~~~~
 
