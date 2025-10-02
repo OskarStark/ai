@@ -17,6 +17,7 @@ use Symfony\AI\Agent\Exception\RuntimeException;
 use Symfony\AI\Agent\Input;
 use Symfony\AI\Agent\InputProcessorInterface;
 use Symfony\AI\Agent\Toolbox\ToolboxInterface;
+use Symfony\AI\Platform\Message\Content\File;
 use Symfony\AI\Platform\Message\Message;
 use Symfony\AI\Platform\Tool\Tool;
 use Symfony\Contracts\Translation\TranslatableInterface;
@@ -28,11 +29,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final readonly class SystemPromptInputProcessor implements InputProcessorInterface
 {
     /**
-     * @param \Stringable|TranslatableInterface|string $systemPrompt the system prompt to prepend to the input messages
-     * @param ToolboxInterface|null                    $toolbox      the tool box to be used to append the tool definitions to the system prompt
+     * @param \Stringable|TranslatableInterface|string|File $systemPrompt the system prompt to prepend to the input messages, or a File object to read from
+     * @param ToolboxInterface|null                         $toolbox      the tool box to be used to append the tool definitions to the system prompt
      */
     public function __construct(
-        private \Stringable|TranslatableInterface|string $systemPrompt,
+        private \Stringable|TranslatableInterface|string|File $systemPrompt,
         private ?ToolboxInterface $toolbox = null,
         private ?TranslatorInterface $translator = null,
         private LoggerInterface $logger = new NullLogger(),
@@ -52,9 +53,13 @@ final readonly class SystemPromptInputProcessor implements InputProcessorInterfa
             return;
         }
 
-        $message = $this->systemPrompt instanceof TranslatableInterface
-            ? $this->systemPrompt->trans($this->translator)
-            : (string) $this->systemPrompt;
+        if ($this->systemPrompt instanceof File) {
+            $message = $this->systemPrompt->asBinary();
+        } elseif ($this->systemPrompt instanceof TranslatableInterface) {
+            $message = $this->systemPrompt->trans($this->translator);
+        } else {
+            $message = (string) $this->systemPrompt;
+        }
 
         if ($this->toolbox instanceof ToolboxInterface
             && [] !== $this->toolbox->getTools()

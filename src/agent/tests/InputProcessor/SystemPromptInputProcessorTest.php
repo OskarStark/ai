@@ -18,6 +18,7 @@ use Symfony\AI\Agent\Toolbox\ToolboxInterface;
 use Symfony\AI\Fixtures\Tool\ToolNoParams;
 use Symfony\AI\Fixtures\Tool\ToolRequiredParams;
 use Symfony\AI\Platform\Bridge\OpenAi\Gpt;
+use Symfony\AI\Platform\Message\Content\File;
 use Symfony\AI\Platform\Message\Message;
 use Symfony\AI\Platform\Message\MessageBag;
 use Symfony\AI\Platform\Message\SystemMessage;
@@ -219,6 +220,49 @@ final class SystemPromptInputProcessorTest extends TestCase
             null,
             null,
         );
+    }
+
+    public function testProcessInputWithFile()
+    {
+        $tempFile = tempnam(sys_get_temp_dir(), 'prompt_');
+        file_put_contents($tempFile, 'This is a system prompt from a file');
+
+        try {
+            $file = File::fromFile($tempFile);
+            $processor = new SystemPromptInputProcessor($file);
+
+            $input = new Input(new Gpt('gpt-4o'), new MessageBag(Message::ofUser('This is a user message')));
+            $processor->processInput($input);
+
+            $messages = $input->messages->getMessages();
+            $this->assertCount(2, $messages);
+            $this->assertInstanceOf(SystemMessage::class, $messages[0]);
+            $this->assertInstanceOf(UserMessage::class, $messages[1]);
+            $this->assertSame('This is a system prompt from a file', $messages[0]->content);
+        } finally {
+            unlink($tempFile);
+        }
+    }
+
+    public function testProcessInputWithMultilineFile()
+    {
+        $tempFile = tempnam(sys_get_temp_dir(), 'prompt_');
+        file_put_contents($tempFile, "Line 1\nLine 2\nLine 3");
+
+        try {
+            $file = File::fromFile($tempFile);
+            $processor = new SystemPromptInputProcessor($file);
+
+            $input = new Input(new Gpt('gpt-4o'), new MessageBag(Message::ofUser('This is a user message')));
+            $processor->processInput($input);
+
+            $messages = $input->messages->getMessages();
+            $this->assertCount(2, $messages);
+            $this->assertInstanceOf(SystemMessage::class, $messages[0]);
+            $this->assertSame("Line 1\nLine 2\nLine 3", $messages[0]->content);
+        } finally {
+            unlink($tempFile);
+        }
     }
 
     private function getTranslator(): TranslatorInterface
