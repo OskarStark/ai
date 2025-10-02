@@ -58,15 +58,11 @@ final class ResultConverter implements ResultConverterInterface
 
         if (429 === $response->getStatusCode()) {
             $headers = $response->getHeaders(false);
-            $resetTime = null;
+            $resetTime = $headers['x-ratelimit-reset-requests'][0]
+                ?? $headers['x-ratelimit-reset-tokens'][0]
+                ?? null;
 
-            if (isset($headers['x-ratelimit-reset-requests'][0])) {
-                $resetTime = self::parseResetTime($headers['x-ratelimit-reset-requests'][0]);
-            } elseif (isset($headers['x-ratelimit-reset-tokens'][0])) {
-                $resetTime = self::parseResetTime($headers['x-ratelimit-reset-tokens'][0]);
-            }
-
-            throw new RateLimitExceededException($resetTime);
+            throw new RateLimitExceededException($resetTime ? self::parseResetTime($resetTime) : null);
         }
 
         if ($options['stream'] ?? false) {
@@ -221,16 +217,15 @@ final class ResultConverter implements ResultConverterInterface
      * - "6m0s"
      * - "2m30s"
      */
-    private static function parseResetTime(string $resetTime): float
+    private static function parseResetTime(string $resetTime): ?int
     {
-        $seconds = 0;
-
         if (preg_match('/^(?:(\d+)m)?(?:(\d+)s)?$/', $resetTime, $matches)) {
             $minutes = isset($matches[1]) ? (int) $matches[1] : 0;
             $secs = isset($matches[2]) ? (int) $matches[2] : 0;
-            $seconds = ($minutes * 60) + $secs;
+
+            return ($minutes * 60) + $secs;
         }
 
-        return (float) $seconds;
+        return null;
     }
 }

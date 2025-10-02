@@ -42,7 +42,7 @@ class ResultConverter implements ResultConverterInterface
 
         if (429 === $response->getStatusCode()) {
             $retryAfter = $response->getHeaders(false)['retry-after'][0] ?? null;
-            $retryAfterValue = $retryAfter ? (float) $retryAfter : null;
+            $retryAfterValue = $retryAfter ? (int) $retryAfter : null;
             throw new RateLimitExceededException($retryAfterValue);
         }
 
