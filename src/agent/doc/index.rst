@@ -49,7 +49,8 @@ array of options::
 
 The structure of the input message bag is flexible, see `Platform Component`_ for more details on how to use it.
 
-**Options**
+Options
+~~~~~~~
 
 As with the Platform component, you can pass options to the agent when running it. These options configure the agent's
 behavior, for example available tools to execute, or are forwarded to the underlying platform and model.
@@ -88,12 +89,14 @@ Custom tools can basically be any class, but must configure by the ``#[AsTool]``
         }
     }
 
-**Tool Return Value**
+Tool Return Value
+~~~~~~~~~~~~~~~~~
 
 In the end, the tool's result needs to be a string, but Symfony AI converts arrays and objects, that implement the
 JsonSerializable interface, to JSON strings for you. So you can return arrays or objects directly from your tool.
 
-**Tool Methods**
+Tool Methods
+~~~~~~~~~~~~
 
 You can configure the method to be called by the LLM with the #[AsTool] attribute and have multiple tools per class::
 
@@ -122,13 +125,15 @@ You can configure the method to be called by the LLM with the #[AsTool] attribut
         }
     }
 
-**Tool Parameters**
+Tool Parameters
+~~~~~~~~~~~~~~~
 
 Symfony AI generates a JSON Schema representation for all tools in the Toolbox based on the #[AsTool] attribute and
 method arguments and param comments in the doc block. Additionally, JSON Schema support validation rules, which are
 partially support by LLMs like GPT.
 
-**Parameter Validation with #[With] Attribute**
+Parameter Validation with #[With] Attribute
+...........................................
 
 To leverage JSON Schema validation rules, configure the ``#[With]`` attribute on the method arguments of your tool::
 
@@ -157,7 +162,8 @@ To leverage JSON Schema validation rules, configure the ``#[With]`` attribute on
 
 See attribute class ``Symfony\AI\Platform\Contract\JsonSchema\Attribute\With`` for all available options.
 
-**Automatic Enum Validation**
+Automatic Enum Validation
+.........................
 
 For PHP backed enums, Symfony AI provides automatic validation without requiring any ``#[With]`` attributes::
 
@@ -201,7 +207,8 @@ This eliminates the need for manual ``#[With(enum: [...])]`` attributes when usi
 
     Please be aware, that this is only converted in a JSON Schema for the LLM to respect, but not validated by Symfony AI.
 
-**Third-Party Tools**
+Third-Party Tools
+~~~~~~~~~~~~~~~~~
 
 In some cases you might want to use third-party tools, which are not part of your application. Adding the ``#[AsTool]``
 attribute to the class is not possible in those cases, but you can explicitly register the tool in the MemoryFactory::
@@ -235,7 +242,8 @@ tools in the same chain - which even enables you to overwrite the pre-existing c
 
     The order of the factories in the ChainFactory matters, as the first factory has the highest priority.
 
-**Agent uses Agent 🤯**
+Agent uses Agent 🤯
+~~~~~~~~~~~~~~~~~~
 
 Similar to third-party tools, an agent can also use an different agent as a tool. This can be useful to encapsulate
 complex logic or to reuse an agent in multiple places or hide sub-agents from the LLM::
@@ -251,7 +259,8 @@ complex logic or to reuse an agent in multiple places or hide sub-agents from th
         ->addTool($agentTool, 'research_agent', 'Meaningful description for sub-agent');
     $toolbox = new Toolbox($metadataFactory, [$agentTool]);
 
-**Fault Tolerance**
+Fault Tolerance
+~~~~~~~~~~~~~~~
 
 To gracefully handle errors that occur during tool calling, e.g. wrong tool names or runtime errors, you can use the
 ``FaultTolerantToolbox`` as a decorator for the Toolbox. It will catch the exceptions and return readable error messages
@@ -299,14 +308,16 @@ If you want to expose the underlying error to the LLM, you can throw a custom ex
         }
     }
 
-**Tool Filtering**
+Tool Filtering
+~~~~~~~~~~~~~~
 
 To limit the tools provided to the LLM in a specific agent call to a subset of the configured tools, you can use the
 tools option with a list of tool names::
 
     $this->agent->call($messages, ['tools' => ['tavily_search']]);
 
-**Tool Result Interception**
+Tool Result Interception
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 To react to the result of a tool, you can implement an EventListener or EventSubscriber, that listens to the
 ``ToolCallsExecuted`` event. This event is dispatched after the Toolbox executed all current tool calls and enables you
@@ -320,7 +331,8 @@ to skip the next LLM call by setting a result yourself::
         }
     });
 
-**Keeping Tool Messages**
+Keeping Tool Messages
+~~~~~~~~~~~~~~~~~~~~~
 
 Sometimes you might wish to keep the tool messages (AssistantMessage containing the toolCalls and ToolCallMessage
 containing the result) in the context. Enable the keepToolMessages flag of the toolbox' AgentProcessor to ensure those
@@ -347,7 +359,8 @@ messages will be added to your MessageBag::
     $result = $agent->call($messages);
     // $messages will now include the tool messages
 
-**Code Examples (with built-in tools)**
+Code Examples (with built-in tools)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * `Brave Tool`_
 * `Clock Tool`_
@@ -391,7 +404,8 @@ more accurate and context-aware results. Therefore, the component provides a bui
     );
     $result = $agent->call($messages);
 
-**Code Examples**
+Code Examples
+~~~~~~~~~~~~~
 
 * `RAG with MongoDB`_
 * `RAG with Pinecone`_
@@ -400,9 +414,10 @@ Structured Output
 -----------------
 
 A typical use-case of LLMs is to classify and extract data from unstructured sources, which is supported by some models
-by features like **Structured Output** or providing a **Response Format**.
+by features like Structured Output or providing a Response Format.
 
-**PHP Classes as Output**
+PHP Classes as Output
+~~~~~~~~~~~~~~~~~~~~~
 
 Symfony AI supports that use-case by abstracting the hustle of defining and providing schemas to the LLM and converting
 the result back to PHP objects.
@@ -433,7 +448,8 @@ To achieve this, a specific agent processor needs to be registered::
 
     dump($result->getContent()); // returns an instance of `MathReasoning` class
 
-**Array Structures as Output**
+Array Structures as Output
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Also PHP array structures as response_format are supported, which also requires the agent processor mentioned above::
 
@@ -462,7 +478,8 @@ Also PHP array structures as response_format are supported, which also requires 
 
     dump($result->getContent()); // returns an array
 
-**Code Examples**
+Code Examples
+~~~~~~~~~~~~~
 
 * `Structured Output with PHP class`_
 * `Structured Output with array`_
@@ -479,7 +496,8 @@ They are provided while instantiating the agent instance::
 
     $agent = new Agent($platform, $model, $inputProcessors, $outputProcessors);
 
-**InputProcessor**
+InputProcessor
+~~~~~~~~~~~~~~
 
 InputProcessor instances are called in the agent before handing over the MessageBag and the $options array to the LLM
 and are able to mutate both on top of the Input instance provided::
@@ -502,7 +520,8 @@ and are able to mutate both on top of the Input instance provided::
         }
     }
 
-**OutputProcessor**
+OutputProcessor
+~~~~~~~~~~~~~~~
 
 OutputProcessor instances are called after the model provided a result and can - on top of options and messages - mutate
 or replace the given result::
@@ -521,7 +540,8 @@ or replace the given result::
         }
     }
 
-**Agent Awareness**
+Agent Awareness
+~~~~~~~~~~~~~~~
 
 Both, Input and Output instances, provide access to the LLM used by the agent, but the agent itself is only provided,
 in case the processor implemented the AgentAwareInterface interface, which can be combined with using the
@@ -551,7 +571,7 @@ relevant information from different sources. Memory providers inject information
 model with context without changing your application logic.
 
 Using Memory
-~~~~~~~~~~~~
+^^^^^^^^^^^^
 
 Memory integration is handled through the ``MemoryInputProcessor`` and one or more ``MemoryProviderInterface`` implementations::
 
@@ -575,11 +595,12 @@ Memory integration is handled through the ``MemoryInputProcessor`` and one or mo
     $result = $agent->call($messages);
 
 Memory Providers
-~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^
 
 The library includes several memory provider implementations that are ready to use out of the box.
 
-**Static Memory**
+Static Memory
+.............
 
 Static memory provides fixed information to the agent, such as user preferences, application context, or any other
 information that should be consistently available without being directly added to the system prompt::
@@ -591,7 +612,8 @@ information that should be consistently available without being directly added t
         'The user prefers brief explanations',
     );
 
-**Embedding Provider**
+Embedding Provider
+..................
 
 This provider leverages vector storage to inject relevant knowledge based on the user's current message. It can be used
 for retrieving general knowledge from a store or recalling past conversation pieces that might be relevant::
@@ -605,7 +627,7 @@ for retrieving general knowledge from a store or recalling past conversation pie
     );
 
 Dynamic Memory Control
-~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^
 
 Memory is globally configured for the agent, but you can selectively disable it for specific calls when needed. This is
 useful when certain interactions shouldn't be influenced by the memory context::
@@ -619,7 +641,7 @@ Testing
 -------
 
 MockAgent
-~~~~~~~~~
+^^^^^^^^^
 
 For testing purposes, the Agent component provides a ``MockAgent`` class that behaves like Symfony's ``MockHttpClient``.
 It provides predictable responses without making external API calls and includes assertion methods for verifying interactions::
@@ -652,7 +674,7 @@ Call Tracking and Assertions::
     $agent->reset();
 
 MockResponse Objects
-~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^
 
 Similar to ``MockHttpClient``, you can use ``MockResponse`` objects for more complex scenarios::
 
@@ -665,7 +687,7 @@ Similar to ``MockHttpClient``, you can use ``MockResponse`` objects for more com
     ]);
 
 Callable Responses
-~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
 
 Like ``MockHttpClient``, ``MockAgent`` supports callable responses for dynamic behavior::
 
@@ -684,7 +706,7 @@ Like ``MockHttpClient``, ``MockAgent`` supports callable responses for dynamic b
 
 
 Service Testing Example
-~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^
 
 Testing a service that uses an agent::
 
@@ -708,7 +730,8 @@ Testing a service that uses an agent::
 The ``MockAgent`` provides all the benefits of traditional mocks while offering a more intuitive API for AI agent testing,
 making your tests more reliable and easier to maintain.
 
-**Code Examples**
+Code Examples
+~~~~~~~~~~~~~
 
 * `Chat with static memory`_
 * `Chat with embedding search memory`_

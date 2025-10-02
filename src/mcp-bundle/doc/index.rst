@@ -3,7 +3,7 @@ MCP Bundle
 
 Symfony integration bundle for `Model Context Protocol`_ using the official MCP SDK `mcp/sdk`_.
 
-**Supports MCP capabilities (tools, prompts, resources) as server via HTTP transport and STDIO. Resource templates implementation ready but awaiting MCP SDK support.**
+Supports MCP capabilities (tools, prompts, resources) as server via HTTP transport and STDIO. Resource templates implementation ready but awaiting MCP SDK support.
 
 Installation
 ------------
@@ -18,16 +18,21 @@ Usage
 At first, you need to decide whether your application should act as a MCP server or client. Both can be configured in
 the ``mcp`` section of your ``config/packages/mcp.yaml`` file.
 
-**Act as Server**
+Act as Server
+~~~~~~~~~~~~~
 
 To use your application as an MCP server, exposing tools, prompts, resources, and resource templates to clients like `Claude Desktop`_, you need to configure in the
 ``client_transports`` section the transports you want to expose to clients. You can use either STDIO or HTTP.
 
-**Creating MCP Capabilities**
+Creating MCP Capabilities
+.........................
 
 MCP capabilities are automatically discovered using PHP attributes.
 
-**Tools** - Actions that can be executed::
+Tools
+^^^^^
+
+Actions that can be executed::
 
     use Mcp\Capability\Attribute\McpTool;
 
@@ -40,7 +45,10 @@ MCP capabilities are automatically discovered using PHP attributes.
         }
     }
 
-**Prompts** - System instructions for AI context::
+Prompts
+^^^^^^^
+
+System instructions for AI context::
 
     use Mcp\Capability\Attribute\McpPrompt;
 
@@ -55,7 +63,10 @@ MCP capabilities are automatically discovered using PHP attributes.
         }
     }
 
-**Resources** - Static data that can be read::
+Resources
+^^^^^^^^^
+
+Static data that can be read::
 
     use Mcp\Capability\Attribute\McpResource;
 
@@ -72,7 +83,10 @@ MCP capabilities are automatically discovered using PHP attributes.
         }
     }
 
-**Resource Templates** - Dynamic resources with parameters:
+Resource Templates
+^^^^^^^^^^^^^^^^^^
+
+Dynamic resources with parameters:
 
 .. note::
 
@@ -99,7 +113,8 @@ MCP capabilities are automatically discovered using PHP attributes.
 
 All capabilities are automatically discovered in the ``src/`` directory when the server starts.
 
-**Transport Types**
+Transport Types
+...............
 
 The MCP Bundle supports two transport types for server communication:
 
@@ -113,8 +128,8 @@ The HTTP transport uses the MCP SDK's ``StreamableHttpTransport`` which supports
 - CORS headers for cross-origin requests
 - Proper MCP initialization handshake
 
-
-**Act as Client**
+Act as Client
+~~~~~~~~~~~~~
 
 .. warning::
 
@@ -209,7 +224,8 @@ Event System
 The MCP Bundle automatically configures the Symfony EventDispatcher to work with the MCP SDK's event system.
 This allows you to listen for changes to your server's capabilities.
 
-**Available Events**
+Available Events
+~~~~~~~~~~~~~~~~
 
 The MCP SDK dispatches the following events when capabilities are registered:
 
@@ -218,7 +234,8 @@ The MCP SDK dispatches the following events when capabilities are registered:
 - ``Mcp\Event\ResourceTemplateListChangedEvent`` - When a resource template is registered
 - ``Mcp\Event\PromptListChangedEvent`` - When a prompt is registered
 
-**Listening to Events**
+Listening to Events
+~~~~~~~~~~~~~~~~~~~
 
 You can create event listeners to respond to capability changes::
 
