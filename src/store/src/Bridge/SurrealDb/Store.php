@@ -25,7 +25,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 /**
  * @author Guillaume Loulier <personal@guillaumeloulier.fr>
  */
-final class Store implements ManagedStoreInterface, StoreInterface
+class Store implements ManagedStoreInterface, StoreInterface
 {
     private string $authenticationToken = '';
 

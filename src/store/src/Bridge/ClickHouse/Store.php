@@ -25,12 +25,12 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 /**
  * @author Grégoire Pineau <lyrixx@lyrixx.info>
  */
-final readonly class Store implements ManagedStoreInterface, StoreInterface
+class Store implements ManagedStoreInterface, StoreInterface
 {
     public function __construct(
-        private HttpClientInterface $httpClient,
-        private string $databaseName = 'default',
-        private string $tableName = 'embedding',
+        private readonly HttpClientInterface $httpClient,
+        private readonly string $databaseName = 'default',
+        private readonly string $tableName = 'embedding',
     ) {
     }
 
