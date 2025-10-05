@@ -21,7 +21,7 @@ require_once __DIR__.'/bootstrap.php';
 $platform = PlatformFactory::create(env('GOOGLE_CLOUD_LOCATION'), env('GOOGLE_CLOUD_PROJECT'), adc_aware_http_client());
 
 $processor = new AgentProcessor();
-$agent = new Agent($platform, 'gemini-2.5-flash-lite', [$processor], [$processor], logger: logger());
+$agent = new Agent($platform, 'gemini-2.5-flash-lite', [$processor], [$processor]);
 $messages = new MessageBag(
     Message::forSystem('You are a helpful math tutor. Guide the user through the solution step by step.'),
     Message::ofUser('how can I solve 8x + 7 = -23'),

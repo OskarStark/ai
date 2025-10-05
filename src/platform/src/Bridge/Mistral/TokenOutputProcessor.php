@@ -24,17 +24,17 @@ final class TokenOutputProcessor implements OutputProcessorInterface
 {
     public function processOutput(Output $output): void
     {
-        if ($output->result instanceof StreamResult) {
+        if ($output->getResult() instanceof StreamResult) {
             // Streams have to be handled manually as the tokens are part of the streamed chunks
             return;
         }
 
-        $rawResponse = $output->result->getRawResult()?->getObject();
+        $rawResponse = $output->getResult()->getRawResult()?->getObject();
         if (!$rawResponse instanceof ResponseInterface) {
             return;
         }
 
-        $metadata = $output->result->getMetadata();
+        $metadata = $output->getResult()->getMetadata();
         $headers = $rawResponse->getHeaders(false);
 
         $remainingTokensMinute = $headers['x-ratelimit-limit-tokens-minute'][0] ?? null;

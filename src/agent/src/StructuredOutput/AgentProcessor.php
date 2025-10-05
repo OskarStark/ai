@@ -17,7 +17,6 @@ use Symfony\AI\Agent\Input;
 use Symfony\AI\Agent\InputProcessorInterface;
 use Symfony\AI\Agent\Output;
 use Symfony\AI\Agent\OutputProcessorInterface;
-use Symfony\AI\Platform\Capability;
 use Symfony\AI\Platform\Result\ObjectResult;
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
@@ -74,10 +73,6 @@ final class AgentProcessor implements InputProcessorInterface, OutputProcessorIn
             return;
         }
 
-        if (!$input->model->supports(Capability::OUTPUT_STRUCTURED)) {
-            throw MissingModelSupportException::forStructuredOutput($input->model::class);
-        }
-
         if (true === ($options['stream'] ?? false)) {
             throw new InvalidArgumentException('Streamed responses are not supported for structured output.');
         }
@@ -92,9 +87,9 @@ final class AgentProcessor implements InputProcessorInterface, OutputProcessorIn
 
     public function processOutput(Output $output): void
     {
-        $options = $output->options;
+        $options = $output->getOptions();
 
-        if ($output->result instanceof ObjectResult) {
+        if ($output->getResult() instanceof ObjectResult) {
             return;
         }
 
@@ -103,22 +98,22 @@ final class AgentProcessor implements InputProcessorInterface, OutputProcessorIn
         }
 
         if (!isset($this->outputStructure)) {
-            $output->result = new ObjectResult(json_decode($output->result->getContent(), true));
+            $output->setResult(new ObjectResult(json_decode($output->getResult()->getContent(), true)));
 
             return;
         }
 
-        $originalResult = $output->result;
-        $output->result = new ObjectResult(
-            $this->serializer->deserialize($output->result->getContent(), $this->outputStructure, 'json')
-        );
+        $originalResult = $output->getResult();
+        $output->setResult(new ObjectResult(
+            $this->serializer->deserialize($output->getResult()->getContent(), $this->outputStructure, 'json')
+        ));
 
         if ($originalResult->getMetadata()->count() > 0) {
-            $output->result->getMetadata()->set($originalResult->getMetadata()->all());
+            $output->getResult()->getMetadata()->set($originalResult->getMetadata()->all());
         }
 
         if (null !== $originalResult->getRawResult()) {
-            $output->result->setRawResult($originalResult->getRawResult());
+            $output->getResult()->setRawResult($originalResult->getRawResult());
         }
     }
 }

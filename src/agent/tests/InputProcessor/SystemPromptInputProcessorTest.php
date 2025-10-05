@@ -17,7 +17,6 @@ use Symfony\AI\Agent\InputProcessor\SystemPromptInputProcessor;
 use Symfony\AI\Agent\Toolbox\ToolboxInterface;
 use Symfony\AI\Fixtures\Tool\ToolNoParams;
 use Symfony\AI\Fixtures\Tool\ToolRequiredParams;
-use Symfony\AI\Platform\Bridge\OpenAi\Gpt;
 use Symfony\AI\Platform\Message\Content\File;
 use Symfony\AI\Platform\Message\Message;
 use Symfony\AI\Platform\Message\MessageBag;
@@ -35,10 +34,10 @@ final class SystemPromptInputProcessorTest extends TestCase
     {
         $processor = new SystemPromptInputProcessor('This is a system prompt');
 
-        $input = new Input(new Gpt('gpt-4o'), new MessageBag(Message::ofUser('This is a user message')));
+        $input = new Input('gpt-4o', new MessageBag(Message::ofUser('This is a user message')));
         $processor->processInput($input);
 
-        $messages = $input->messages->getMessages();
+        $messages = $input->getMessageBag()->getMessages();
         $this->assertCount(2, $messages);
         $this->assertInstanceOf(SystemMessage::class, $messages[0]);
         $this->assertInstanceOf(UserMessage::class, $messages[1]);
@@ -53,10 +52,10 @@ final class SystemPromptInputProcessorTest extends TestCase
             Message::forSystem('This is already a system prompt'),
             Message::ofUser('This is a user message'),
         );
-        $input = new Input(new Gpt('gpt-4o'), $messages);
+        $input = new Input('gpt-4o', $messages);
         $processor->processInput($input);
 
-        $messages = $input->messages->getMessages();
+        $messages = $input->getMessageBag()->getMessages();
         $this->assertCount(2, $messages);
         $this->assertInstanceOf(SystemMessage::class, $messages[0]);
         $this->assertInstanceOf(UserMessage::class, $messages[1]);
@@ -80,10 +79,10 @@ final class SystemPromptInputProcessorTest extends TestCase
             },
         );
 
-        $input = new Input(new Gpt('gpt-4o'), new MessageBag(Message::ofUser('This is a user message')));
+        $input = new Input('gpt-4o', new MessageBag(Message::ofUser('This is a user message')));
         $processor->processInput($input);
 
-        $messages = $input->messages->getMessages();
+        $messages = $input->getMessageBag()->getMessages();
         $this->assertCount(2, $messages);
         $this->assertInstanceOf(SystemMessage::class, $messages[0]);
         $this->assertInstanceOf(UserMessage::class, $messages[1]);
@@ -119,10 +118,10 @@ final class SystemPromptInputProcessorTest extends TestCase
             $this->getTranslator(),
         );
 
-        $input = new Input(new Gpt('gpt-4o'), new MessageBag(Message::ofUser('This is a user message')));
+        $input = new Input('gpt-4o', new MessageBag(Message::ofUser('This is a user message')));
         $processor->processInput($input);
 
-        $messages = $input->messages->getMessages();
+        $messages = $input->getMessageBag()->getMessages();
         $this->assertCount(2, $messages);
         $this->assertInstanceOf(SystemMessage::class, $messages[0]);
         $this->assertInstanceOf(UserMessage::class, $messages[1]);
@@ -161,10 +160,10 @@ final class SystemPromptInputProcessorTest extends TestCase
             },
         );
 
-        $input = new Input(new Gpt('gpt-4o'), new MessageBag(Message::ofUser('This is a user message')));
+        $input = new Input('gpt-4o', new MessageBag(Message::ofUser('This is a user message')));
         $processor->processInput($input);
 
-        $messages = $input->messages->getMessages();
+        $messages = $input->getMessageBag()->getMessages();
         $this->assertCount(2, $messages);
         $this->assertInstanceOf(SystemMessage::class, $messages[0]);
         $this->assertInstanceOf(UserMessage::class, $messages[1]);
@@ -184,10 +183,10 @@ final class SystemPromptInputProcessorTest extends TestCase
     {
         $processor = new SystemPromptInputProcessor(new TranslatableMessage('This is a'), null, $this->getTranslator());
 
-        $input = new Input(new Gpt('gpt-4o'), new MessageBag(Message::ofUser('This is a user message')), []);
+        $input = new Input('gpt-4o', new MessageBag(Message::ofUser('This is a user message')), []);
         $processor->processInput($input);
 
-        $messages = $input->messages->getMessages();
+        $messages = $input->getMessageBag()->getMessages();
         $this->assertCount(2, $messages);
         $this->assertInstanceOf(SystemMessage::class, $messages[0]);
         $this->assertInstanceOf(UserMessage::class, $messages[1]);
@@ -202,10 +201,10 @@ final class SystemPromptInputProcessorTest extends TestCase
             $this->getTranslator(),
         );
 
-        $input = new Input(new Gpt('gpt-4o'), new MessageBag(), []);
+        $input = new Input('gpt-4o', new MessageBag(), []);
         $processor->processInput($input);
 
-        $messages = $input->messages->getMessages();
+        $messages = $input->getMessageBag()->getMessages();
         $this->assertCount(1, $messages);
         $this->assertInstanceOf(SystemMessage::class, $messages[0]);
         $this->assertSame('This is a cool translated system prompt with a translation domain', $messages[0]->content);
@@ -231,10 +230,10 @@ final class SystemPromptInputProcessorTest extends TestCase
             $file = File::fromFile($tempFile);
             $processor = new SystemPromptInputProcessor($file);
 
-            $input = new Input(new Gpt('gpt-4o'), new MessageBag(Message::ofUser('This is a user message')));
+            $input = new Input('gpt-4o', new MessageBag(Message::ofUser('This is a user message')));
             $processor->processInput($input);
 
-            $messages = $input->messages->getMessages();
+            $messages = $input->getMessageBag()->getMessages();
             $this->assertCount(2, $messages);
             $this->assertInstanceOf(SystemMessage::class, $messages[0]);
             $this->assertInstanceOf(UserMessage::class, $messages[1]);
@@ -253,10 +252,10 @@ final class SystemPromptInputProcessorTest extends TestCase
             $file = File::fromFile($tempFile);
             $processor = new SystemPromptInputProcessor($file);
 
-            $input = new Input(new Gpt('gpt-4o'), new MessageBag(Message::ofUser('This is a user message')));
+            $input = new Input('gpt-4o', new MessageBag(Message::ofUser('This is a user message')));
             $processor->processInput($input);
 
-            $messages = $input->messages->getMessages();
+            $messages = $input->getMessageBag()->getMessages();
             $this->assertCount(2, $messages);
             $this->assertInstanceOf(SystemMessage::class, $messages[0]);
             $this->assertSame("Line 1\nLine 2\nLine 3", $messages[0]->content);

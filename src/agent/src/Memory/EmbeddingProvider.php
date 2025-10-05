@@ -34,7 +34,7 @@ final readonly class EmbeddingProvider implements MemoryProviderInterface
 
     public function load(Input $input): array
     {
-        $messages = $input->messages->getMessages();
+        $messages = $input->getMessageBag()->getMessages();
         /** @var MessageInterface|null $userMessage */
         $userMessage = $messages[array_key_last($messages)] ?? null;
 

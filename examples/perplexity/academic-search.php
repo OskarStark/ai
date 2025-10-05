@@ -18,7 +18,7 @@ use Symfony\AI\Platform\Message\MessageBag;
 require_once dirname(__DIR__).'/bootstrap.php';
 
 $platform = PlatformFactory::create(env('PERPLEXITY_API_KEY'), http_client());
-$agent = new Agent($platform, 'sonar', outputProcessors: [new SearchResultProcessor()], logger: logger());
+$agent = new Agent($platform, 'sonar', outputProcessors: [new SearchResultProcessor()]);
 
 $messages = new MessageBag(Message::ofUser('What is the best French cheese of the first quarter-century of 21st century?'));
 $response = $agent->call($messages, [

@@ -24,7 +24,7 @@ $platform = PlatformFactory::create(env('AIMLAPI_API_KEY'), http_client());
 $wikipedia = new Wikipedia(http_client());
 $toolbox = new Toolbox([$wikipedia], logger: logger());
 $processor = new AgentProcessor($toolbox);
-$agent = new Agent($platform, 'google/gemini-2.5-flash', [$processor], [$processor], logger: logger());
+$agent = new Agent($platform, 'google/gemini-2.5-flash', [$processor], [$processor]);
 
 $messages = new MessageBag(Message::ofUser('Who is the current chancellor of Germany?'));
 $result = $agent->call($messages);

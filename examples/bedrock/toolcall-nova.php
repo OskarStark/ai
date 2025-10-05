@@ -30,7 +30,7 @@ $platform = PlatformFactory::create();
 $wikipedia = new Wikipedia(http_client());
 $toolbox = new Toolbox([$wikipedia]);
 $processor = new AgentProcessor($toolbox);
-$agent = new Agent($platform, 'nova-pro', [$processor], [$processor], logger: logger());
+$agent = new Agent($platform, 'nova-pro', [$processor], [$processor]);
 
 $messages = new MessageBag(
     Message::ofUser('Who is the current chancellor of Germany? Use Wikipedia to find the answer.')

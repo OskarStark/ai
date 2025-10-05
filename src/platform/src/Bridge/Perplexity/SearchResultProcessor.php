@@ -23,17 +23,17 @@ final class SearchResultProcessor implements OutputProcessorInterface
 {
     public function processOutput(Output $output): void
     {
-        $metadata = $output->result->getMetadata();
+        $metadata = $output->getResult()->getMetadata();
 
-        if ($output->result instanceof StreamResult) {
-            $generator = $output->result->getContent();
+        if ($output->getResult() instanceof StreamResult) {
+            $generator = $output->getResult()->getContent();
             // Makes $metadata accessible in the stream loop.
             $generator->send($metadata);
 
             return;
         }
 
-        $rawResponse = $output->result->getRawResult()?->getObject();
+        $rawResponse = $output->getResult()->getRawResult()?->getObject();
         if (!$rawResponse instanceof ResponseInterface) {
             return;
         }

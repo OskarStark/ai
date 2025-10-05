@@ -20,7 +20,7 @@ require_once dirname(__DIR__).'/bootstrap.php';
 
 $platform = PlatformFactory::create(env('OPENAI_API_KEY'), http_client());
 $processor = new AgentProcessor();
-$agent = new Agent($platform, 'gpt-4o-mini', [$processor], [$processor], logger: logger());
+$agent = new Agent($platform, 'gpt-4o-mini', [$processor], [$processor]);
 $messages = new MessageBag(
     Message::forSystem('You are a helpful math tutor. Guide the user through the solution step by step.'),
     Message::ofUser('how can I solve 8x + 7 = -23'),

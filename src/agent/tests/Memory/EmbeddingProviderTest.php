@@ -36,17 +36,9 @@ final class EmbeddingProviderTest extends TestCase
         $store = $this->createMock(StoreInterface::class);
         $store->expects($this->never())->method('query');
 
-        $embeddingProvider = new EmbeddingProvider(
-            $platform,
-            $this->createStub(Model::class),
-            $store,
-        );
+        $embeddingProvider = new EmbeddingProvider($platform, new Model('embedding-001'), $store);
 
-        $embeddingProvider->load(new Input(
-            $this->createStub(Model::class),
-            new MessageBag(),
-            [],
-        ));
+        $embeddingProvider->load(new Input('embedding-001', new MessageBag(), []));
     }
 
     public function testItIsDoingNothingWithoutUserMessageInBag()
@@ -57,14 +49,10 @@ final class EmbeddingProviderTest extends TestCase
         $store = $this->createMock(StoreInterface::class);
         $store->expects($this->never())->method('query');
 
-        $embeddingProvider = new EmbeddingProvider(
-            $platform,
-            $this->createStub(Model::class),
-            $store,
-        );
+        $embeddingProvider = new EmbeddingProvider($platform, new Model('embedding-001'), $store);
 
         $embeddingProvider->load(new Input(
-            $this->createStub(Model::class),
+            'embedding-001',
             new MessageBag(Message::forSystem('This is a system message')),
             [],
         ));
@@ -78,14 +66,10 @@ final class EmbeddingProviderTest extends TestCase
         $store = $this->createMock(StoreInterface::class);
         $store->expects($this->never())->method('query');
 
-        $embeddingProvider = new EmbeddingProvider(
-            $platform,
-            $this->createStub(Model::class),
-            $store,
-        );
+        $embeddingProvider = new EmbeddingProvider($platform, new Model('embedding-001'), $store);
 
         $embeddingProvider->load(new Input(
-            $this->createStub(Model::class),
+            'embedding-001',
             new MessageBag(Message::ofUser(new ImageUrl('foo.jpg'))),
             [],
         ));
@@ -99,11 +83,6 @@ final class EmbeddingProviderTest extends TestCase
             $this->createStub(RawResultInterface::class),
         );
 
-        $embeddingModel = $this->createMock(Model::class);
-        $embeddingModel->expects($this->once())
-            ->method('getName')
-            ->willReturn('text-embedding-3-small');
-
         $platform = $this->createMock(PlatformInterface::class);
         $platform->expects($this->once())
             ->method('invoke')
@@ -116,14 +95,10 @@ final class EmbeddingProviderTest extends TestCase
             ->with($vector)
             ->willReturn([]);
 
-        $embeddingProvider = new EmbeddingProvider(
-            $platform,
-            $embeddingModel,
-            $store,
-        );
+        $embeddingProvider = new EmbeddingProvider($platform, new Model('text-embedding-3-small'), $store);
 
         $memory = $embeddingProvider->load(new Input(
-            $this->createStub(Model::class),
+            'text-embedding-3-small',
             new MessageBag(Message::ofUser(new Text('Have we talked about the weather?'))),
             [],
         ));
@@ -138,11 +113,6 @@ final class EmbeddingProviderTest extends TestCase
             static fn () => $vectorResult,
             $this->createStub(RawResultInterface::class),
         );
-
-        $embeddingModel = $this->createMock(Model::class);
-        $embeddingModel->expects($this->once())
-            ->method('getName')
-            ->willReturn('text-embedding-3-small');
 
         $platform = $this->createMock(PlatformInterface::class);
         $platform->expects($this->once())
@@ -159,14 +129,10 @@ final class EmbeddingProviderTest extends TestCase
                 (object) ['metadata' => ['fact' => 'Water is wet']],
             ]);
 
-        $embeddingProvider = new EmbeddingProvider(
-            $platform,
-            $embeddingModel,
-            $store,
-        );
+        $embeddingProvider = new EmbeddingProvider($platform, new Model('text-embedding-3-small'), $store);
 
         $memory = $embeddingProvider->load(new Input(
-            $this->createStub(Model::class),
+            'text-embedding-3-small',
             new MessageBag(Message::ofUser(new Text('Have we talked about the weather?'))),
             [],
         ));

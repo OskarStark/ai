@@ -24,7 +24,7 @@ $platform = PlatformFactory::create(env('DOCKER_MODEL_RUNNER_HOST_URL'), http_cl
 $wikipedia = new Wikipedia(http_client());
 $toolbox = new Toolbox([$wikipedia]);
 $processor = new AgentProcessor($toolbox);
-$agent = new Agent($platform, 'ai/gemma3n', [$processor], [$processor], logger: logger());
+$agent = new Agent($platform, 'ai/gemma3n', [$processor], [$processor]);
 
 $messages = new MessageBag(Message::ofUser('Who is the actual Prime Minister of France?'));
 $result = $agent->call($messages);

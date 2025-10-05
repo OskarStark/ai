@@ -24,7 +24,7 @@ $platform = PlatformFactory::create(env('MISTRAL_API_KEY'), http_client());
 $transcriber = new YouTubeTranscriber(http_client());
 $toolbox = new Toolbox([$transcriber], logger: logger());
 $processor = new AgentProcessor($toolbox);
-$agent = new Agent($platform, 'mistral-large-latest', [$processor], [$processor], logger: logger());
+$agent = new Agent($platform, 'mistral-large-latest', [$processor], [$processor]);
 
 $messages = new MessageBag(Message::ofUser('Please summarize this video for me: https://www.youtube.com/watch?v=6uXW-ulpj0s'));
 $result = $agent->call($messages, [

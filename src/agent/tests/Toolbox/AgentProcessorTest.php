@@ -17,11 +17,9 @@ use Symfony\AI\Agent\Input;
 use Symfony\AI\Agent\Output;
 use Symfony\AI\Agent\Toolbox\AgentProcessor;
 use Symfony\AI\Agent\Toolbox\ToolboxInterface;
-use Symfony\AI\Platform\Capability;
 use Symfony\AI\Platform\Message\AssistantMessage;
 use Symfony\AI\Platform\Message\MessageBag;
 use Symfony\AI\Platform\Message\ToolCallMessage;
-use Symfony\AI\Platform\Model;
 use Symfony\AI\Platform\Result\ToolCall;
 use Symfony\AI\Platform\Result\ToolCallResult;
 use Symfony\AI\Platform\Tool\ExecutionReference;
@@ -34,9 +32,8 @@ class AgentProcessorTest extends TestCase
         $toolbox = $this->createStub(ToolboxInterface::class);
         $toolbox->method('getTools')->willReturn([]);
 
-        $model = new Model('gpt-4', [Capability::TOOL_CALLING]);
         $processor = new AgentProcessor($toolbox);
-        $input = new Input($model, new MessageBag());
+        $input = new Input('gpt-4', new MessageBag());
 
         $processor->processInput($input);
 
@@ -50,9 +47,8 @@ class AgentProcessorTest extends TestCase
         $tool2 = new Tool(new ExecutionReference('ClassTool2', 'method1'), 'tool2', 'description2', null);
         $toolbox->method('getTools')->willReturn([$tool1, $tool2]);
 
-        $model = new Model('gpt-4', [Capability::TOOL_CALLING]);
         $processor = new AgentProcessor($toolbox);
-        $input = new Input($model, new MessageBag());
+        $input = new Input('gpt-4', new MessageBag());
 
         $processor->processInput($input);
 
@@ -66,9 +62,8 @@ class AgentProcessorTest extends TestCase
         $tool2 = new Tool(new ExecutionReference('ClassTool2', 'method1'), 'tool2', 'description2', null);
         $toolbox->method('getTools')->willReturn([$tool1, $tool2]);
 
-        $model = new Model('gpt-4', [Capability::TOOL_CALLING]);
         $processor = new AgentProcessor($toolbox);
-        $input = new Input($model, new MessageBag(), ['tools' => ['tool2']]);
+        $input = new Input('gpt-4', new MessageBag(), ['tools' => ['tool2']]);
 
         $processor->processInput($input);
 
@@ -80,8 +75,6 @@ class AgentProcessorTest extends TestCase
         $toolbox = $this->createMock(ToolboxInterface::class);
         $toolbox->expects($this->once())->method('execute')->willReturn('Test response');
 
-        $model = new Model('gpt-4', [Capability::TOOL_CALLING]);
-
         $messageBag = new MessageBag();
 
         $result = new ToolCallResult(new ToolCall('id1', 'tool1', ['arg1' => 'value1']));
@@ -91,7 +84,7 @@ class AgentProcessorTest extends TestCase
         $processor = new AgentProcessor($toolbox, keepToolMessages: true);
         $processor->setAgent($agent);
 
-        $output = new Output($model, $result, $messageBag);
+        $output = new Output('gpt-4', $result, $messageBag);
 
         $processor->processOutput($output);
 
@@ -105,8 +98,6 @@ class AgentProcessorTest extends TestCase
         $toolbox = $this->createMock(ToolboxInterface::class);
         $toolbox->expects($this->once())->method('execute')->willReturn('Test response');
 
-        $model = new Model('gpt-4', [Capability::TOOL_CALLING]);
-
         $messageBag = new MessageBag();
 
         $result = new ToolCallResult(new ToolCall('id1', 'tool1', ['arg1' => 'value1']));
@@ -116,7 +107,7 @@ class AgentProcessorTest extends TestCase
         $processor = new AgentProcessor($toolbox, keepToolMessages: false);
         $processor->setAgent($agent);
 
-        $output = new Output($model, $result, $messageBag);
+        $output = new Output('gpt-4', $result, $messageBag);
 
         $processor->processOutput($output);
 

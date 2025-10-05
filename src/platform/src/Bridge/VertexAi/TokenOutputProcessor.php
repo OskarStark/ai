@@ -38,12 +38,12 @@ final class TokenOutputProcessor implements OutputProcessorInterface
     public function processOutput(Output $output): void
     {
         $tokenUsage = new TokenUsage();
-        $metadata = $output->result->getMetadata();
+        $metadata = $output->getResult()->getMetadata();
 
-        if ($output->result instanceof StreamResult) {
+        if ($output->getResult() instanceof StreamResult) {
             $lastChunk = null;
 
-            foreach ($output->result->getContent() as $chunk) {
+            foreach ($output->getResult()->getContent() as $chunk) {
                 // Store last event that contains usage metadata
                 if (isset($chunk['usageMetadata'])) {
                     $lastChunk = $chunk;
@@ -57,7 +57,7 @@ final class TokenOutputProcessor implements OutputProcessorInterface
             return;
         }
 
-        $rawResponse = $output->result->getRawResult()?->getObject();
+        $rawResponse = $output->getResult()->getRawResult()?->getObject();
         if (!$rawResponse instanceof ResponseInterface) {
             return;
         }

@@ -45,7 +45,7 @@ final readonly class SystemPromptInputProcessor implements InputProcessorInterfa
 
     public function processInput(Input $input): void
     {
-        $messages = $input->messages;
+        $messages = $input->getMessageBag();
 
         if (null !== $messages->getSystemMessage()) {
             $this->logger->debug('Skipping system prompt injection since MessageBag already contains a system message.');
@@ -85,6 +85,6 @@ final readonly class SystemPromptInputProcessor implements InputProcessorInterfa
                 PROMPT;
         }
 
-        $input->messages = $messages->prepend(Message::forSystem($message));
+        $input->setMessageBag($messages->prepend(Message::forSystem($message)));
     }
 }

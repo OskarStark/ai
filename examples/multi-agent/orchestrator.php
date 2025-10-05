@@ -31,7 +31,6 @@ $orchestrator = new Agent(
     'gpt-4o-mini',
     [new SystemPromptInputProcessor('You are an intelligent agent orchestrator that routes user questions to specialized agents.'), $structuredOutputProcessor],
     [$structuredOutputProcessor],
-    logger: logger()
 );
 
 // Create technical agent for handling technical issues
@@ -40,7 +39,6 @@ $technical = new Agent(
     'gpt-4o-mini?max_tokens=150', // set max_tokens here to be faster and cheaper
     [new SystemPromptInputProcessor('You are a technical support specialist. Help users resolve bugs, problems, and technical errors.')],
     name: 'technical',
-    logger: logger()
 );
 
 // Create general agent for handling any other questions
@@ -49,7 +47,6 @@ $fallback = new Agent(
     'gpt-4o-mini',
     [new SystemPromptInputProcessor('You are a helpful general assistant. Assist users with any questions or tasks they may have. You should never ever answer technical question.')],
     name: 'fallback',
-    logger: logger()
 );
 
 $multiAgent = new MultiAgent(

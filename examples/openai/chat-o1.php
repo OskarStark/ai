@@ -32,7 +32,7 @@ $prompt = <<<PROMPT
     at the beginning and end, not throughout the code.
     PROMPT;
 
-$agent = new Agent($platform, 'o1-preview', logger: logger());
+$agent = new Agent($platform, 'o1-preview');
 $result = $agent->call(new MessageBag(Message::ofUser($prompt)));
 
 echo $result->getContent().\PHP_EOL;

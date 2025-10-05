@@ -23,7 +23,7 @@ $platform = PlatformFactory::create(env('OLLAMA_HOST_URL'), http_client());
 
 $toolbox = new Toolbox([new Clock()], logger: logger());
 $processor = new AgentProcessor($toolbox);
-$agent = new Agent($platform, env('OLLAMA_LLM'), [$processor], [$processor], logger: logger());
+$agent = new Agent($platform, env('OLLAMA_LLM'), [$processor], [$processor]);
 
 $messages = new MessageBag(Message::ofUser('What time is it?'));
 $result = $agent->call($messages);

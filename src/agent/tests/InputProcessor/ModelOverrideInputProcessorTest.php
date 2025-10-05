@@ -15,46 +15,36 @@ use PHPUnit\Framework\TestCase;
 use Symfony\AI\Agent\Exception\InvalidArgumentException;
 use Symfony\AI\Agent\Input;
 use Symfony\AI\Agent\InputProcessor\ModelOverrideInputProcessor;
-use Symfony\AI\Platform\Capability;
 use Symfony\AI\Platform\Message\MessageBag;
-use Symfony\AI\Platform\Model;
 
 final class ModelOverrideInputProcessorTest extends TestCase
 {
     public function testProcessInputWithValidModelOption()
     {
-        $originalModel = new Model('gpt-4o-mini', [Capability::INPUT_TEXT, Capability::OUTPUT_TEXT]);
-        $overrideModel = new Model('gpt-4o', [Capability::INPUT_TEXT, Capability::OUTPUT_TEXT]);
-
-        $input = new Input($originalModel, new MessageBag(), ['model' => $overrideModel]);
+        $input = new Input('gpt-4o-mini', new MessageBag(), ['model' => 'gpt-4o']);
 
         $processor = new ModelOverrideInputProcessor();
         $processor->processInput($input);
 
-        $this->assertSame($overrideModel, $input->model);
-        $this->assertSame('gpt-4o', $input->model->getName());
+        $this->assertSame('gpt-4o', $input->getModel());
     }
 
     public function testProcessInputWithoutModelOption()
     {
-        $originalModel = new Model('gpt-4o-mini', [Capability::INPUT_TEXT, Capability::OUTPUT_TEXT]);
-
-        $input = new Input($originalModel, new MessageBag());
+        $input = new Input('gpt-4o-mini', new MessageBag());
 
         $processor = new ModelOverrideInputProcessor();
         $processor->processInput($input);
 
-        $this->assertSame($originalModel, $input->model);
-        $this->assertSame('gpt-4o-mini', $input->model->getName());
+        $this->assertSame('gpt-4o-mini', $input->getModel());
     }
 
     public function testProcessInputWithInvalidModelOption()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(\sprintf('Option "model" must be an instance of "%s".', Model::class));
+        $this->expectExceptionMessage('Option "model" must be a string.');
 
-        $originalModel = new Model('gpt-4o-mini', [Capability::INPUT_TEXT, Capability::OUTPUT_TEXT]);
-        $input = new Input($originalModel, new MessageBag(), ['model' => new MessageBag()]);
+        $input = new Input('gpt-4o-mini', new MessageBag(), ['model' => new MessageBag()]);
 
         $processor = new ModelOverrideInputProcessor();
         $processor->processInput($input);

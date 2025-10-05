@@ -12,32 +12,23 @@
 namespace Symfony\AI\Agent\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 use Symfony\AI\Agent\Agent;
 use Symfony\AI\Agent\AgentAwareInterface;
 use Symfony\AI\Agent\AgentInterface;
 use Symfony\AI\Agent\Exception\InvalidArgumentException;
-use Symfony\AI\Agent\Exception\MissingModelSupportException;
-use Symfony\AI\Agent\Exception\RuntimeException;
 use Symfony\AI\Agent\Input;
 use Symfony\AI\Agent\InputProcessorInterface;
 use Symfony\AI\Agent\Output;
 use Symfony\AI\Agent\OutputProcessorInterface;
-use Symfony\AI\Platform\Capability;
 use Symfony\AI\Platform\Message\Content\Audio;
 use Symfony\AI\Platform\Message\Content\Image;
 use Symfony\AI\Platform\Message\Content\Text;
 use Symfony\AI\Platform\Message\MessageBag;
 use Symfony\AI\Platform\Message\UserMessage;
-use Symfony\AI\Platform\Model;
-use Symfony\AI\Platform\ModelCatalog\DynamicModelCatalog;
 use Symfony\AI\Platform\PlatformInterface;
 use Symfony\AI\Platform\Result\RawResultInterface;
 use Symfony\AI\Platform\Result\ResultInterface;
 use Symfony\AI\Platform\Result\ResultPromise;
-use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
-use Symfony\Contracts\HttpClient\ResponseInterface as HttpResponseInterface;
 
 final class AgentTest extends TestCase
 {
@@ -111,13 +102,9 @@ final class AgentTest extends TestCase
     {
         $platform = $this->createMock(PlatformInterface::class);
 
-        $platform->expects($this->once())
-            ->method('getModelCatalog')
-            ->willReturn(new DynamicModelCatalog());
-
         $agent = new Agent($platform, 'gpt-4o');
 
-        $this->assertEquals(new Model('gpt-4o', Capability::cases()), $agent->getModel());
+        $this->assertEquals('gpt-4o', $agent->getModel());
     }
 
     public function testCallProcessesInputThroughProcessors()
@@ -126,10 +113,6 @@ final class AgentTest extends TestCase
         $modelName = 'gpt-4o';
         $messages = new MessageBag(new UserMessage(new Text('Hello')));
         $result = $this->createMock(ResultInterface::class);
-
-        $platform->expects($this->once())
-            ->method('getModelCatalog')
-            ->willReturn(new DynamicModelCatalog());
 
         $inputProcessor = $this->createMock(InputProcessorInterface::class);
         $inputProcessor->expects($this->once())
@@ -157,10 +140,6 @@ final class AgentTest extends TestCase
         $messages = new MessageBag(new UserMessage(new Text('Hello')));
         $result = $this->createMock(ResultInterface::class);
 
-        $platform->expects($this->once())
-            ->method('getModelCatalog')
-            ->willReturn(new DynamicModelCatalog());
-
         $outputProcessor = $this->createMock(OutputProcessorInterface::class);
         $outputProcessor->expects($this->once())
             ->method('processOutput')
@@ -180,61 +159,11 @@ final class AgentTest extends TestCase
         $this->assertSame($result, $actualResult);
     }
 
-    public function testCallThrowsExceptionForAudioInputWithoutSupport()
-    {
-        $platform = $this->createMock(PlatformInterface::class);
-        $messages = new MessageBag(new UserMessage(new Audio('audio-data', 'audio/mp3')));
-
-        $modelCatalog = $this->createMock(\Symfony\AI\Platform\ModelCatalog\ModelCatalogInterface::class);
-        $model = new Model('gpt-4', [Capability::INPUT_TEXT]); // Model without INPUT_AUDIO capability
-
-        $modelCatalog->expects($this->once())
-            ->method('getModel')
-            ->with('gpt-4')
-            ->willReturn($model);
-
-        $platform->expects($this->once())
-            ->method('getModelCatalog')
-            ->willReturn($modelCatalog);
-
-        $this->expectException(MissingModelSupportException::class);
-
-        $agent = new Agent($platform, 'gpt-4');
-        $agent->call($messages);
-    }
-
-    public function testCallThrowsExceptionForImageInputWithoutSupport()
-    {
-        $platform = $this->createMock(PlatformInterface::class);
-        $messages = new MessageBag(new UserMessage(new Image('image-data', 'image/png')));
-
-        $modelCatalog = $this->createMock(\Symfony\AI\Platform\ModelCatalog\ModelCatalogInterface::class);
-        $model = new Model('gpt-4', [Capability::INPUT_TEXT]); // Model without INPUT_IMAGE capability
-
-        $modelCatalog->expects($this->once())
-            ->method('getModel')
-            ->with('gpt-4')
-            ->willReturn($model);
-
-        $platform->expects($this->once())
-            ->method('getModelCatalog')
-            ->willReturn($modelCatalog);
-
-        $this->expectException(MissingModelSupportException::class);
-
-        $agent = new Agent($platform, 'gpt-4');
-        $agent->call($messages);
-    }
-
     public function testCallAllowsAudioInputWithSupport()
     {
         $platform = $this->createMock(PlatformInterface::class);
         $messages = new MessageBag(new UserMessage(new Audio('audio-data', 'audio/mp3')));
         $result = $this->createMock(ResultInterface::class);
-
-        $platform->expects($this->once())
-            ->method('getModelCatalog')
-            ->willReturn(new DynamicModelCatalog());
 
         $rawResult = $this->createMock(RawResultInterface::class);
         $response = new ResultPromise(fn () => $result, $rawResult, []);
@@ -256,10 +185,6 @@ final class AgentTest extends TestCase
         $messages = new MessageBag(new UserMessage(new Image('image-data', 'image/png')));
         $result = $this->createMock(ResultInterface::class);
 
-        $platform->expects($this->once())
-            ->method('getModelCatalog')
-            ->willReturn(new DynamicModelCatalog());
-
         $rawResult = $this->createMock(RawResultInterface::class);
         $response = new ResultPromise(fn () => $result, $rawResult, []);
 
@@ -274,115 +199,6 @@ final class AgentTest extends TestCase
         $this->assertSame($result, $actualResult);
     }
 
-    public function testCallHandlesClientException()
-    {
-        $platform = $this->createMock(PlatformInterface::class);
-        $messages = new MessageBag(new UserMessage(new Text('Hello')));
-        $logger = $this->createMock(LoggerInterface::class);
-
-        $platform->expects($this->once())
-            ->method('getModelCatalog')
-            ->willReturn(new DynamicModelCatalog());
-
-        $httpResponse = $this->createMock(HttpResponseInterface::class);
-        $httpResponse->expects($this->once())
-            ->method('toArray')
-            ->with(false)
-            ->willReturn(['error' => 'Bad request']);
-
-        $exception = new class('Client error') extends \Exception implements ClientExceptionInterface {
-            private HttpResponseInterface $response;
-
-            public function setResponse(HttpResponseInterface $response): void
-            {
-                $this->response = $response;
-            }
-
-            public function getResponse(): HttpResponseInterface
-            {
-                return $this->response;
-            }
-        };
-        $exception->setResponse($httpResponse);
-
-        $logger->expects($this->once())
-            ->method('debug')
-            ->with('Client error', ['error' => 'Bad request']);
-
-        $platform->expects($this->once())
-            ->method('invoke')
-            ->willThrowException($exception);
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Client error');
-
-        $agent = new Agent($platform, 'gpt-4', logger: $logger);
-        $agent->call($messages);
-    }
-
-    public function testCallHandlesClientExceptionWithEmptyMessage()
-    {
-        $platform = $this->createMock(PlatformInterface::class);
-        $messages = new MessageBag(new UserMessage(new Text('Hello')));
-
-        $platform->expects($this->once())
-            ->method('getModelCatalog')
-            ->willReturn(new DynamicModelCatalog());
-
-        $httpResponse = $this->createMock(HttpResponseInterface::class);
-        $httpResponse->expects($this->once())
-            ->method('toArray')
-            ->with(false)
-            ->willReturn([]);
-
-        $exception = new class('') extends \Exception implements ClientExceptionInterface {
-            private HttpResponseInterface $response;
-
-            public function setResponse(HttpResponseInterface $response): void
-            {
-                $this->response = $response;
-            }
-
-            public function getResponse(): HttpResponseInterface
-            {
-                return $this->response;
-            }
-        };
-        $exception->setResponse($httpResponse);
-
-        $platform->expects($this->once())
-            ->method('invoke')
-            ->willThrowException($exception);
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid request to model or platform');
-
-        $agent = new Agent($platform, 'gpt-4');
-        $agent->call($messages);
-    }
-
-    public function testCallHandlesHttpException()
-    {
-        $platform = $this->createMock(PlatformInterface::class);
-        $messages = new MessageBag(new UserMessage(new Text('Hello')));
-
-        $platform->expects($this->once())
-            ->method('getModelCatalog')
-            ->willReturn(new DynamicModelCatalog());
-
-        $exception = $this->createMock(HttpExceptionInterface::class);
-
-        $platform->expects($this->once())
-            ->method('invoke')
-            ->willThrowException($exception);
-
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Failed to request model');
-
-        $agent = new Agent($platform, 'gpt-4');
-        $agent->call($messages);
-    }
-
     public function testCallPassesOptionsToInvoke()
     {
         $platform = $this->createMock(PlatformInterface::class);
@@ -392,10 +208,6 @@ final class AgentTest extends TestCase
 
         $rawResult = $this->createMock(RawResultInterface::class);
         $response = new ResultPromise(fn () => $result, $rawResult, []);
-
-        $platform->expects($this->once())
-            ->method('getModelCatalog')
-            ->willReturn(new DynamicModelCatalog());
 
         $platform->expects($this->once())
             ->method('invoke')

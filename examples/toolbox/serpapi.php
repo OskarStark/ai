@@ -24,7 +24,7 @@ $platform = PlatformFactory::create(env('OPENAI_API_KEY'), http_client());
 $serpApi = new SerpApi(http_client(), env('SERP_API_KEY'));
 $toolbox = new Toolbox([$serpApi], logger: logger());
 $processor = new AgentProcessor($toolbox);
-$agent = new Agent($platform, 'gpt-4o-mini', [$processor], [$processor], logger: logger());
+$agent = new Agent($platform, 'gpt-4o-mini', [$processor], [$processor]);
 
 $messages = new MessageBag(Message::ofUser('Who is the current chancellor of Germany?'));
 $result = $agent->call($messages);

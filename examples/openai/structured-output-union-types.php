@@ -20,7 +20,7 @@ require_once dirname(__DIR__).'/bootstrap.php';
 
 $platform = PlatformFactory::create(env('OPENAI_API_KEY'), http_client());
 $processor = new AgentProcessor();
-$agent = new Agent($platform, 'gpt-4o-mini', [$processor], [$processor], logger: logger());
+$agent = new Agent($platform, 'gpt-4o-mini', [$processor], [$processor]);
 $messages = new MessageBag(
     Message::forSystem(<<<PROMPT
         You are a time assistant! You can provide time either as a unix timestamp or as a human readable time format.

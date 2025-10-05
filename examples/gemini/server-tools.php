@@ -23,7 +23,7 @@ $platform = PlatformFactory::create(env('GEMINI_API_KEY'), http_client());
 
 $toolbox = new Toolbox([new Clock()], logger: logger());
 $processor = new AgentProcessor($toolbox);
-$agent = new Agent($platform, 'gemini-2.5-pro-preview-03-25', [$processor], [$processor], logger: logger());
+$agent = new Agent($platform, 'gemini-2.5-pro-preview-03-25', [$processor], [$processor]);
 
 $messages = new MessageBag(
     Message::ofUser(

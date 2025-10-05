@@ -19,7 +19,7 @@ require_once dirname(__DIR__).'/bootstrap.php';
 
 $platform = PlatformFactory::create(env('MISTRAL_API_KEY'), http_client());
 
-$agent = new Agent($platform, 'mistral-large-latest', outputProcessors: [new TokenOutputProcessor()], logger: logger());
+$agent = new Agent($platform, 'mistral-large-latest', outputProcessors: [new TokenOutputProcessor()]);
 
 $messages = new MessageBag(
     Message::forSystem('You are a pirate and you write funny.'),

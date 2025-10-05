@@ -27,7 +27,7 @@ $clock = new Clock(new SymfonyClock());
 $toolbox = new Toolbox([$clock]);
 $toolProcessor = new ToolProcessor($toolbox);
 $structuredOutputProcessor = new StructuredOutputProcessor();
-$agent = new Agent($platform, 'gemini-1.5-flash', [$toolProcessor, $structuredOutputProcessor], [$toolProcessor, $structuredOutputProcessor], logger: logger());
+$agent = new Agent($platform, 'gemini-1.5-flash', [$toolProcessor, $structuredOutputProcessor], [$toolProcessor, $structuredOutputProcessor]);
 
 $messages = new MessageBag(Message::ofUser('What date and time is it?'));
 $result = $agent->call($messages, ['response_format' => [

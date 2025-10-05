@@ -27,7 +27,7 @@ $platform = PlatformFactory::create(env('MISTRAL_API_KEY'), http_client());
 $serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
 
 $processor = new AgentProcessor(new ResponseFormatFactory(), $serializer);
-$agent = new Agent($platform, 'mistral-small-latest', [$processor], [$processor], logger: logger());
+$agent = new Agent($platform, 'mistral-small-latest', [$processor], [$processor]);
 $messages = new MessageBag(
     Message::forSystem('You are a helpful math tutor. Guide the user through the solution step by step.'),
     Message::ofUser('how can I solve 8x + 7 = -23'),

@@ -61,20 +61,19 @@ final class AgentProcessor implements InputProcessorInterface, OutputProcessorIn
 
     public function processOutput(Output $output): void
     {
-        if ($output->result instanceof GenericStreamResponse) {
-            $output->result = new ToolboxStreamResponse(
-                $output->result->getContent(),
-                $this->handleToolCallsCallback($output),
+        if ($output->getResult() instanceof GenericStreamResponse) {
+            $output->setResult(
+                new ToolboxStreamResponse($output->getResult()->getContent(), $this->handleToolCallsCallback($output))
             );
 
             return;
         }
 
-        if (!$output->result instanceof ToolCallResult) {
+        if (!$output->getResult() instanceof ToolCallResult) {
             return;
         }
 
-        $output->result = $this->handleToolCallsCallback($output)($output->result);
+        $output->setResult($this->handleToolCallsCallback($output)($output->getResult()));
     }
 
     /**
@@ -88,7 +87,7 @@ final class AgentProcessor implements InputProcessorInterface, OutputProcessorIn
     private function handleToolCallsCallback(Output $output): \Closure
     {
         return function (ToolCallResult $result, ?AssistantMessage $streamedAssistantResponse = null) use ($output): ResultInterface {
-            $messages = $this->keepToolMessages ? $output->messages : clone $output->messages;
+            $messages = $this->keepToolMessages ? $output->getMessageBag() : clone $output->getMessageBag();
 
             if (null !== $streamedAssistantResponse && '' !== $streamedAssistantResponse->content) {
                 $messages->add($streamedAssistantResponse);
@@ -108,7 +107,7 @@ final class AgentProcessor implements InputProcessorInterface, OutputProcessorIn
                 $event = new ToolCallsExecuted(...$results);
                 $this->eventDispatcher?->dispatch($event);
 
-                $result = $event->hasResponse() ? $event->result : $this->agent->call($messages, $output->options);
+                $result = $event->hasResponse() ? $event->result : $this->agent->call($messages, $output->getOptions());
             } while ($result instanceof ToolCallResult);
 
             return $result;

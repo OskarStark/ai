@@ -49,7 +49,7 @@ $indexer->index($documents);
 $similaritySearch = new SimilaritySearch($vectorizer, $store);
 $toolbox = new Toolbox([$similaritySearch], logger: logger());
 $processor = new AgentProcessor($toolbox);
-$agent = new Agent($platform, env('OLLAMA_LLM'), [$processor], [$processor], logger: logger());
+$agent = new Agent($platform, env('OLLAMA_LLM'), [$processor], [$processor]);
 
 $messages = new MessageBag(
     Message::forSystem('Please answer all user questions only using SimilaritySearch function.'),

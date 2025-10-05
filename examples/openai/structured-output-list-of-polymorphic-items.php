@@ -20,7 +20,7 @@ require_once dirname(__DIR__).'/bootstrap.php';
 
 $platform = PlatformFactory::create(env('OPENAI_API_KEY'), http_client());
 $processor = new AgentProcessor();
-$agent = new Agent($platform, 'gpt-4o-mini', [$processor], [$processor], logger: logger());
+$agent = new Agent($platform, 'gpt-4o-mini', [$processor], [$processor]);
 $messages = new MessageBag(
     Message::forSystem('You are a persona data collector! Return all the data you can gather from the user input.'),
     Message::ofUser('Hi! My name is John Doe, I am 30 years old and I live in Paris.'),

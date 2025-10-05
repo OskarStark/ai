@@ -18,7 +18,7 @@ require_once dirname(__DIR__).'/bootstrap.php';
 
 $platform = PlatformFactory::create(env('DOCKER_MODEL_RUNNER_HOST_URL'), http_client());
 
-$agent = new Agent($platform, 'ai/gemma3n', logger: logger());
+$agent = new Agent($platform, 'ai/gemma3n');
 $messages = new MessageBag(
     Message::forSystem('You are a pirate and you write funny.'),
     Message::ofUser('What is the Symfony framework?'),

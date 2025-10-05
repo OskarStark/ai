@@ -20,7 +20,7 @@ require_once dirname(__DIR__).'/bootstrap.php';
 
 $platform = PlatformFactory::create(env('OPENAI_API_KEY'), http_client());
 
-$agent = new Agent($platform, 'gpt-4o-mini', logger: logger());
+$agent = new Agent($platform, 'gpt-4o-mini');
 $chat = new Chat($agent, new InMemoryStore());
 
 $messages = new MessageBag(
