@@ -13,7 +13,6 @@ use Symfony\AI\Agent\Agent;
 use Symfony\AI\Agent\Toolbox\AgentProcessor;
 use Symfony\AI\Agent\Toolbox\Tool\Wikipedia;
 use Symfony\AI\Agent\Toolbox\Toolbox;
-use Symfony\AI\Platform\Bridge\DeepSeek\DeepSeek;
 use Symfony\AI\Platform\Bridge\DeepSeek\PlatformFactory;
 use Symfony\AI\Platform\Message\Message;
 use Symfony\AI\Platform\Message\MessageBag;
@@ -21,12 +20,11 @@ use Symfony\AI\Platform\Message\MessageBag;
 require_once dirname(__DIR__).'/bootstrap.php';
 
 $platform = PlatformFactory::create(env('DEEPSEEK_API_KEY'), http_client());
-$model = new DeepSeek('deepseek-chat');
 
 $wikipedia = new Wikipedia(http_client());
 $toolbox = new Toolbox([$wikipedia]);
 $processor = new AgentProcessor($toolbox);
-$agent = new Agent($platform, $model, [$processor], [$processor]);
+$agent = new Agent($platform, 'deepseek-chat', [$processor], [$processor]);
 $messages = new MessageBag(Message::ofUser(<<<TXT
         First, define unicorn in 30 words.
         Then lookup at Wikipedia what the irish history looks like in 2 sentences.

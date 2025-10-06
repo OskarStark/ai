@@ -12,7 +12,6 @@
 use Symfony\AI\Agent\Agent;
 use Symfony\AI\Agent\StructuredOutput\AgentProcessor;
 use Symfony\AI\Fixtures\StructuredOutput\MathReasoning;
-use Symfony\AI\Platform\Bridge\DeepSeek\DeepSeek;
 use Symfony\AI\Platform\Bridge\DeepSeek\PlatformFactory;
 use Symfony\AI\Platform\Message\Message;
 use Symfony\AI\Platform\Message\MessageBag;
@@ -20,10 +19,9 @@ use Symfony\AI\Platform\Message\MessageBag;
 require_once dirname(__DIR__).'/bootstrap.php';
 
 $platform = PlatformFactory::create(env('DEEPSEEK_API_KEY'), http_client());
-$model = new DeepSeek('deepseek-chat');
 
 $processor = new AgentProcessor();
-$agent = new Agent($platform, $model, [$processor], [$processor]);
+$agent = new Agent($platform, 'deepseek-chat', [$processor], [$processor]);
 // todo: this example does not work with ['output_structure' => MathReasoning::class] out of the box
 $messages = new MessageBag(
     Message::forSystem('You are a helpful math tutor. Guide the user through the solution step by step.'),
