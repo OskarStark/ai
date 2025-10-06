@@ -75,7 +75,9 @@ jobs:
               run: ../link
 
             - name: Run commands examples
-              run: php examples/commands/stores.php
+              run: |
+                php examples/commands/stores.php
+                php examples/commands/message-stores.php
 
     demo:
         runs-on: ubuntu-latest
