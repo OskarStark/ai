@@ -68,8 +68,8 @@ final readonly class SystemPromptInputProcessor implements InputProcessorInterfa
 
             $tools = implode(\PHP_EOL.\PHP_EOL, array_map(
                 fn (Tool $tool) => <<<TOOL
-                    ## {$tool->name}
-                    {$tool->description}
+                    ## {$tool->getName()}
+                    {$tool->getDescription()}
                     TOOL,
                 $this->toolbox->getTools()
             ));

@@ -82,7 +82,7 @@ final class Toolbox implements ToolboxInterface
 
             $arguments = $this->argumentResolver->resolveArguments($metadata, $toolCall);
             $this->eventDispatcher?->dispatch(new ToolCallArgumentsResolved($tool, $metadata, $arguments));
-            $result = $tool->{$metadata->reference->getMethod()}(...$arguments);
+            $result = $tool->{$metadata->getReference()->getMethod()}(...$arguments);
             $this->eventDispatcher?->dispatch(new ToolCallSucceeded($tool, $metadata, $arguments, $result));
         } catch (ToolExecutionExceptionInterface $e) {
             $this->eventDispatcher?->dispatch(new ToolCallFailed($tool, $metadata, $arguments ?? [], $e));
@@ -99,7 +99,7 @@ final class Toolbox implements ToolboxInterface
     private function getMetadata(ToolCall $toolCall): Tool
     {
         foreach ($this->getTools() as $metadata) {
-            if ($metadata->name === $toolCall->getName()) {
+            if ($metadata->getName() === $toolCall->getName()) {
                 return $metadata;
             }
         }
@@ -109,13 +109,13 @@ final class Toolbox implements ToolboxInterface
 
     private function getExecutable(Tool $metadata): object
     {
-        $className = $metadata->reference->getClass();
+        $className = $metadata->getReference()->getClass();
         foreach ($this->tools as $tool) {
             if ($tool instanceof $className) {
                 return $tool;
             }
         }
 
-        throw ToolNotFoundException::notFoundForReference($metadata->reference);
+        throw ToolNotFoundException::notFoundForReference($metadata->getReference());
     }
 }

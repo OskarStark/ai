@@ -65,9 +65,9 @@ final class ChainFactoryTest extends TestCase
         $metadata = iterator_to_array($this->factory->getTool(ToolOptionalParam::class));
 
         $this->assertCount(1, $metadata);
-        $this->assertSame('optional_param', $metadata[0]->name);
-        $this->assertSame('Tool with optional param', $metadata[0]->description);
-        $this->assertSame('bar', $metadata[0]->reference->getMethod());
+        $this->assertSame('optional_param', $metadata[0]->getName());
+        $this->assertSame('Tool with optional param', $metadata[0]->getDescription());
+        $this->assertSame('bar', $metadata[0]->getReference()->getMethod());
     }
 
     public function testTestGetMetadataWithAttributeDoubleHit()

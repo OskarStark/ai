@@ -52,7 +52,7 @@ final class AgentProcessor implements InputProcessorInterface, OutputProcessorIn
         $options = $input->getOptions();
         // only filter tool map if list of strings is provided as option
         if (isset($options['tools']) && $this->isFlatStringArray($options['tools'])) {
-            $toolMap = array_values(array_filter($toolMap, fn (Tool $tool) => \in_array($tool->name, $options['tools'], true)));
+            $toolMap = array_values(array_filter($toolMap, fn (Tool $tool) => \in_array($tool->getName(), $options['tools'], true)));
         }
 
         $options['tools'] = $toolMap;

@@ -39,9 +39,9 @@ final class MemoryFactoryTest extends TestCase
 
         $this->assertCount(1, $metadata);
         $this->assertInstanceOf(Tool::class, $metadata[0]);
-        $this->assertSame('happy_birthday', $metadata[0]->name);
-        $this->assertSame('Generates birthday message', $metadata[0]->description);
-        $this->assertSame('__invoke', $metadata[0]->reference->getMethod());
+        $this->assertSame('happy_birthday', $metadata[0]->getName());
+        $this->assertSame('Generates birthday message', $metadata[0]->getDescription());
+        $this->assertSame('__invoke', $metadata[0]->getReference()->getMethod());
 
         $expectedParams = [
             'type' => 'object',
@@ -53,7 +53,7 @@ final class MemoryFactoryTest extends TestCase
             'additionalProperties' => false,
         ];
 
-        $this->assertSame($expectedParams, $metadata[0]->parameters);
+        $this->assertSame($expectedParams, $metadata[0]->getParameters());
     }
 
     public function testGetMetadataWithMultipleToolsInClass()
@@ -66,9 +66,9 @@ final class MemoryFactoryTest extends TestCase
 
         $this->assertCount(2, $metadata);
         $this->assertInstanceOf(Tool::class, $metadata[0]);
-        $this->assertSame('checkout', $metadata[0]->name);
-        $this->assertSame('Buys a number of items per product', $metadata[0]->description);
-        $this->assertSame('buy', $metadata[0]->reference->getMethod());
+        $this->assertSame('checkout', $metadata[0]->getName());
+        $this->assertSame('Buys a number of items per product', $metadata[0]->getDescription());
+        $this->assertSame('buy', $metadata[0]->getReference()->getMethod());
 
         $expectedParams = [
             'type' => 'object',
@@ -79,12 +79,12 @@ final class MemoryFactoryTest extends TestCase
             'required' => ['id', 'amount'],
             'additionalProperties' => false,
         ];
-        $this->assertSame($expectedParams, $metadata[0]->parameters);
+        $this->assertSame($expectedParams, $metadata[0]->getParameters());
 
         $this->assertInstanceOf(Tool::class, $metadata[1]);
-        $this->assertSame('cancel', $metadata[1]->name);
-        $this->assertSame('Cancels an order', $metadata[1]->description);
-        $this->assertSame('cancel', $metadata[1]->reference->getMethod());
+        $this->assertSame('cancel', $metadata[1]->getName());
+        $this->assertSame('Cancels an order', $metadata[1]->getDescription());
+        $this->assertSame('cancel', $metadata[1]->getReference()->getMethod());
 
         $expectedParams = [
             'type' => 'object',
@@ -94,6 +94,6 @@ final class MemoryFactoryTest extends TestCase
             'required' => ['orderId'],
             'additionalProperties' => false,
         ];
-        $this->assertSame($expectedParams, $metadata[1]->parameters);
+        $this->assertSame($expectedParams, $metadata[1]->getParameters());
     }
 }
