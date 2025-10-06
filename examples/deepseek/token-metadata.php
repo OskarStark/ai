@@ -21,8 +21,6 @@ $messages = new MessageBag(
     Message::forSystem('You are a pirate and you write funny.'),
     Message::ofUser('What is the Symfony framework?'),
 );
-$result = $platform->invoke('deepseek-chat', $messages, [
-    'temperature' => 0.5,
-]);
+$result = $platform->invoke('deepseek-chat', $messages);
 
 print_token_usage($result->getMetadata());
