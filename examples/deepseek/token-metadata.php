@@ -23,7 +23,6 @@ $messages = new MessageBag(
 );
 $result = $platform->invoke('deepseek-chat', $messages, [
     'temperature' => 0.5,
-    'max_tokens' => 500, // specific options just for this call
 ]);
 
 print_token_usage($result->getMetadata());

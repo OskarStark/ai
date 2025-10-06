@@ -21,8 +21,6 @@ $messages = new MessageBag(
     Message::forSystem('You are an in-universe Matrix programme, always make hints at the Matrix.'),
     Message::ofUser('Yesterday I had a Déjà vu. It is a funny feeling, no?'),
 );
-$result = $platform->invoke('deepseek-chat', $messages, [
-    'max_tokens' => 500, // specific options just for this call
-]);
+$result = $platform->invoke('deepseek-chat', $messages);
 
 echo $result->getResult()->getContent().\PHP_EOL;
