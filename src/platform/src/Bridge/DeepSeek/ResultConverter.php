@@ -35,7 +35,7 @@ final class ResultConverter implements ResultConverterInterface
 {
     public function supports(Model $model): bool
     {
-        return str_starts_with($model->getName(), 'deepseek-');
+        return $model instanceof DeepSeek;
     }
 
     public function convert(RawResultInterface|RawHttpResult $result, array $options = []): ResultInterface

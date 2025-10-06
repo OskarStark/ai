@@ -33,7 +33,7 @@ final readonly class ModelClient implements ModelClientInterface
 
     public function supports(Model $model): bool
     {
-        return str_starts_with($model->getName(), 'deepseek-');
+        return $model instanceof DeepSeek;
     }
 
     public function request(Model $model, array|string $payload, array $options = []): RawHttpResult
