@@ -11,6 +11,8 @@
 
 namespace Symfony\AI\Platform\Bridge\DeepSeek;
 
+use Symfony\AI\Platform\Bridge\DeepSeek\Chat\ModelClient;
+use Symfony\AI\Platform\Bridge\DeepSeek\Chat\ResultConverter;
 use Symfony\AI\Platform\Contract;
 use Symfony\AI\Platform\Platform;
 use Symfony\Component\HttpClient\EventSourceHttpClient;
