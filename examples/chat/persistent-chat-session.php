@@ -33,7 +33,7 @@ $requestStack->push($request);
 $store = new SessionStore($requestStack, 'chat');
 $store->setup();
 
-$agent = new Agent($platform, 'gpt-4o-mini', logger: logger());
+$agent = new Agent($platform, 'gpt-4o-mini');
 $chat = new Chat($agent, $store);
 
 $messages = new MessageBag(
