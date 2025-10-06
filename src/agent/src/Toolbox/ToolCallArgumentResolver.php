@@ -50,14 +50,14 @@ final readonly class ToolCallArgumentResolver
         $arguments = [];
 
         foreach ($parameters as $name => $reflectionParameter) {
-            if (!\array_key_exists($name, $toolCall->arguments)) {
+            if (!\array_key_exists($name, $toolCall->getArguments())) {
                 if (!$reflectionParameter->isOptional()) {
-                    throw new ToolException(\sprintf('Parameter "%s" is mandatory for tool "%s".', $name, $toolCall->name));
+                    throw new ToolException(\sprintf('Parameter "%s" is mandatory for tool "%s".', $name, $toolCall->getName()));
                 }
                 continue;
             }
 
-            $value = $toolCall->arguments[$name];
+            $value = $toolCall->getArguments()[$name];
             $parameterType = $this->typeResolver->resolve($reflectionParameter);
             $dimensions = '';
             while ($parameterType instanceof CollectionType) {

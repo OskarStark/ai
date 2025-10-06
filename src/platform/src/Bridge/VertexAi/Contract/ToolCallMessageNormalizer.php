@@ -39,7 +39,7 @@ final class ToolCallMessageNormalizer extends ModelContractNormalizer
 
         return [[
             'functionResponse' => array_filter([
-                'name' => $data->toolCall->name,
+                'name' => $data->toolCall->getName(),
                 'response' => \is_array($resultContent) ? $resultContent : [
                     'rawResponse' => $resultContent,
                 ],

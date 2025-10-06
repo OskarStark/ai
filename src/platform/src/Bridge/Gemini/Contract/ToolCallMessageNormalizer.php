@@ -38,8 +38,8 @@ final class ToolCallMessageNormalizer extends ModelContractNormalizer
 
         return [[
             'functionResponse' => array_filter([
-                'id' => $data->toolCall->id,
-                'name' => $data->toolCall->name,
+                'id' => $data->toolCall->getId(),
+                'name' => $data->toolCall->getName(),
                 'response' => \is_array($resultContent) ? $resultContent : [
                     'rawResponse' => $resultContent, // Gemini expects the response to be an object, but not everyone uses objects as their responses.
                 ],

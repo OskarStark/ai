@@ -51,9 +51,9 @@ final class AssistantMessageNormalizer extends ModelContractNormalizer implement
                 return [
                     'type' => 'function',
                     'function' => [
-                        'name' => $message->name,
+                        'name' => $message->getName(),
                         // stdClass forces empty object
-                        'arguments' => [] === $message->arguments ? new \stdClass() : $message->arguments,
+                        'arguments' => [] === $message->getArguments() ? new \stdClass() : $message->getArguments(),
                     ],
                 ];
             }, $data->toolCalls ?? [])),

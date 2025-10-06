@@ -42,7 +42,7 @@ final readonly class FaultTolerantToolbox implements ToolboxInterface
         } catch (ToolNotFoundException) {
             $names = array_map(fn (Tool $metadata) => $metadata->name, $this->getTools());
 
-            return \sprintf('Tool "%s" was not found, please use one of these: %s', $toolCall->name, implode(', ', $names));
+            return \sprintf('Tool "%s" was not found, please use one of these: %s', $toolCall->getName(), implode(', ', $names));
         }
     }
 }

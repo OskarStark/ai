@@ -22,7 +22,7 @@ final class ToolExecutionException extends \RuntimeException implements ToolExec
 
     public static function executionFailed(ToolCall $toolCall, \Throwable $previous): self
     {
-        $exception = new self(\sprintf('Execution of tool "%s" failed with error: %s', $toolCall->name, $previous->getMessage()), previous: $previous);
+        $exception = new self(\sprintf('Execution of tool "%s" failed with error: %s', $toolCall->getName(), $previous->getMessage()), previous: $previous);
         $exception->toolCall = $toolCall;
 
         return $exception;
@@ -30,6 +30,6 @@ final class ToolExecutionException extends \RuntimeException implements ToolExec
 
     public function getToolCallResult(): string
     {
-        return \sprintf('An error occurred while executing tool "%s".', $this->toolCall->name);
+        return \sprintf('An error occurred while executing tool "%s".', $this->toolCall->getName());
     }
 }

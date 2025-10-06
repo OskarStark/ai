@@ -23,7 +23,7 @@ final class ToolNotFoundException extends \RuntimeException implements Exception
 
     public static function notFoundForToolCall(ToolCall $toolCall): self
     {
-        $exception = new self(\sprintf('Tool not found for call: %s.', $toolCall->name));
+        $exception = new self(\sprintf('Tool not found for call: %s.', $toolCall->getName()));
         $exception->toolCall = $toolCall;
 
         return $exception;

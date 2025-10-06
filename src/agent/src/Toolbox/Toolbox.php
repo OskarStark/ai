@@ -78,7 +78,7 @@ final class Toolbox implements ToolboxInterface
         $tool = $this->getExecutable($metadata);
 
         try {
-            $this->logger->debug(\sprintf('Executing tool "%s".', $toolCall->name), $toolCall->arguments);
+            $this->logger->debug(\sprintf('Executing tool "%s".', $toolCall->getName()), $toolCall->getArguments());
 
             $arguments = $this->argumentResolver->resolveArguments($metadata, $toolCall);
             $this->eventDispatcher?->dispatch(new ToolCallArgumentsResolved($tool, $metadata, $arguments));
@@ -88,7 +88,7 @@ final class Toolbox implements ToolboxInterface
             $this->eventDispatcher?->dispatch(new ToolCallFailed($tool, $metadata, $arguments ?? [], $e));
             throw $e;
         } catch (\Throwable $e) {
-            $this->logger->warning(\sprintf('Failed to execute tool "%s".', $toolCall->name), ['exception' => $e]);
+            $this->logger->warning(\sprintf('Failed to execute tool "%s".', $toolCall->getName()), ['exception' => $e]);
             $this->eventDispatcher?->dispatch(new ToolCallFailed($tool, $metadata, $arguments ?? [], $e));
             throw ToolExecutionException::executionFailed($toolCall, $e);
         }
@@ -99,7 +99,7 @@ final class Toolbox implements ToolboxInterface
     private function getMetadata(ToolCall $toolCall): Tool
     {
         foreach ($this->getTools() as $metadata) {
-            if ($metadata->name === $toolCall->name) {
+            if ($metadata->name === $toolCall->getName()) {
                 return $metadata;
             }
         }
