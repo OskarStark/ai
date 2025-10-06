@@ -16,9 +16,6 @@ use Symfony\AI\Platform\Model;
 
 final class DeepSeek extends Model
 {
-    public const CHAT = 'deepseek-chat';
-    public const REASONER = 'deepseek-reasoner';
-
     public function __construct(string $name, array $options = [])
     {
         $capabilities = [

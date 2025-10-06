@@ -21,7 +21,7 @@ use Symfony\AI\Platform\Message\MessageBag;
 require_once dirname(__DIR__).'/bootstrap.php';
 
 $platform = PlatformFactory::create(env('DEEPSEEK_API_KEY'), http_client());
-$model = new DeepSeek(DeepSeek::CHAT);
+$model = new DeepSeek('deepseek-chat');
 
 $wikipedia = new Wikipedia(http_client());
 $toolbox = new Toolbox([$wikipedia]);

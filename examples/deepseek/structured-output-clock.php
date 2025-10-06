@@ -23,7 +23,7 @@ use Symfony\Component\Clock\Clock as SymfonyClock;
 require_once dirname(__DIR__).'/bootstrap.php';
 
 $platform = PlatformFactory::create(env('DEEPSEEK_API_KEY'), http_client());
-$model = new DeepSeek(DeepSeek::CHAT);
+$model = new DeepSeek('deepseek-chat');
 
 $clock = new Clock(new SymfonyClock());
 $toolbox = new Toolbox([$clock]);
