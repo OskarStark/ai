@@ -26,9 +26,10 @@ use Symfony\AI\Platform\Message\Content\Text;
 use Symfony\AI\Platform\Message\MessageBag;
 use Symfony\AI\Platform\Message\UserMessage;
 use Symfony\AI\Platform\PlatformInterface;
+use Symfony\AI\Platform\Result\DeferredResult;
 use Symfony\AI\Platform\Result\RawResultInterface;
 use Symfony\AI\Platform\Result\ResultInterface;
-use Symfony\AI\Platform\Result\ResultPromise;
+use Symfony\AI\Platform\Test\PlainConverter;
 
 final class AgentTest extends TestCase
 {
@@ -120,7 +121,7 @@ final class AgentTest extends TestCase
             ->with($this->isInstanceOf(Input::class));
 
         $rawResult = $this->createMock(RawResultInterface::class);
-        $response = new ResultPromise(fn () => $result, $rawResult, []);
+        $response = new DeferredResult(new PlainConverter($result), $rawResult, []);
 
         $platform->expects($this->once())
             ->method('invoke')
@@ -146,7 +147,7 @@ final class AgentTest extends TestCase
             ->with($this->isInstanceOf(Output::class));
 
         $rawResult = $this->createMock(RawResultInterface::class);
-        $response = new ResultPromise(fn () => $result, $rawResult, []);
+        $response = new DeferredResult(new PlainConverter($result), $rawResult, []);
 
         $platform->expects($this->once())
             ->method('invoke')
@@ -166,7 +167,7 @@ final class AgentTest extends TestCase
         $result = $this->createMock(ResultInterface::class);
 
         $rawResult = $this->createMock(RawResultInterface::class);
-        $response = new ResultPromise(fn () => $result, $rawResult, []);
+        $response = new DeferredResult(new PlainConverter($result), $rawResult, []);
 
         $platform->expects($this->once())
             ->method('invoke')
@@ -186,7 +187,7 @@ final class AgentTest extends TestCase
         $result = $this->createMock(ResultInterface::class);
 
         $rawResult = $this->createMock(RawResultInterface::class);
-        $response = new ResultPromise(fn () => $result, $rawResult, []);
+        $response = new DeferredResult(new PlainConverter($result), $rawResult, []);
 
         $platform->expects($this->once())
             ->method('invoke')
@@ -207,7 +208,7 @@ final class AgentTest extends TestCase
         $result = $this->createMock(ResultInterface::class);
 
         $rawResult = $this->createMock(RawResultInterface::class);
-        $response = new ResultPromise(fn () => $result, $rawResult, []);
+        $response = new DeferredResult(new PlainConverter($result), $rawResult, []);
 
         $platform->expects($this->once())
             ->method('invoke')

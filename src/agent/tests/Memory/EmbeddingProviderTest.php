@@ -20,9 +20,10 @@ use Symfony\AI\Platform\Message\Message;
 use Symfony\AI\Platform\Message\MessageBag;
 use Symfony\AI\Platform\Model;
 use Symfony\AI\Platform\PlatformInterface;
+use Symfony\AI\Platform\Result\DeferredResult;
 use Symfony\AI\Platform\Result\RawResultInterface;
-use Symfony\AI\Platform\Result\ResultPromise;
 use Symfony\AI\Platform\Result\VectorResult;
+use Symfony\AI\Platform\Test\PlainConverter;
 use Symfony\AI\Platform\Vector\Vector;
 use Symfony\AI\Store\StoreInterface;
 
@@ -78,8 +79,8 @@ final class EmbeddingProviderTest extends TestCase
     public function testItIsNotCreatingMemoryWhenNoVectorsFound()
     {
         $vectorResult = new VectorResult($vector = new Vector([0.1, 0.2], 2));
-        $resultPromise = new ResultPromise(
-            static fn () => $vectorResult,
+        $deferredResult = new DeferredResult(
+            new PlainConverter($vectorResult),
             $this->createStub(RawResultInterface::class),
         );
 
@@ -87,7 +88,7 @@ final class EmbeddingProviderTest extends TestCase
         $platform->expects($this->once())
             ->method('invoke')
             ->with('text-embedding-3-small', 'Have we talked about the weather?')
-            ->willReturn($resultPromise);
+            ->willReturn($deferredResult);
 
         $store = $this->createMock(StoreInterface::class);
         $store->expects($this->once())
@@ -109,8 +110,8 @@ final class EmbeddingProviderTest extends TestCase
     public function testItIsCreatingMemoryWithFoundVectors()
     {
         $vectorResult = new VectorResult($vector = new Vector([0.1, 0.2], 2));
-        $resultPromise = new ResultPromise(
-            static fn () => $vectorResult,
+        $deferredResult = new DeferredResult(
+            new PlainConverter($vectorResult),
             $this->createStub(RawResultInterface::class),
         );
 
@@ -118,7 +119,7 @@ final class EmbeddingProviderTest extends TestCase
         $platform->expects($this->once())
             ->method('invoke')
             ->with('text-embedding-3-small', 'Have we talked about the weather?')
-            ->willReturn($resultPromise);
+            ->willReturn($deferredResult);
 
         $store = $this->createMock(StoreInterface::class);
         $store->expects($this->once())

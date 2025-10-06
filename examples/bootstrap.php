@@ -15,7 +15,7 @@ use Symfony\AI\Agent\Exception\ExceptionInterface as AgentException;
 use Symfony\AI\Platform\Exception\ExceptionInterface as PlatformException;
 use Symfony\AI\Platform\Metadata\Metadata;
 use Symfony\AI\Platform\Metadata\TokenUsage;
-use Symfony\AI\Platform\Result\ResultPromise;
+use Symfony\AI\Platform\Result\DeferredResult;
 use Symfony\AI\Store\Exception\ExceptionInterface as StoreException;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Logger\ConsoleLogger;
@@ -120,7 +120,7 @@ function print_token_usage(Metadata $metadata): void
     $table->render();
 }
 
-function print_vectors(ResultPromise $result): void
+function print_vectors(DeferredResult $result): void
 {
     assert([] !== $result->asVectors());
     assert(array_key_exists(0, $result->asVectors()));
@@ -178,7 +178,7 @@ function perplexity_print_citations(Metadata $metadata): void
     }
 }
 
-function print_stream(ResultPromise $result): void
+function print_stream(DeferredResult $result): void
 {
     foreach ($result->asStream() as $word) {
         echo $word;
