@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\AI\Platform\Bridge\DeepSeek\Chat;
+namespace Symfony\AI\Platform\Bridge\DeepSeek;
 
 use Symfony\AI\Platform\Bridge\DeepSeek\DeepSeek;
 use Symfony\AI\Platform\Model;
