@@ -11,20 +11,12 @@
 
 namespace Symfony\AI\Platform\Bridge\DeepSeek;
 
-use Symfony\AI\Platform\Capability;
 use Symfony\AI\Platform\Model;
 
 final class DeepSeek extends Model
 {
     public function __construct(string $name, array $options = [])
     {
-        $capabilities = [
-            Capability::INPUT_MESSAGES,
-            Capability::OUTPUT_STREAMING,
-            Capability::OUTPUT_STRUCTURED,
-            Capability::TOOL_CALLING,
-        ];
-
-        parent::__construct($name, $capabilities, $options);
+        parent::__construct($name, [], $options);
     }
 }
