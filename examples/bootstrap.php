@@ -180,7 +180,7 @@ function perplexity_print_citations(Metadata $metadata): void
 
 function print_stream(ResultPromise $result): void
 {
-    foreach ($result->getResult()->getContent() as $word) {
+    foreach ($result->asStream() as $word) {
         echo $word;
     }
     echo \PHP_EOL;

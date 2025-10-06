@@ -22,4 +22,4 @@ $result = $platform->invoke('mistral-large-latest', $messages, [
     'temperature' => 0.7,
 ]);
 
-echo $result->getResult()->getContent().\PHP_EOL;
+echo $result->asText().\PHP_EOL;

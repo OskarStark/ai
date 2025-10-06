@@ -25,4 +25,4 @@ $result = $platform->invoke('gpt-4o-mini', $messages, [
     'max_tokens' => 500, // specific options just for this call
 ]);
 
-echo $result->getResult()->getContent().\PHP_EOL;
+echo $result->asText().\PHP_EOL;

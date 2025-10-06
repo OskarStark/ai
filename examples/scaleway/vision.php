@@ -26,4 +26,4 @@ $messages = new MessageBag(
 );
 $result = $platform->invoke('pixtral-12b-2409', $messages);
 
-echo $result->getResult()->getContent().\PHP_EOL;
+echo $result->asText().\PHP_EOL;

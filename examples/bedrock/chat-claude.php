@@ -29,4 +29,4 @@ $messages = new MessageBag(
 );
 $result = $platform->invoke('claude-3-7-sonnet-20250219', $messages);
 
-echo $result->getResult()->getContent().\PHP_EOL;
+echo $result->asText().\PHP_EOL;

@@ -18,7 +18,7 @@ require_once dirname(__DIR__).'/bootstrap.php';
 $platform = PlatformFactory::create(env('PERPLEXITY_API_KEY'), http_client());
 
 $messages = new MessageBag(Message::ofUser('What is the best French cheese?'));
-$response = $platform->invoke('sonar', $messages, [
+$result = $platform->invoke('sonar', $messages, [
     'search_domain_filter' => [
         'https://en.wikipedia.org/wiki/Cheese',
     ],
@@ -27,4 +27,4 @@ $response = $platform->invoke('sonar', $messages, [
     'search_recency_filter' => 'week',
 ]);
 
-echo $response->getResult()->getContent().\PHP_EOL;
+echo $result->asText().\PHP_EOL;

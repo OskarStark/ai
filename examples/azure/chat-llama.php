@@ -26,4 +26,4 @@ $result = $platform->invoke('llama-3.3-70B-Instruct', $messages, [
     'frequency_penalty' => 0,
 ]);
 
-echo $result->getResult()->getContent().\PHP_EOL;
+echo $result->asText().\PHP_EOL;

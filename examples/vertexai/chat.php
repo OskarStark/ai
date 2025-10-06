@@ -23,4 +23,4 @@ $messages = new MessageBag(
 );
 $result = $platform->invoke('gemini-2.5-flash', $messages);
 
-echo $result->getResult()->getContent().\PHP_EOL;
+echo $result->asText().\PHP_EOL;

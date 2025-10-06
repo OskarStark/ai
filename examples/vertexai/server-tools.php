@@ -27,4 +27,4 @@ $messages = new MessageBag(
 
 $result = $platform->invoke('gemini-2.5-pro', $messages, ['server_tools' => ['url_context' => true]]);
 
-echo $result->getResult()->getContent().\PHP_EOL;
+echo $result->asText().\PHP_EOL;

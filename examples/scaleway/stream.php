@@ -23,7 +23,7 @@ $messages = new MessageBag(
 );
 $result = $platform->invoke('gpt-oss-120b', $messages, ['stream' => true]);
 
-foreach ($result->getResult()->getContent() as $word) {
+foreach ($result->asStream() as $word) {
     echo $word;
 }
 echo \PHP_EOL;

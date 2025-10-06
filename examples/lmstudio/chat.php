@@ -25,4 +25,4 @@ $result = $platform->invoke('gemma-3-4b-it-qat', $messages, [
     'max_tokens' => 500, // specific options just for this call
 ]);
 
-echo $result->getResult()->getContent().\PHP_EOL;
+echo $result->asText().\PHP_EOL;

@@ -29,4 +29,4 @@ $messages = new MessageBag(
 );
 $result = $platform->invoke('llama-3.2-3b-instruct', $messages);
 
-echo $result->getResult()->getContent().\PHP_EOL;
+echo $result->asText().\PHP_EOL;

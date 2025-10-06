@@ -27,4 +27,4 @@ $messages = new MessageBag(
 );
 $result = $platform->invoke('google/gemma-3-27b-it', $messages);
 
-echo $result->getResult()->getContent().\PHP_EOL;
+echo $result->asText().\PHP_EOL;

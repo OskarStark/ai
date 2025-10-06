@@ -24,7 +24,7 @@ $messages = new MessageBag(
 
 try {
     $result = $platform->invoke(env('OLLAMA_LLM'), $messages);
-    echo $result->getResult()->getContent().\PHP_EOL;
+    echo $result->asText().\PHP_EOL;
 } catch (InvalidArgumentException $e) {
     echo $e->getMessage()."\nMaybe use a different model?\n";
 }
