@@ -11,8 +11,10 @@
 
 namespace Symfony\AI\Platform\Bridge\VertexAi\Gemini;
 
+use Symfony\AI\Platform\Exception\RateLimitExceededException;
 use Symfony\AI\Platform\Exception\RuntimeException;
 use Symfony\AI\Platform\Model as BaseModel;
+use Symfony\AI\Platform\Result\BinaryResult;
 use Symfony\AI\Platform\Result\ChoiceResult;
 use Symfony\AI\Platform\Result\RawHttpResult;
 use Symfony\AI\Platform\Result\RawResultInterface;
@@ -42,8 +44,14 @@ final readonly class ResultConverter implements ResultConverterInterface
 
     public function convert(RawResultInterface|RawHttpResult $result, array $options = []): ResultInterface
     {
+        $response = $result->getObject();
+
+        if (429 === $response->getStatusCode()) {
+            throw new RateLimitExceededException();
+        }
+
         if ($options['stream'] ?? false) {
-            return new StreamResult($this->convertStream($result->getObject()));
+            return new StreamResult($this->convertStream($response));
         }
 
         $data = $result->getData();
@@ -125,7 +133,7 @@ final readonly class ResultConverter implements ResultConverterInterface
      *     }
      * } $choice
      */
-    private function convertChoice(array $choice): ToolCallResult|TextResult
+    private function convertChoice(array $choice): ToolCallResult|TextResult|BinaryResult
     {
         $contentParts = $choice['content']['parts'];
 
@@ -141,6 +149,10 @@ final readonly class ResultConverter implements ResultConverterInterface
 
             if (isset($contentPart['text'])) {
                 return new TextResult($contentPart['text']);
+            }
+
+            if (isset($contentPart['inlineData'])) {
+                return new BinaryResult($contentPart['inlineData']['data'], $contentPart['inlineData']['mimeType'] ?? null);
             }
 
             throw new RuntimeException(\sprintf('Unsupported finish reason "%s".', $choice['finishReason']));
