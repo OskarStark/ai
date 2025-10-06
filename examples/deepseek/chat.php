@@ -18,9 +18,7 @@ use Symfony\AI\Platform\Message\MessageBag;
 require_once dirname(__DIR__).'/bootstrap.php';
 
 $platform = PlatformFactory::create(env('DEEPSEEK_API_KEY'), http_client());
-$model = new DeepSeek(DeepSeek::CHAT, [
-    'temperature' => 0.5, // default options for the model in every call
-]);
+$model = new DeepSeek(DeepSeek::CHAT);
 
 $agent = new Agent($platform, $model, logger: logger());
 $messages = new MessageBag(
