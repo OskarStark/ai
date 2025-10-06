@@ -23,4 +23,4 @@ $messages = new MessageBag(
 );
 $result = $platform->invoke('deepseek-chat', $messages);
 
-echo $result->getResult()->getContent().\PHP_EOL;
+echo $result->getContent().\PHP_EOL;

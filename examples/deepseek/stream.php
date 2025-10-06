@@ -25,7 +25,7 @@ $result = $platform->invoke('deepseek-chat', $messages, [
     'stream' => true, // enable streaming of response text
 ]);
 
-foreach ($result->getResult()->getContent() as $word) {
+foreach ($result->getContent() as $word) {
     echo $word;
 }
 echo \PHP_EOL;
