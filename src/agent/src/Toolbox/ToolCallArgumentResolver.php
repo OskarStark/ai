@@ -43,7 +43,7 @@ final readonly class ToolCallArgumentResolver
      */
     public function resolveArguments(Tool $metadata, ToolCall $toolCall): array
     {
-        $method = new \ReflectionMethod($metadata->reference->class, $metadata->reference->method);
+        $method = new \ReflectionMethod($metadata->reference->getClass(), $metadata->reference->getMethod());
 
         /** @var array<string, \ReflectionParameter> $parameters */
         $parameters = array_column($method->getParameters(), null, 'name');

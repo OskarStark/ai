@@ -82,7 +82,7 @@ final class Toolbox implements ToolboxInterface
 
             $arguments = $this->argumentResolver->resolveArguments($metadata, $toolCall);
             $this->eventDispatcher?->dispatch(new ToolCallArgumentsResolved($tool, $metadata, $arguments));
-            $result = $tool->{$metadata->reference->method}(...$arguments);
+            $result = $tool->{$metadata->reference->getMethod()}(...$arguments);
             $this->eventDispatcher?->dispatch(new ToolCallSucceeded($tool, $metadata, $arguments, $result));
         } catch (ToolExecutionExceptionInterface $e) {
             $this->eventDispatcher?->dispatch(new ToolCallFailed($tool, $metadata, $arguments ?? [], $e));
@@ -109,8 +109,9 @@ final class Toolbox implements ToolboxInterface
 
     private function getExecutable(Tool $metadata): object
     {
+        $className = $metadata->reference->getClass();
         foreach ($this->tools as $tool) {
-            if ($tool instanceof $metadata->reference->class) {
+            if ($tool instanceof $className) {
                 return $tool;
             }
         }

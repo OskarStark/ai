@@ -41,7 +41,7 @@ final class MemoryFactoryTest extends TestCase
         $this->assertInstanceOf(Tool::class, $metadata[0]);
         $this->assertSame('happy_birthday', $metadata[0]->name);
         $this->assertSame('Generates birthday message', $metadata[0]->description);
-        $this->assertSame('__invoke', $metadata[0]->reference->method);
+        $this->assertSame('__invoke', $metadata[0]->reference->getMethod());
 
         $expectedParams = [
             'type' => 'object',
@@ -68,7 +68,7 @@ final class MemoryFactoryTest extends TestCase
         $this->assertInstanceOf(Tool::class, $metadata[0]);
         $this->assertSame('checkout', $metadata[0]->name);
         $this->assertSame('Buys a number of items per product', $metadata[0]->description);
-        $this->assertSame('buy', $metadata[0]->reference->method);
+        $this->assertSame('buy', $metadata[0]->reference->getMethod());
 
         $expectedParams = [
             'type' => 'object',
@@ -84,7 +84,7 @@ final class MemoryFactoryTest extends TestCase
         $this->assertInstanceOf(Tool::class, $metadata[1]);
         $this->assertSame('cancel', $metadata[1]->name);
         $this->assertSame('Cancels an order', $metadata[1]->description);
-        $this->assertSame('cancel', $metadata[1]->reference->method);
+        $this->assertSame('cancel', $metadata[1]->reference->getMethod());
 
         $expectedParams = [
             'type' => 'object',

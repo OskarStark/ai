@@ -31,6 +31,6 @@ final class ToolNotFoundException extends \RuntimeException implements Exception
 
     public static function notFoundForReference(ExecutionReference $reference): self
     {
-        return new self(\sprintf('Tool not found for reference: %s::%s.', $reference->class, $reference->method));
+        return new self(\sprintf('Tool not found for reference: %s::%s.', $reference->getClass(), $reference->getMethod()));
     }
 }
