@@ -11,7 +11,6 @@
 
 namespace Symfony\AI\Platform\Bridge\DeepSeek;
 
-use Symfony\AI\Platform\Bridge\DeepSeek\DeepSeek;
 use Symfony\AI\Platform\Model;
 use Symfony\AI\Platform\ModelClientInterface;
 use Symfony\AI\Platform\Result\RawHttpResult;
@@ -34,7 +33,7 @@ final readonly class ModelClient implements ModelClientInterface
 
     public function supports(Model $model): bool
     {
-        return $model instanceof DeepSeek;
+        return str_starts_with($model->getName(), 'deepseek-');
     }
 
     public function request(Model $model, array|string $payload, array $options = []): RawHttpResult

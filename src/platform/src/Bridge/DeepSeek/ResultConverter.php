@@ -11,7 +11,6 @@
 
 namespace Symfony\AI\Platform\Bridge\DeepSeek;
 
-use Symfony\AI\Platform\Bridge\DeepSeek\DeepSeek;
 use Symfony\AI\Platform\Exception\ContentFilterException;
 use Symfony\AI\Platform\Exception\InvalidRequestException;
 use Symfony\AI\Platform\Exception\RuntimeException;
@@ -37,7 +36,7 @@ final class ResultConverter implements ResultConverterInterface
 {
     public function supports(Model $model): bool
     {
-        return $model instanceof DeepSeek;
+        return str_starts_with($model->getName(), 'deepseek-');
     }
 
     public function convert(RawResultInterface|RawHttpResult $result, array $options = []): ResultInterface
