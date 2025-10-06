@@ -19,7 +19,7 @@ final class DeepSeek extends Model
     public const CHAT = 'deepseek-chat';
     public const REASONER = 'deepseek-reasoner';
 
-    public function __construct(string $name = self::CHAT, array $options = ['temperature' => 1.0])
+    public function __construct(string $name = self::CHAT, array $options = [])
     {
         $capabilities = [
             Capability::INPUT_MESSAGES,
