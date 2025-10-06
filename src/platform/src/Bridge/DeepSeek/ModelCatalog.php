@@ -12,7 +12,6 @@
 namespace Symfony\AI\Platform\Bridge\DeepSeek;
 
 use Symfony\AI\Platform\Capability;
-use Symfony\AI\Platform\Model;
 use Symfony\AI\Platform\ModelCatalog\AbstractModelCatalog;
 
 /**
@@ -27,7 +26,7 @@ final class ModelCatalog extends AbstractModelCatalog
     {
         $defaultModels = [
             'deepseek-chat' => [
-                'class' => Model::class,
+                'class' => DeepSeek::class,
                 'capabilities' => [
                     Capability::INPUT_MESSAGES,
                     Capability::OUTPUT_TEXT,
@@ -37,7 +36,7 @@ final class ModelCatalog extends AbstractModelCatalog
                 ],
             ],
             'deepseek-reasoner' => [
-                'class' => Model::class,
+                'class' => DeepSeek::class,
                 'capabilities' => [
                     Capability::INPUT_MESSAGES,
                     Capability::OUTPUT_TEXT,
