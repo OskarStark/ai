@@ -24,9 +24,9 @@ $platform = PlatformFactory::create(env('DEEPSEEK_API_KEY'), http_client());
 $model = new DeepSeek(DeepSeek::CHAT);
 
 $clock = new Clock();
-$toolbox = new Toolbox([$clock], logger: logger());
+$toolbox = new Toolbox([$clock]);
 $processor = new AgentProcessor($toolbox);
-$agent = new Agent($platform, $model, [$processor], [$processor], logger: logger());
+$agent = new Agent($platform, $model, [$processor], [$processor]);
 
 $messages = new MessageBag(Message::ofUser('How many days until next Christmas?'));
 $result = $agent->call($messages);

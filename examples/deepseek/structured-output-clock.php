@@ -26,7 +26,7 @@ $platform = PlatformFactory::create(env('DEEPSEEK_API_KEY'), http_client());
 $model = new DeepSeek(DeepSeek::CHAT);
 
 $clock = new Clock(new SymfonyClock());
-$toolbox = new Toolbox([$clock], logger: logger());
+$toolbox = new Toolbox([$clock]);
 $toolProcessor = new ToolProcessor($toolbox);
 $structuredOutputProcessor = new StructuredOutputProcessor();
 $agent = new Agent($platform, $model, [$toolProcessor, $structuredOutputProcessor], [$toolProcessor, $structuredOutputProcessor]);

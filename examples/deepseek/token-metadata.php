@@ -9,26 +9,20 @@
  * file that was distributed with this source code.
  */
 
-use Symfony\AI\Agent\Agent;
-use Symfony\AI\Platform\Bridge\DeepSeek\DeepSeek;
 use Symfony\AI\Platform\Bridge\DeepSeek\PlatformFactory;
-use Symfony\AI\Platform\Bridge\OpenAi\TokenOutputProcessor;
 use Symfony\AI\Platform\Message\Message;
 use Symfony\AI\Platform\Message\MessageBag;
 
 require_once dirname(__DIR__).'/bootstrap.php';
 
 $platform = PlatformFactory::create(env('DEEPSEEK_API_KEY'), http_client());
-$model = new DeepSeek(DeepSeek::CHAT, [
-    'temperature' => 0.5, // default options for the model in every call
-]);
 
-$agent = new Agent($platform, $model, outputProcessors: [new TokenOutputProcessor()], logger: logger());
 $messages = new MessageBag(
     Message::forSystem('You are a pirate and you write funny.'),
     Message::ofUser('What is the Symfony framework?'),
 );
-$result = $agent->call($messages, [
+$result = $platform->invoke('deepseek-chat', $messages, [
+    'temperature' => 0.5,
     'max_tokens' => 500, // specific options just for this call
 ]);
 

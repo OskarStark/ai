@@ -24,9 +24,9 @@ $platform = PlatformFactory::create(env('DEEPSEEK_API_KEY'), http_client());
 $model = new DeepSeek(DeepSeek::CHAT);
 
 $wikipedia = new Wikipedia(http_client());
-$toolbox = new Toolbox([$wikipedia], logger: logger());
+$toolbox = new Toolbox([$wikipedia]);
 $processor = new AgentProcessor($toolbox);
-$agent = new Agent($platform, $model, [$processor], [$processor], logger: logger());
+$agent = new Agent($platform, $model, [$processor], [$processor]);
 $messages = new MessageBag(Message::ofUser(<<<TXT
         First, define unicorn in 30 words.
         Then lookup at Wikipedia what the irish history looks like in 2 sentences.

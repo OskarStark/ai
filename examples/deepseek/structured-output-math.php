@@ -23,7 +23,7 @@ $platform = PlatformFactory::create(env('DEEPSEEK_API_KEY'), http_client());
 $model = new DeepSeek(DeepSeek::CHAT);
 
 $processor = new AgentProcessor();
-$agent = new Agent($platform, $model, [$processor], [$processor], logger: logger());
+$agent = new Agent($platform, $model, [$processor], [$processor]);
 // todo: this example does not work with ['output_structure' => MathReasoning::class] out of the box
 $messages = new MessageBag(
     Message::forSystem('You are a helpful math tutor. Guide the user through the solution step by step.'),
