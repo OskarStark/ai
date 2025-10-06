@@ -14,26 +14,25 @@ namespace Symfony\AI\Platform\Bridge\DeepSeek;
 use Symfony\AI\Platform\Bridge\DeepSeek\Chat\ModelClient;
 use Symfony\AI\Platform\Bridge\DeepSeek\Chat\ResultConverter;
 use Symfony\AI\Platform\Contract;
+use Symfony\AI\Platform\ModelCatalog\ModelCatalogInterface;
 use Symfony\AI\Platform\Platform;
 use Symfony\Component\HttpClient\EventSourceHttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-final class PlatformFactory
+final readonly class PlatformFactory
 {
     public static function create(
         #[\SensitiveParameter] string $apiKey,
         ?HttpClientInterface $httpClient = null,
+        ModelCatalogInterface $modelCatalog = new ModelCatalog(),
         ?Contract $contract = null,
     ): Platform {
         $httpClient = $httpClient instanceof EventSourceHttpClient ? $httpClient : new EventSourceHttpClient($httpClient);
 
         return new Platform(
-            [
-                new ModelClient($httpClient, $apiKey),
-            ],
-            [
-                new ResultConverter(),
-            ],
+            [new ModelClient($httpClient, $apiKey)],
+            [new ResultConverter()],
+            $modelCatalog,
             $contract ?? Contract::create(),
         );
     }
