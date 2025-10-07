@@ -38,6 +38,8 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
 )]
 final class AgentCallCommand extends Command
 {
+    private AgentInterface $agent;
+
     /**
      * @param ServiceLocator<AgentInterface> $agents
      */
@@ -104,26 +106,20 @@ final class AgentCallCommand extends Command
         $input->setArgument('agent', $selectedAgent);
     }
 
+    protected function initialize(InputInterface $input, OutputInterface $output): void
+    {
+        $agentName = trim((string) $input->getArgument('agent'));
+
+        if (!$this->agents->has($agentName)) {
+            throw new InvalidArgumentException(\sprintf('Agent "%s" not found. Available agents: "%s"', $agentName, implode(', ', array_keys($this->agents->getProvidedServices()))));
+        }
+
+        $this->agent = $this->agents->get($agentName);
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $availableAgents = array_keys($this->agents->getProvidedServices());
-
-        if (0 === \count($availableAgents)) {
-            throw new InvalidArgumentException('No agents are configured.');
-        }
-
-        $agentArg = $input->getArgument('agent');
-        $agentName = \is_string($agentArg) ? $agentArg : '';
-
-        if ($agentName && !$this->agents->has($agentName)) {
-            throw new InvalidArgumentException(\sprintf('Agent "%s" not found. Available agents: "%s"', $agentName, implode(', ', $availableAgents)));
-        }
-
-        if (!$agentName) {
-            throw new InvalidArgumentException(\sprintf('Agent name is required. Available agents: "%s"', implode(', ', $availableAgents)));
-        }
-
-        $agent = $this->agents->get($agentName);
+        $agentName = (string) $input->getArgument('agent');
 
         $io = new SymfonyStyle($input, $output);
 
@@ -149,7 +145,7 @@ final class AgentCallCommand extends Command
             $messages->add(Message::ofUser($userInput));
 
             try {
-                $result = $agent->call($messages);
+                $result = $this->agent->call($messages);
 
                 if (!$systemPromptDisplayed && null !== ($systemMessage = $messages->getSystemMessage())) {
                     $io->section('System Prompt');
