@@ -38,6 +38,7 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
 )]
 final class AgentCallCommand extends Command
 {
+    private string $agentName;
     private AgentInterface $agent;
 
     /**
@@ -108,22 +109,20 @@ final class AgentCallCommand extends Command
 
     protected function initialize(InputInterface $input, OutputInterface $output): void
     {
-        $agentName = trim((string) $input->getArgument('agent'));
+        $this->agentName = trim((string) $input->getArgument('agent'));
 
-        if (!$this->agents->has($agentName)) {
-            throw new InvalidArgumentException(\sprintf('Agent "%s" not found. Available agents: "%s"', $agentName, implode(', ', array_keys($this->agents->getProvidedServices()))));
+        if (!$this->agents->has($this->agentName)) {
+            throw new InvalidArgumentException(\sprintf('Agent "%s" not found. Available agents: "%s"', $this->agentName, implode(', ', array_keys($this->agents->getProvidedServices()))));
         }
 
-        $this->agent = $this->agents->get($agentName);
+        $this->agent = $this->agents->get($this->agentName);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $agentName = (string) $input->getArgument('agent');
-
         $io = new SymfonyStyle($input, $output);
 
-        $io->title(\sprintf('Chat with %s Agent', $agentName));
+        $io->title(\sprintf('Chat with %s Agent', $this->agentName));
         $io->info('Type your message and press Enter. Type "exit" or "quit" to end the conversation.');
         $io->newLine();
 
