@@ -4,11 +4,11 @@ on:
     push:
         paths:
             - '**.rst'
-            - 'src/*/doc/**'
+            - 'docs/**'
     pull_request:
         paths:
             - '**.rst'
-            - 'src/*/doc/**'
+            - 'docs/**'
 
 jobs:
     doctor-rst:
