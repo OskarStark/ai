@@ -73,7 +73,8 @@ The Code Execution tool provides a sandboxed environment for running code::
     $result = $platform->invoke($model, $messages);
 
 
-## Using Multiple Server Tools
+Using Multiple Server Tools
+---------------------------
 
 You can enable multiple server tools simultaneously::
 

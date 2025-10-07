@@ -236,7 +236,7 @@ tools in the same chain - which even enables you to overwrite the pre-existing c
     $reflectionFactory = new ReflectionToolFactory(); // Register tools with #[AsTool] attribute
     $metadataFactory = (new MemoryToolFactory())      // Register or overwrite tools explicitly
         ->addTool(...);
-    $toolbox = new Toolbox(new AgentFactory($metadataFactory, $reflectionFactory), [...]);
+    $toolbox = new Toolbox(new ChainFactory($metadataFactory, $reflectionFactory), [...]);
 
 .. note::
 
@@ -362,7 +362,7 @@ messages will be added to your MessageBag::
     // Platform & LLM instantiation
     $messages = new MessageBag(
         Message::forSystem(<<<PROMPT
-            Please answer all user questions only using the similary_search tool. Do not add information and if you cannot
+            Please answer all user questions only using the similarity_search tool. Do not add information and if you cannot
             find an answer, say so.
             PROMPT),
         Message::ofUser('...') // The user's question.
@@ -415,7 +415,7 @@ more accurate and context-aware results. Therefore, the component provides a bui
 
     $messages = new MessageBag(
         Message::forSystem(<<<PROMPT
-            Please answer all user questions only using the similary_search tool. Do not add information and if you cannot
+            Please answer all user questions only using the similarity_search tool. Do not add information and if you cannot
             find an answer, say so.
             PROMPT),
         Message::ofUser('...') // The user's question.

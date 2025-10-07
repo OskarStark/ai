@@ -42,12 +42,8 @@ Grounding with Google Search
 
 The Grounding tool allows the model to connect its responses to verifiable sources of information, enhancing the reliability
 of its outputs. More at https://cloud.google.com/vertex-ai/generative-ai/docs/grounding/overview
-Below is an example of grounding a model's responses using Google Search, which uses publicly-available web data.
-
-* Grounding with Google Search *
 
 Ground a model's responses using Google Search, which uses publicly-available web data.
-More info can be found at https://cloud.google.com/vertex-ai/generative-ai/docs/grounding/overview
 
 ::
 
