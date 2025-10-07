@@ -29,13 +29,13 @@ The URL Context tool allows the model to fetch and analyze content from specifie
 
 ::
 
-    $model = new VertexAi\Gemini\Model('gemini-2.5-pro', ['server_tools' => ['url_context' => true]]);
-
     $messages = new MessageBag(
         Message::ofUser("Based on https://www.euribor-rates.eu/en/current-euribor-rates/4/euribor-rate-12-months/, what is the latest 12-month Euribor rate?"),
     );
 
-    $result = $platform->invoke($model, $messages);
+    $result = $platform->invoke('gemini-2.5-pro', $messages, [
+        'server_tools' => ['url_context' => true],
+    ]);
 
 Grounding with Google Search
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -47,17 +47,15 @@ Ground a model's responses using Google Search, which uses publicly-available we
 
 ::
 
-    $model = new VertexAi\Gemini\Model('gemini-2.5-pro', [
-        'server_tools' => [
-            'google_search' => true,
-        ],
-    ]);
-
     $messages = new MessageBag(
         Message::ofUser('What are the top breakthroughs in AI in 2025 so far?')
     );
 
-    $result = $platform->invoke($model, $messages);
+    $result = $platform->invoke('gemini-2.5-pro', $messages, [
+        'server_tools' => [
+            'google_search' => true,
+        ],
+    ]);
 
 Code Execution
 ~~~~~~~~~~~~~~
@@ -67,17 +65,15 @@ More info can be found at https://cloud.google.com/vertex-ai/generative-ai/docs/
 
 ::
 
-    $model = new Gemini('gemini-2.5-pro-preview-03-25', [
-        'server_tools' => [
-            'code_execution' => true,
-        ],
-    ]);
-
     $messages = new MessageBag(
         Message::ofUser('Write Python code to calculate the 50th Fibonacci number and run it')
     );
 
-    $result = $platform->invoke($model, $messages);
+    $result = $platform->invoke('gemini-2.5-pro-preview-03-25', $messages, [
+        'server_tools' => [
+            'code_execution' => true,
+        ],
+    ]);
 
 
 Using Multiple Server Tools
@@ -85,7 +81,11 @@ Using Multiple Server Tools
 
 You can enable multiple tools in a single request::
 
-    $model = new Gemini('gemini-2.5-pro-preview-03-25', [
+    $messages = new MessageBag(
+        Message::ofUser('Write Python code to calculate the 50th Fibonacci number and run it')
+    );
+
+    $result = $platform->invoke('gemini-2.5-pro-preview-03-25', $messages, [
         'server_tools' => [
             'google_search' => true,
             'code_execution' => true,

@@ -1,13 +1,12 @@
 Symfony AI - Agent Component
 ============================
 
-The Agent component provides a framework for building AI agents that, sits on top of the Platform and Store components,
-allowing you to create agents that can interact with users, perform tasks, and manage workflows.
+The Agent component provides a framework for building AI agents that,
+sits on top of the Platform and Store components, allowing you to create
+agents that can interact with users, perform tasks, and manage workflows.
 
 Installation
 ------------
-
-Install the component using Composer:
 
 .. code-block:: terminal
 
@@ -16,26 +15,26 @@ Install the component using Composer:
 Basic Usage
 -----------
 
-To instantiate an agent, you need to pass a ``Symfony\AI\Platform\PlatformInterface`` and a
-``Symfony\AI\Platform\Model`` instance to the ``Symfony\AI\Agent\Agent`` class::
+To instantiate an agent, you need to pass a :class:`Symfony\\AI\\Platform\\PlatformInterface` and a
+:class:`Symfony\\AI\\Platform\\Model` instance to the :class:`Symfony\\AI\\Agent\\Agent` class::
 
     use Symfony\AI\Agent\Agent;
     use Symfony\AI\Platform\Bridge\OpenAi\Gpt;
     use Symfony\AI\Platform\Bridge\OpenAi\PlatformFactory;
 
     $platform = PlatformFactory::create($apiKey);
-    $model = new Gpt(Gpt::GPT_4O_MINI);
+    $model = 'gpt-4o-mini';
 
     $agent = new Agent($platform, $model);
 
-You can then run the agent with a ``Symfony\AI\Platform\Message\MessageBagInterface`` instance as input and an optional
+You can then run the agent with a :class:`Symfony\\AI\\Platform\\Message\\MessageBagInterface` instance as input and an optional
 array of options::
 
     use Symfony\AI\Agent\Agent;
     use Symfony\AI\Platform\Message\Message;
     use Symfony\AI\Platform\Message\MessageBag;
 
-    // Platform & LLM instantiation
+    // Platform instantiation
 
     $agent = new Agent($platform, $model);
     $input = new MessageBag(
@@ -67,7 +66,7 @@ Tool calling can be enabled by registering the processors in the agent::
     use Symfony\AI\Agent\Toolbox\AgentProcessor;
     use Symfony\AI\Agent\Toolbox\Toolbox;
 
-    // Platform & LLM instantiation
+    // Platform instantiation
 
     $yourTool = new YourTool();
 
@@ -76,7 +75,7 @@ Tool calling can be enabled by registering the processors in the agent::
 
     $agent = new Agent($platform, $model, inputProcessors: [$toolProcessor], outputProcessors: [$toolProcessor]);
 
-Custom tools can basically be any class, but must configure by the ``#[AsTool]`` attribute::
+Custom tools can basically be any class, but must configure by the :class:`Symfony\\AI\\Agent\\Toolbox\\Attribute\\AsTool` attribute::
 
     use Symfony\AI\Toolbox\Attribute\AsTool;
 
@@ -98,7 +97,7 @@ JsonSerializable interface, to JSON strings for you. So you can return arrays or
 Tool Methods
 ~~~~~~~~~~~~
 
-You can configure the method to be called by the LLM with the #[AsTool] attribute and have multiple tools per class::
+You can configure the method to be called by the LLM with the :class:`Symfony\\AI\\Agent\\Toolbox\\Attribute\\AsTool` attribute and have multiple tools per class::
 
     use Symfony\AI\Toolbox\Attribute\AsTool;
 
@@ -128,14 +127,14 @@ You can configure the method to be called by the LLM with the #[AsTool] attribut
 Tool Parameters
 ~~~~~~~~~~~~~~~
 
-Symfony AI generates a JSON Schema representation for all tools in the Toolbox based on the #[AsTool] attribute and
+Symfony AI generates a JSON Schema representation for all tools in the :class:`Symfony\\AI\\Agent\\Toolbox\\Toolbox` based on the :class:`Symfony\\AI\\Agent\\Toolbox\\Attribute\\AsTool` attribute and
 method arguments and param comments in the doc block. Additionally, JSON Schema support validation rules, which are
-partially support by LLMs like GPT.
+partially supported by LLMs like GPT.
 
-Parameter Validation with #[With] Attribute
-...........................................
+Parameter Validation with ``#[With]`` Attribute
+...............................................
 
-To leverage JSON Schema validation rules, configure the ``#[With]`` attribute on the method arguments of your tool::
+To leverage JSON Schema validation rules, configure the :class:`Symfony\\AI\\Platform\\Contract\\JsonSchema\\Attribute\\With` attribute on the method arguments of your tool::
 
     use Symfony\AI\Agent\Toolbox\Attribute\AsTool;
     use Symfony\AI\Platform\Contract\JsonSchema\Attribute\With;
@@ -160,12 +159,12 @@ To leverage JSON Schema validation rules, configure the ``#[With]`` attribute on
         }
     }
 
-See attribute class ``Symfony\AI\Platform\Contract\JsonSchema\Attribute\With`` for all available options.
+See attribute class :class:`Symfony\\AI\\Platform\\Contract\\JsonSchema\\Attribute\\With` for all available options.
 
 Automatic Enum Validation
 .........................
 
-For PHP backed enums, Symfony AI provides automatic validation without requiring any ``#[With]`` attributes::
+For PHP backed enums, automatic validation without requiring any :class:`Symfony\\AI\\Platform\\Contract\\JsonSchema\\Attribute\\With` attribute is supported::
 
     enum Priority: int
     {
@@ -205,13 +204,13 @@ This eliminates the need for manual ``#[With(enum: [...])]`` attributes when usi
 
 .. note::
 
-    Please be aware, that this is only converted in a JSON Schema for the LLM to respect, but not validated by Symfony AI.
+    Please be aware, that this is only converted in a JSON Schema for the LLM to respect, but not validated by Symfony AI itself.
 
 Third-Party Tools
 ~~~~~~~~~~~~~~~~~
 
-In some cases you might want to use third-party tools, which are not part of your application. Adding the ``#[AsTool]``
-attribute to the class is not possible in those cases, but you can explicitly register the tool in the MemoryFactory::
+In some cases you might want to use third-party tools, which are not part of your application. Adding the :class:`Symfony\\AI\\Agent\\Toolbox\\Attribute\\AsTool`
+attribute to the class is not possible in those cases, but you can explicitly register the tool in the :class:`Symfony\\AI\\Agent\\Toolbox\\ToolFactory\\MemoryToolFactory`::
 
     use Symfony\AI\Agent\Toolbox\Toolbox;
     use Symfony\AI\Agent\Toolbox\ToolFactory\MemoryToolFactory;
@@ -225,7 +224,7 @@ attribute to the class is not possible in those cases, but you can explicitly re
 
     Please be aware that not all return types are supported by the toolbox, so a decorator might still be needed.
 
-This can be combined with the ChainFactory which enables you to use explicitly registered tools and ``#[AsTool]`` tagged
+This can be combined with the :class:`Symfony\\AI\\Agent\\Toolbox\\ToolFactory\\ChainFactory` which enables you to use explicitly registered tools and :class:`Symfony\\AI\\Agent\\Toolbox\\Attribute\\AsTool` tagged
 tools in the same chain - which even enables you to overwrite the pre-existing configuration of a tool::
 
     use Symfony\AI\Agent\Toolbox\Toolbox;
@@ -263,7 +262,7 @@ Fault Tolerance
 ~~~~~~~~~~~~~~~
 
 To gracefully handle errors that occur during tool calling, e.g. wrong tool names or runtime errors, you can use the
-``FaultTolerantToolbox`` as a decorator for the Toolbox. It will catch the exceptions and return readable error messages
+:class:`Symfony\\AI\\Agent\\Toolbox\\FaultTolerantToolbox` as a decorator for the :class:`Symfony\\AI\\Agent\\Toolbox\\Toolbox`. It will catch the exceptions and return readable error messages
 to the LLM::
 
     use Symfony\AI\Agent\Agent;
@@ -277,17 +276,19 @@ to the LLM::
 
     $agent = new Agent($platform, $model, inputProcessor: [$toolProcessor], outputProcessor: [$toolProcessor]);
 
-If you want to expose the underlying error to the LLM, you can throw a custom exception that implements `ToolExecutionExceptionInterface`::
+If you want to expose the underlying error to the LLM, you can throw a custom exception that implements :class:`Symfony\\AI\\Agent\\Toolbox\\Exception\\ToolExecutionExceptionInterface`::
 
     use Symfony\AI\Agent\Toolbox\Exception\ToolExecutionExceptionInterface;
 
     class EntityNotFoundException extends \RuntimeException implements ToolExecutionExceptionInterface
     {
-        public function __construct(private string $entityName, private int $id)
-        {
+        public function __construct(
+            private string $entityName,
+            private int $id,
+        ){
         }
 
-        public function getToolCallResult(): mixed
+        public function getToolCallResult(): string
         {
             return \sprintf('No %s found with id %d', $this->entityName, $this->id);
         }
@@ -296,13 +297,18 @@ If you want to expose the underlying error to the LLM, you can throw a custom ex
     #[AsTool('get_user_age', 'Get age by user id')]
     class GetUserAge
     {
-        public function __construct(private UserRepository $userRepository)
-        {
+        public function __construct(
+            private UserRepository $userRepository,
+        ){
         }
 
         public function __invoke(int $id): int
         {
-            $user = $this->userRepository->find($id) ?? throw new EntityNotFoundException('user', $id);
+            $user = $this->userRepository->find($id)
+
+            if (null === $user) {
+                throw new EntityNotFoundException('user', $id);
+            }
 
             return $user->getAge();
         }
@@ -319,9 +325,9 @@ tools option with a list of tool names::
 Tool Result Interception
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-To react to the result of a tool, you can implement an EventListener or EventSubscriber, that listens to the
-``ToolCallsExecuted`` event. This event is dispatched after the Toolbox executed all current tool calls and enables you
-to skip the next LLM call by setting a result yourself::
+To react to the result of a tool, you can implement an EventListener, that listens to the
+:class:`Symfony\\AI\\Agent\\Toolbox\\Event\\ToolCallsExecuted` event. This event is dispatched after the :class:`Symfony\\AI\\Agent\\Toolbox\\Toolbox` executed all current
+tool calls and enables you to skip the next LLM call by setting a result yourself::
 
     $eventDispatcher->addListener(ToolCallsExecuted::class, function (ToolCallsExecuted $event): void {
         foreach ($event->toolCallResults as $toolCallResult) {
@@ -335,7 +341,9 @@ Tool Call Lifecycle Events
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you need to react more granularly to the lifecycle of individual tool calls, you can listen to the
-``ToolCallArgumentsResolved``, ``ToolCallSucceeded`` and ``ToolCallFailed`` events. These are dispatched at different stages::
+:class:`Symfony\\AI\\Agent\\Toolbox\\Event\\ToolCallArgumentsResolved`,
+:class:`Symfony\\AI\\Agent\\Toolbox\\Event\\ToolCallSucceeded` and
+:class:`Symfony\\AI\\Agent\\Toolbox\\Event\\ToolCallFailed` events. These are dispatched at different stages::
 
     $eventDispatcher->addListener(ToolCallArgumentsResolved::class, function (ToolCallArgumentsResolved $event): void {
         // Let the client know, that the tool $event->toolCall->name was executed
@@ -352,25 +360,26 @@ If you need to react more granularly to the lifecycle of individual tool calls, 
 Keeping Tool Messages
 ~~~~~~~~~~~~~~~~~~~~~
 
-Sometimes you might wish to keep the tool messages (AssistantMessage containing the toolCalls and ToolCallMessage
-containing the result) in the context. Enable the keepToolMessages flag of the toolbox' AgentProcessor to ensure those
-messages will be added to your MessageBag::
+Sometimes you might wish to keep the tool messages (:class:`Symfony\\AI\\Platform\\Message\\AssistantMessage` containing the ``toolCalls`` and :class:`Symfony\\AI\\Platform\\Message\\ToolCallMessage`
+containing the result) in the context. Enable the ``keepToolMessages`` flag of the toolbox' :class:`Symfony\\AI\\Agent\\Toolbox\\AgentProcessor`
+to ensure those messages will be added to your :class:`Symfony\\AI\\Platform\\Message\\MessageBag`::
 
     use Symfony\AI\Agent\Toolbox\AgentProcessor;
     use Symfony\AI\Agent\Toolbox\Toolbox;
 
-    // Platform & LLM instantiation
+    // Platform instantiation
+
     $messages = new MessageBag(
         Message::forSystem(<<<PROMPT
-            Please answer all user questions only using the similarity_search tool. Do not add information and if you cannot
-            find an answer, say so.
+            Please answer all user questions only using the my-tool tool.
+            Do not add information and if you cannot find an answer, say so.
             PROMPT),
         Message::ofUser('...') // The user's question.
     );
 
-    $yourTool = new YourTool();
+    $tool = new MyTool();
 
-    $toolbox = new Toolbox([$yourTool]);
+    $toolbox = new Toolbox([$tool]);
     $toolProcessor = new AgentProcessor($toolbox, keepToolMessages: true);
 
     $agent = new Agent($platform, $model, inputProcessor: [$toolProcessor], outputProcessor: [$toolProcessor]);
@@ -397,7 +406,7 @@ Retrieval Augmented Generation (RAG)
 In combination with the `Store Component`_, the Agent component can be used to build agents that perform Retrieval
 Augmented Generation (RAG). This allows the agent to retrieve relevant documents from a store and use them to generate
 more accurate and context-aware results. Therefore, the component provides a built-in tool called
-``Symfony\AI\Agent\Toolbox\Tool\SimilaritySearch``::
+:class:`Symfony\\AI\\Agent\\Toolbox\\Tool\\SimilaritySearch`::
 
     use Symfony\AI\Agent\Agent;
     use Symfony\AI\Agent\Toolbox\AgentProcessor;
@@ -517,8 +526,8 @@ They are provided while instantiating the agent instance::
 InputProcessor
 ~~~~~~~~~~~~~~
 
-InputProcessor instances are called in the agent before handing over the MessageBag and the $options array to the LLM
-and are able to mutate both on top of the Input instance provided::
+:class:`Symfony\\AI\\Agent\\InputProcessorInterface` instances are called in the agent before handing over the :class:`Symfony\\AI\\Platform\\Message\\MessageBag` and the $options array to the LLM
+and are able to mutate both on top of the :class:`Symfony\\AI\\Agent\\Input` instance provided::
 
     use Symfony\AI\Agent\Input;
     use Symfony\AI\Agent\InputProcessorInterface;
@@ -541,7 +550,7 @@ and are able to mutate both on top of the Input instance provided::
 OutputProcessor
 ~~~~~~~~~~~~~~~
 
-OutputProcessor instances are called after the model provided a result and can - on top of options and messages - mutate
+:class:`Symfony\\AI\\Agent\\OutputProcessorInterface` instances are called after the model provided a result and can - on top of options and messages - mutate
 or replace the given result::
 
     use Symfony\AI\Agent\Output;
@@ -561,9 +570,9 @@ or replace the given result::
 Agent Awareness
 ~~~~~~~~~~~~~~~
 
-Both, Input and Output instances, provide access to the LLM used by the agent, but the agent itself is only provided,
-in case the processor implemented the AgentAwareInterface interface, which can be combined with using the
-AgentAwareTrait::
+Both, :class:`Symfony\\AI\\Agent\\Input` and :class:`Symfony\\AI\\Agent\\Output` instances, provide access to the LLM used by the agent, but the agent itself is only provided,
+in case the processor implemented the :class:`Symfony\\AI\\Agent\\AgentAwareInterface` interface, which can be combined with using the
+:class:`Symfony\\AI\\Agent\\AgentAwareTrait`::
 
     use Symfony\AI\Agent\AgentAwareInterface;
     use Symfony\AI\Agent\AgentAwareTrait;
@@ -591,7 +600,7 @@ model with context without changing your application logic.
 Using Memory
 ^^^^^^^^^^^^
 
-Memory integration is handled through the ``MemoryInputProcessor`` and one or more ``MemoryProviderInterface`` implementations::
+Memory integration is handled through the :class:`Symfony\\AI\\Agent\\Memory\\MemoryInputProcessor` and one or more :class:`Symfony\\AI\\Agent\\Memory\\MemoryProviderInterface` implementations::
 
     use Symfony\AI\Agent\Agent;
     use Symfony\AI\Agent\Memory\MemoryInputProcessor;
@@ -599,7 +608,7 @@ Memory integration is handled through the ``MemoryInputProcessor`` and one or mo
     use Symfony\AI\Platform\Message\Message;
     use Symfony\AI\Platform\Message\MessageBag;
 
-    // Platform & LLM instantiation
+    // Platform instantiation
 
     $personalFacts = new StaticMemoryProvider(
         'My name is Wilhelm Tell',
@@ -661,7 +670,7 @@ Testing
 MockAgent
 ^^^^^^^^^
 
-For testing purposes, the Agent component provides a ``MockAgent`` class that behaves like Symfony's ``MockHttpClient``.
+For testing purposes, the Agent component provides a :class:`Symfony\\AI\\Agent\\MockAgent` class that behaves like Symfony's :class:`Symfony\\Component\\HttpClient\\MockHttpClient`.
 It provides predictable responses without making external API calls and includes assertion methods for verifying interactions::
 
     use Symfony\AI\Agent\MockAgent;
@@ -694,7 +703,7 @@ Call Tracking and Assertions::
 MockResponse Objects
 ^^^^^^^^^^^^^^^^^^^^
 
-Similar to ``MockHttpClient``, you can use ``MockResponse`` objects for more complex scenarios::
+Similar to :class:`Symfony\\Component\\HttpClient\\MockHttpClient`, you can use :class:`Symfony\\AI\\Agent\\MockResponse` objects for more complex scenarios::
 
     use Symfony\AI\Agent\MockResponse;
 
@@ -707,7 +716,7 @@ Similar to ``MockHttpClient``, you can use ``MockResponse`` objects for more com
 Callable Responses
 ^^^^^^^^^^^^^^^^^^
 
-Like ``MockHttpClient``, ``MockAgent`` supports callable responses for dynamic behavior::
+Like :class:`Symfony\\Component\\HttpClient\\MockHttpClient`, :class:`Symfony\\AI\\Agent\\MockAgent` supports callable responses for dynamic behavior::
 
     $agent = new MockAgent();
 

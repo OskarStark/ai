@@ -1,12 +1,11 @@
 Symfony AI - Platform Component
 ===============================
 
-The Platform component provides an abstraction for interacting with different models, their providers and contracts.
+The Platform component provides an abstraction for interacting with different
+models, their providers and contracts.
 
 Installation
 ------------
-
-Install the component using Composer:
 
 .. code-block:: terminal
 
@@ -23,8 +22,9 @@ specific use cases or performance requirements.
 Usage
 -----
 
-The instantiation of the ``Symfony\AI\Platform\Platform`` class is usually delegated to a provider-specific factory,
-with a provider being OpenAI, Azure, Google, Replicate, and others.
+The instantiation of the :class:`Symfony\\AI\\Platform\Platform` class is
+usually delegated to a provider-specific factory, with a provider being
+OpenAI, Anthropic, Google, Replicate, and others.
 
 For example, to use the OpenAI provider, you would typically do something like this::
 
@@ -32,23 +32,15 @@ For example, to use the OpenAI provider, you would typically do something like t
     use Symfony\AI\Platform\Bridge\OpenAi\Gpt;
     use Symfony\AI\Platform\Bridge\OpenAi\PlatformFactory;
 
-    // Platform
     $platform = PlatformFactory::create(env('OPENAI_API_KEY'));
 
-    // Embeddings Model
-    $embeddings = new Embeddings(Embeddings::TEXT_3_SMALL);
-
-    // Language Model in version gpt-4o-mini
-    $model = new Gpt(Gpt::GPT_4O_MINI);
-
-And with a ``Symfony\AI\Platform\PlatformInterface`` instance, and a ``Symfony\AI\Platform\Model`` instance, you can now
-use the platform to interact with the AI model::
+With this :class:`Symfony\\AI\\Platform\PlatformInterface` instance you can now interact with the LLM::
 
     // Generate a vector embedding for a text, returns a Symfony\AI\Platform\Result\VectorResult
     $vectorResult = $platform->invoke($embeddings, 'What is the capital of France?');
 
     // Generate a text completion with GPT, returns a Symfony\AI\Platform\Result\TextResult
-    $result = $platform->invoke($model, new MessageBag(Message::ofUser('What is the capital of France?')));
+    $result = $platform->invoke('gpt-4o-mini', new MessageBag(Message::ofUser('What is the capital of France?')));
 
 Depending on the model and its capabilities, different types of inputs and outputs are supported, which results in a
 very flexible and powerful interface for working with AI models.
@@ -56,12 +48,11 @@ very flexible and powerful interface for working with AI models.
 Models
 ------
 
-The component provides a model base class ``Symfony\AI\Platform\Model`` which is a combination of a model name, a set of
+The component provides a model base class :class:`Symfony\\AI\\Platform\\Model` which is a combination of a model name, a set of
 capabilities, and additional options. Usually, bridges to specific providers extend this base class to provide a quick
-start for vendor-specific models and their capabilities, see ``Symfony\AI\Platform\Bridge\Anthropic\Claude`` or
-``Symfony\AI\Platform\Bridge\OpenAi\Gpt``.
+start for vendor-specific models and their capabilities.
 
-Capabilities are a list of strings defined by ``Symfony\AI\Platform\Capability``, which can be used to check if a model
+Capabilities are a list of strings defined by :class:`Symfony\\AI\\Platform\\Capability`, which can be used to check if a model
 supports a specific feature, like ``Capability::INPUT_AUDIO`` or ``Capability::OUTPUT_IMAGE``.
 
 Options are additional parameters that can be passed to the model, like ``temperature`` or ``max_tokens``, and are
@@ -112,15 +103,14 @@ Supported Models & Platforms
     * All models provided by `HuggingFace`_ can be listed with a command in the examples folder,
       and also filtered, e.g. ``php examples/huggingface/_model-listing.php --provider=hf-inference --task=object-detection``
 
-See `GitHub`_ for planned support of other models and platforms.
-
 Options
 -------
 
-The third parameter of the ``invoke`` method is an array of options, which basically wraps the options of the
-corresponding model and platform, like ``temperature`` or ``stream``::
+The third parameter of the :method:`Symfony\\AI\\Platform\\PlatformInterface::invoke`
+method is an array of options, which basically wraps the options of the corresponding
+model and platform, like ``temperature`` or ``max_tokens``::
 
-    $result = $platform->invoke($model, $input, [
+    $result = $platform->invoke('gpt-4o-mini', $input, [
         'temperature' => 0.7,
         'max_tokens' => 100,
     ]);
@@ -132,11 +122,12 @@ corresponding model and platform, like ``temperature`` or ``stream``::
 Language Models and Messages
 ----------------------------
 
-One central feature of the Platform component is the support for language models and easing the interaction with them.
-This is supported by providing an extensive set of data classes around the concept of messages and their content.
+One central feature of the Platform component is the support for language
+models and easing the interaction with them. This is supported by providing
+an extensive set of data classes around the concept of messages and their content.
 
-Messages can be of different types, most importantly ``UserMessage``, ``SystemMessage``, or ``AssistantMessage``, can
-have different content types, like ``Text``, ``Image`` or ``Audio``, and can be grouped into a ``MessageBag``::
+Messages can be of different types, most importantly :class:`Symfony\\AI\\Platform\\Message\\UserMessage`, :class:`Symfony\\AI\\Platform\\Message\\SystemMessage`, or :class:`Symfony\\AI\\Platform\\Message\\AssistantMessage`, can
+have different content types, like :class:`Symfony\\AI\\Platform\\Message\\Content\\Text`, :class:`Symfony\\AI\\Platform\\Message\\Content\\Image` or :class:`Symfony\\AI\\Platform\\Message\\Content\\Audio`, and can be grouped into a :class:`Symfony\\AI\\Platform\\Message\\MessageBag`::
 
     use Symfony\AI\Platform\Message\Content\Image;
     use Symfony\AI\Platform\Message\Message;
@@ -179,7 +170,7 @@ Result Streaming
 ----------------
 
 Since LLMs usually generate a result word by word, most of them also support streaming the result using Server Side
-Events. Symfony AI supports that by abstracting the conversion and returning a ``Generator`` as content of the result::
+Events. Symfony AI supports that by abstracting the conversion and returning a :class:`Generator` as content of the result::
 
     use Symfony\AI\Agent\Agent;
     use Symfony\AI\Message\Message;
@@ -200,8 +191,10 @@ Events. Symfony AI supports that by abstracting the conversion and returning a `
         echo $word;
     }
 
-In a terminal application this generator can be used directly, but with a web app an additional layer like `Mercure`_
-needs to be used.
+.. note::
+
+    To be able to use streaming in your web application,
+    an additional layer like `Mercure`_ is needed.
 
 Code Examples
 ~~~~~~~~~~~~~
@@ -213,7 +206,7 @@ Code Examples
 Image Processing
 ----------------
 
-Some LLMs also support images as input, which Symfony AI supports as content type within the ``UserMessage``::
+Some LLMs also support images as input, which Symfony AI supports as content type within the :class:`Symfony\\AI\\Platform\\Message\\UserMessage`::
 
     use Symfony\AI\Platform\Message\Content\Image;
     use Symfony\AI\Platform\Message\Message;
@@ -242,7 +235,7 @@ Audio Processing
 ----------------
 
 Similar to images, some LLMs also support audio as input, which is just another content type within the
-``UserMessage``::
+:class:`Symfony\\AI\\Platform\\Message\\UserMessage`::
 
     use Symfony\AI\Platform\Message\Content\Audio;
     use Symfony\AI\Platform\Message\Message;
@@ -268,15 +261,13 @@ Embeddings
 
 Creating embeddings of word, sentences, or paragraphs is a typical use case around the interaction with LLMs.
 
-The standalone usage results in an ``Vector`` instance::
+The standalone usage results in a :class:`Symfony\\AI\\Store\\Vector` instance::
 
     use Symfony\AI\Platform\Bridge\OpenAi\Embeddings;
 
-    // Initialize Platform
+    // Initialize platform
 
-    $embeddings = new Embeddings($platform, Embeddings::TEXT_3_SMALL);
-
-    $vectors = $platform->invoke($embeddings, $textInput)->asVectors();
+    $vectors = $platform->invoke('text-embedding-3-small', $textInput)->asVectors();
 
     dump($vectors[0]->getData()); // returns something like: [0.123, -0.456, 0.789, ...]
 
@@ -292,7 +283,8 @@ Server Tools
 
 Some platforms provide built-in server-side tools for enhanced capabilities without custom implementations:
 
-1. **[Gemini](gemini-server-tools.rst)** - URL Context, Google Search, Code Execution
+1. **[Gemini](platform/gemini-server-tools.rst)** - URL Context, Google Search, Code Execution
+1. **[VertexAI](platform/vertexai-server-tools.rst)** - URL Context, Google Search, Code Execution
 
 For complete Vertex AI setup and usage guide, see :doc:`vertexai`.
 
@@ -302,10 +294,10 @@ Parallel Platform Calls
 Since the ``Platform`` sits on top of Symfony's HttpClient component, it supports multiple model calls in parallel,
 which can be useful to speed up the processing::
 
-    // Initialize Platform & Model
+    // Initialize Platform
 
     foreach ($inputs as $input) {
-        $results[] = $platform->invoke($model, $input);
+        $results[] = $platform->invoke('gpt-4o-mini', $input);
     }
 
     foreach ($results as $result) {
@@ -315,19 +307,20 @@ which can be useful to speed up the processing::
 Testing Tools
 -------------
 
-For unit or integration testing, you can use the `InMemoryPlatform`, which implements `PlatformInterface` without calling external APIs.
+For unit or integration testing, you can use the :class:`Symfony\\AI\\Platform\\InMemoryPlatform`,
+which implements :class:`Symfony\\AI\\Platform\\PlatformInterface` without calling external APIs.
 
 It supports returning either:
 
 - A fixed string result
-- A callable that dynamically returns a simple string or any ``ResultInterface`` based on the model, input, and options::
+- A callable that dynamically returns a simple string or any :class:`Symfony\\AI\\Platform\\Result\\ResultInterface` based on the model, input, and options::
 
     use Symfony\AI\Platform\InMemoryPlatform;
     use Symfony\AI\Platform\Model;
 
     $platform = new InMemoryPlatform('Fake result');
 
-    $result = $platform->invoke(new Model('test'), 'What is the capital of France?');
+    $result = $platform->invoke('gpt-4o-mini', 'What is the capital of France?');
 
     echo $result->asText(); // "Fake result"
 
@@ -340,7 +333,7 @@ Dynamic Text Results
         fn($model, $input, $options) => "Echo: {$input}"
     );
 
-    $result = $platform->invoke(new Model('test'), 'Hello AI');
+    $result = $platform->invoke('gpt-4o-mini', 'Hello AI');
     echo $result->asText(); // "Echo: Hello AI"
 
 Vector Results
@@ -354,7 +347,7 @@ Vector Results
         fn() => new VectorResult(new Vector([0.1, 0.2, 0.3, 0.4]))
     );
 
-    $result = $platform->invoke(new Model('test'), 'vectorize this text');
+    $result = $platform->invoke('gpt-4o-mini', 'vectorize this text');
     $vectors = $result->asVectors(); // Returns Vector object with [0.1, 0.2, 0.3, 0.4]
 
 Binary Results
@@ -368,7 +361,7 @@ Binary Results
         fn() => new BinaryResult('fake-pdf-content', 'application/pdf')
     );
 
-    $result = $platform->invoke(new Model('test'), 'generate PDF document');
+    $result = $platform->invoke('gpt-4o-mini', 'generate PDF document');
     $binary = $result->asBinary(); // Returns Binary object with content and MIME type
 
 Raw Results
@@ -423,7 +416,6 @@ Code Examples
 .. _`OpenAI's Dall·E`: https://platform.openai.com/docs/guides/image-generation
 .. _`OpenAI's Whisper`: https://platform.openai.com/docs/guides/speech-to-text
 .. _`HuggingFace`: https://huggingface.co/
-.. _`GitHub`: https://github.com/symfony/ai/issues/16
 .. _`Mercure`: https://mercure.rocks/
 .. _`Streaming Claude`: https://github.com/symfony/ai/blob/main/examples/anthropic/stream.php
 .. _`Streaming GPT`: https://github.com/symfony/ai/blob/main/examples/openai/stream.php

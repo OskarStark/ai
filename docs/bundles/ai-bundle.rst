@@ -6,6 +6,7 @@ Symfony integration bundle for Symfony AI components.
 Integrating:
 
 * `Symfony AI Agent`_
+* `Symfony AI Chat`_
 * `Symfony AI Platform`_
 * `Symfony AI Store`_
 
@@ -33,7 +34,7 @@ Basic Example with OpenAI
             default:
                 model: 'gpt-4o-mini'
 
-Advanced Example with multiple agents
+Advanced Example with Multiple Agents
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: yaml
@@ -365,7 +366,8 @@ Then configure the prompt with translation enabled:
                     enable_translation: true
                     translation_domain: 'ai_prompts'  # Optional: specify translation domain
 
-The system prompt text will be automatically translated using the configured translator service. If no translation domain is specified, the default domain will be used.
+The system prompt text will be automatically translated using the configured translator service.
+If no translation domain is specified, the default domain will be used.
 
 Memory Provider Configuration
 -----------------------------
@@ -434,7 +436,8 @@ Memory can work independently or alongside the system prompt:
 Custom Memory Provider Requirements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When using a service reference, the memory service must implement the ``Symfony\AI\Agent\Memory\MemoryProviderInterface``::
+When using a service reference, the memory service must implement the
+:class:`Symfony\\AI\\Agent\\Memory\\MemoryProviderInterface`::
 
     use Symfony\AI\Agent\Input;
     use Symfony\AI\Agent\Memory\Memory;
@@ -446,35 +449,12 @@ When using a service reference, the memory service must implement the ``Symfony\
         {
             // Return an array of Memory objects containing relevant conversation history
             return [
-                new Memory('Previous conversation context...'),
+                new Memory('Username: OskarStark'),
+                new Memory('Age: 40'),
                 new Memory('User preferences: prefers concise answers'),
             ];
         }
     }
-
-How Memory Works
-~~~~~~~~~~~~~~~~
-
-The system uses explicit configuration to determine memory behavior:
-
-Static Memory Processing
-........................
-
-
-1. When you provide a string value (e.g., ``memory: 'some text'``)
-2. The system creates a ``StaticMemoryProvider`` automatically
-3. Content is formatted as "## Static Memory" with the provided text
-4. This memory is consistently available across all conversations
-
-Dynamic Memory Processing
-.........................
-
-1. When you provide an array with a service key (e.g., ``memory: {service: 'my_service'}``)
-2. The ``MemoryInputProcessor`` uses the specified service directly
-3. The service's ``loadMemory()`` method is called before processing user input
-4. Dynamic memory content is injected based on the current context
-
-In both cases, memory content is prepended to the system message, allowing the agent to utilize the context effectively.
 
 Multi-Agent Orchestration
 -------------------------
@@ -581,11 +561,6 @@ Example of creating a Handoff in PHP::
         when: ['code', 'debug', 'implementation', 'refactor', 'programming']
     );
 
-    $documentationHandoff = new Handoff(
-        to: $documentationAgent,
-        when: ['document', 'readme', 'explain', 'tutorial']
-    );
-
 The ``fallback`` parameter (required) specifies an agent to handle requests that don't match any handoff rules. This ensures all requests have a proper handler.
 
 How It Works
@@ -636,7 +611,7 @@ This is useful for testing platform configurations and quick interactions with A
 ``ai:agent:call``
 ~~~~~~~~~~~~~~~~~
 
-The ``ai:agent:call`` command (alias: ``ai:chat``) provides an interactive chat interface to communicate with configured agents.
+The ``ai:agent:call`` command provides an interactive chat interface to communicate with configured agents.
 This is useful for testing agent configurations, tools, and conversational flows.
 
 .. code-block:: terminal
@@ -724,7 +699,7 @@ Usage
 Agent Service
 ~~~~~~~~~~~~~
 
-Use the `Agent` service to leverage models and tools::
+Use the :class:`Symfony\\AI\\Agent\\Agent` service to leverage models and tools::
 
     use Symfony\AI\Agent\AgentInterface;
     use Symfony\AI\Platform\Message\Message;
@@ -751,11 +726,11 @@ Use the `Agent` service to leverage models and tools::
 Register Processors
 ~~~~~~~~~~~~~~~~~~~
 
-By default, all services implementing the ``InputProcessorInterface`` or the
-``OutputProcessorInterface`` interfaces are automatically applied to every ``Agent``.
+By default, all services implementing the :class:`Symfony\\AI\\Agent\\InputProcessorInterface` or the
+:class:`Symfony\\AI\\Agent\\OutputProcessorInterface` interfaces are automatically applied to every :class:`Symfony\\AI\\Agent\\Agent`.
 
-This behavior can be overridden/configured with the ``#[AsInputProcessor]`` and
-the ``#[AsOutputProcessor]`` attributes::
+This behavior can be overridden/configured with the :class:`Symfony\\AI\\AiBundle\\Attribute\\AsInputProcessor` and
+the :class:`Symfony\\AI\\AiBundle\\Attribute\\AsOutputProcessor` attributes::
 
     use Symfony\AI\Agent\Input;
     use Symfony\AI\Agent\InputProcessorInterface;
@@ -804,7 +779,7 @@ To use existing tools, you can register them as a service:
         Symfony\AI\Agent\Toolbox\Tool\Brave:
           $apiKey: '%env(BRAVE_API_KEY)%'
 
-Custom tools can be registered by using the ``#[AsTool]`` attribute::
+Custom tools can be registered by using the :class:`Symfony\\AI\\Agent\\Toolbox\\Attribute\\AsTool` attribute::
 
     use Symfony\AI\Agent\Toolbox\Attribute\AsTool;
 
@@ -838,8 +813,8 @@ To inject only specific tools, list them in the configuration:
                 tools:
                     - 'Symfony\AI\Agent\Toolbox\Tool\SimilaritySearch'
 
-To restrict the access to a tool, you can use the ``IsGrantedTool`` attribute, which
-works similar to ``IsGranted`` attribute in `symfony/security-http`. For this to work,
+To restrict the access to a tool, you can use the :class:`Symfony\\AI\\Agent\\Attribute\\IsGrantedTool` attribute, which
+works similar to :class:`Symfony\\Component\\Security\\Http\\Attribute\\IsGranted` attribute in `symfony/security-http`. For this to work,
 make sure you have `symfony/security-core` installed in your project.
 
 ::
@@ -855,7 +830,8 @@ make sure you have `symfony/security-core` installed in your project.
             return 'ACME Corp.';
         }
     }
-The attribute ``IsGrantedTool`` can be added on class- or method-level - even multiple
+
+The attribute :class:`Symfony\\AI\\Agent\\Attribute\\IsGrantedTool` can be added on class- or method-level - even multiple
 times. If multiple attributes apply to one tool call, a logical AND is used and all access
 decisions have to grant access.
 
@@ -898,14 +874,6 @@ The token usage information can be accessed from the result metadata::
         }
     }
 
-Supported Platforms
-~~~~~~~~~~~~~~~~~~~
-
-Token usage tracking is currently supported, and by default enabled, for the following platforms:
-
-* **OpenAI**: Tracks all token types including cached and thinking tokens
-* **Mistral**: Tracks basic token usage and rate limit information
-
 Disable Tracking
 ~~~~~~~~~~~~~~~~
 
@@ -916,8 +884,8 @@ To disable token usage tracking for an agent, set the ``track_token_usage`` opti
     ai:
         agent:
             my_agent:
-                track_token_usage: false
                 model: 'gpt-4o-mini'
+                track_token_usage: false
 
 Vectorizers
 -----------
@@ -990,5 +958,6 @@ The profiler panel provides insights into the agent's execution:
 
 
 .. _`Symfony AI Agent`: https://github.com/symfony/ai-agent
+.. _`Symfony AI Chat`: https://github.com/symfony/ai-chat
 .. _`Symfony AI Platform`: https://github.com/symfony/ai-platform
 .. _`Symfony AI Store`: https://github.com/symfony/ai-store

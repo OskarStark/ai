@@ -6,11 +6,9 @@ The Store component provides a low-level abstraction for storing and retrieving 
 Installation
 ------------
 
-Install the component using Composer:
-
 .. code-block:: terminal
 
-    composer require symfony/ai-store
+    $ composer require symfony/ai-store
 
 Purpose
 -------
@@ -24,8 +22,8 @@ for documents.
 Indexing
 --------
 
-One higher level feature is the ``Symfony\AI\Store\Indexer``. The purpose of this service is to populate a store with documents.
-Therefore it accepts one or multiple ``Symfony\AI\Store\Document\TextDocument`` objects, converts them into embeddings and stores them in the
+One higher level feature is the :class:`Symfony\\AI\\Store\\Indexer`. The purpose of this service is to populate a store with documents.
+Therefore it accepts one or multiple :class:`Symfony\\AI\\Store\\Document\\TextDocument` objects, converts them into embeddings and stores them in the
 used vector store::
 
     use Symfony\AI\Store\Document\TextDocument;
@@ -73,13 +71,9 @@ Supported Stores
 * `Postgres`_ (requires `ext-pdo`)
 * `Qdrant`_
 * `SurrealDB`_
-* `Symfony Cache`_
+* `Symfony Cache`_ (requires `symfony/cache` as additional dependency)
 * `Typesense`_
 * `Weaviate`_
-
-.. note::
-
-    See `GitHub`_ for planned stores.
 
 Commands
 --------
@@ -107,12 +101,14 @@ you can use the ``bin/console ai:store:setup`` command to initialize the store a
 Implementing a Bridge
 ---------------------
 
-The main extension points of the Store component is the ``Symfony\AI\Store\StoreInterface``, that defines the methods
+The main extension points of the Store component is the :class:`Symfony\\AI\\Store\\StoreInterface`, that defines the methods
 for adding vectorized documents to the store, and querying the store for documents with a vector.
 
 This leads to a store implementing two methods::
 
     use Symfony\AI\Store\StoreInterface;
+    use Symfony\AI\Store\Vector;
+    use Symfony\AI\Store\VectorDocument;
 
     class MyStore implements StoreInterface
     {
@@ -156,6 +152,5 @@ This leads to a store implementing two methods::
 .. _`Qdrant`: https://qdrant.tech/
 .. _`Neo4j`: https://neo4j.com/
 .. _`Typesense`: https://typesense.org/
-.. _`GitHub`: https://github.com/symfony/ai/issues/16
 .. _`Symfony Cache`: https://symfony.com/doc/current/components/cache.html
 .. _`Weaviate`: https://weaviate.io/

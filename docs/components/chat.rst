@@ -7,8 +7,6 @@ for future chat and context-retrieving purposes.
 Installation
 ------------
 
-Install the component using Composer:
-
 .. code-block:: terminal
 
     $ composer require symfony/ai-chat
@@ -27,9 +25,8 @@ with a ``Symfony\AI\Agent\AgentInterface`` and a ``Symfony\AI\Chat\MessageStoreI
     use Symfony\AI\Platform\Message\Message;
 
     $platform = PlatformFactory::create($apiKey);
-    $model = new Gpt(Gpt::GPT_4O_MINI);
 
-    $agent = new Agent($platform, $model);
+    $agent = new Agent($platform, 'gpt-40-mini');
     $chat = new Chat($agent, new InMemoryStore());
 
     $chat->submit(Message::ofUser('Hello'));
@@ -43,6 +40,7 @@ for adding messages to the message store, and returning the messages from a stor
 
 This leads to a store implementing two methods::
 
+    use Symfony\AI\Platform\Message\MessageBag;
     use Symfony\AI\Store\MessageStoreInterface;
 
     class MyCustomStore implements MessageStoreInterface
@@ -89,7 +87,8 @@ Commands
 --------
 
 While using the `Chat` component in your Symfony application along with the ``AiBundle``,
-you can use the ``bin/console ai:message-store:setup`` command to initialize the message store and ``bin/console ai:message-store:drop`` to clean up the message store:
+you can use the ``bin/console ai:message-store:setup`` command to initialize the message
+store and ``bin/console ai:message-store:drop`` to clean up the message store:
 
 .. code-block:: yaml
 

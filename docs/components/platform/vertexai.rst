@@ -62,32 +62,19 @@ Basic usage example::
         $httpClient
     );
 
-    $model = new Model(Model::GEMINI_2_5_FLASH);
-
     $messages = new MessageBag(
         Message::ofUser('Hello, how are you?')
     );
 
-    $result = $platform->invoke($model, $messages);
+    $result = $platform->invoke('gemini-2.5-flash', $messages);
     echo $result->getContent();
-
-Available Models
-----------------
-
-The VertexAI bridge supports various Gemini models:
-
-* ``Model::GEMINI_2_5_PRO`` - Most capable model for complex tasks
-* ``Model::GEMINI_2_5_FLASH`` - Fast and efficient for most use cases
-* ``Model::GEMINI_2_0_FLASH`` - Previous generation fast model
-* ``Model::GEMINI_2_5_FLASH_LITE`` - Lightweight version
-* ``Model::GEMINI_2_0_FLASH_LITE`` - Previous generation lightweight model
 
 Model Availability by Location
 ------------------------------
 
-.. important::
+.. note::
 
-    **Model availability varies by Google Cloud location.** Not all models are available in all regions.
+    Model availability varies by Google Cloud location. Not all models are available in all regions.
 
 Common model availability:
 

@@ -26,63 +26,60 @@ The URL Context tool allows Gemini to fetch and analyze content from web pages. 
 
 ::
 
-    $model = new Gemini('gemini-2.5-pro-preview-03-25', [
-        'server_tools' => [
-            'url_context' => true
-        ]
-    ]);
-
     $messages = new MessageBag(
         Message::ofUser('What was the 12 month Euribor rate a week ago based on https://www.euribor-rates.eu/en/current-euribor-rates/4/euribor-rate-12-months/')
     );
 
-    $result = $platform->invoke($model, $messages);
+    $result = $platform->invoke('gemini-2.5-pro-preview-03-25, $messages, [
+        'server_tools' => [
+            'url_context' => true,
+        ]
+    ]);
 
 Google Search
 ~~~~~~~~~~~~~
 
 The Google Search tool enables the model to search the web and incorporate search results into its results::
 
-    $model = new Gemini('gemini-2.5-pro-preview-03-25', [
-        'server_tools' => [
-            'google_search' => true
-        ]
-    ]);
-
     $messages = new MessageBag(
         Message::ofUser('What are the latest developments in quantum computing?')
     );
 
-    $result = $platform->invoke($model, $messages);
+    $result = $platform->invoke('gemini-2.5-pro-preview-03-25', $messages, [
+        'server_tools' => [
+            'google_search' => true,
+        ]
+    ]);
 
 Code Execution
 ~~~~~~~~~~~~~~
 
 The Code Execution tool provides a sandboxed environment for running code::
 
-    $model = new Gemini('gemini-2.5-pro-preview-03-25', [
-        'server_tools' => [
-            'code_execution' => true
-        ]
-    ]);
-
     $messages = new MessageBag(
         Message::ofUser('Calculate the factorial of 20 and show me the code')
     );
 
-    $result = $platform->invoke($model, $messages);
-
+    $result = $platform->invoke('gemini-2.5-pro-preview-03-25', [
+        'server_tools' => [
+            'code_execution' => true,
+        ]
+    ]);
 
 Using Multiple Server Tools
 ---------------------------
 
 You can enable multiple server tools simultaneously::
 
-    $model = new Gemini('gemini-2.5-pro-preview-03-25', [
+    $messages = new MessageBag(
+        Message::ofUser('Calculate the factorial of 20 and show me the code')
+    );
+
+    $result = $platform->invoke('gemini-2.5-pro-preview-03-25', [
         'server_tools' => [
             'url_context' => true,
             'google_search' => true,
-            'code_execution' => true
+            'code_execution' => true,
         ]
     ]);
 
