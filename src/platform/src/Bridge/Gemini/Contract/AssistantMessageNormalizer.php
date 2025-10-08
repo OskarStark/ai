@@ -30,18 +30,18 @@ final class AssistantMessageNormalizer extends ModelContractNormalizer
     {
         $normalized = [];
 
-        if (isset($data->content)) {
-            $normalized['text'] = $data->content;
+        if (null !== $data->getContent()) {
+            $normalized['text'] = $data->getContent();
         }
 
-        if (isset($data->toolCalls[0])) {
+        if ($data->hasToolCalls()) {
             $normalized['functionCall'] = [
-                'id' => $data->toolCalls[0]->getId(),
-                'name' => $data->toolCalls[0]->getName(),
+                'id' => $data->getToolCalls()[0]->getId(),
+                'name' => $data->getToolCalls()[0]->getName(),
             ];
 
-            if ($data->toolCalls[0]->getArguments()) {
-                $normalized['functionCall']['args'] = $data->toolCalls[0]->getArguments();
+            if ($data->getToolCalls()[0]->getArguments()) {
+                $normalized['functionCall']['args'] = $data->getToolCalls()[0]->getArguments();
             }
         }
 

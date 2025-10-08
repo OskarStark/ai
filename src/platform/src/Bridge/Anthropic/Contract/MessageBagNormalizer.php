@@ -42,7 +42,7 @@ final class MessageBagNormalizer extends ModelContractNormalizer implements Norm
         ];
 
         if (null !== $system = $data->getSystemMessage()) {
-            $array['system'] = $system->content;
+            $array['system'] = $system->getContent();
         }
 
         if (isset($context[Contract::CONTEXT_MODEL]) && $context[Contract::CONTEXT_MODEL] instanceof Model) {

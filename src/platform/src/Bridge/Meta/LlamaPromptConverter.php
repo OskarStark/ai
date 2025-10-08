@@ -44,44 +44,44 @@ final class LlamaPromptConverter
             return trim(<<<SYSTEM
                 <|begin_of_text|><|start_header_id|>system<|end_header_id|>
 
-                {$message->content}<|eot_id|>
+                {$message->getContent()}<|eot_id|>
                 SYSTEM);
         }
 
         if ($message instanceof AssistantMessage) {
-            if ('' === $message->content || null === $message->content) {
+            if ('' === $message->getContent() || null === $message->getContent()) {
                 return '';
             }
 
             return trim(<<<ASSISTANT
                 <|start_header_id|>{$message->getRole()->value}<|end_header_id|>
 
-                {$message->content}<|eot_id|>
+                {$message->getContent()}<|eot_id|>
                 ASSISTANT);
         }
 
         // Handling of UserMessage
-        $count = \count($message->content);
+        $count = \count($message->getContent());
 
         $contentParts = [];
         if ($count > 1) {
-            foreach ($message->content as $value) {
+            foreach ($message->getContent() as $value) {
                 if ($value instanceof Text) {
-                    $contentParts[] = $value->text;
+                    $contentParts[] = $value->getText();
                 }
 
                 if ($value instanceof ImageUrl) {
-                    $contentParts[] = $value->url;
+                    $contentParts[] = $value->getUrl();
                 }
             }
         } elseif (1 === $count) {
-            $value = $message->content[0];
+            $value = $message->getContent()[0];
             if ($value instanceof Text) {
-                $contentParts[] = $value->text;
+                $contentParts[] = $value->getText();
             }
 
             if ($value instanceof ImageUrl) {
-                $contentParts[] = $value->url;
+                $contentParts[] = $value->getUrl();
             }
         } else {
             throw new RuntimeException('Unsupported message type.');

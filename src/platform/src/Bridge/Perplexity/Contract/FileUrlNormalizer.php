@@ -31,7 +31,7 @@ final class FileUrlNormalizer extends ModelContractNormalizer
         return [
             'type' => 'file_url',
             'file_url' => [
-                'url' => $data->url,
+                'url' => $data->getUrl(),
             ],
         ];
     }

@@ -89,7 +89,7 @@ final class AgentProcessor implements InputProcessorInterface, OutputProcessorIn
         return function (ToolCallResult $result, ?AssistantMessage $streamedAssistantResponse = null) use ($output): ResultInterface {
             $messages = $this->keepToolMessages ? $output->getMessageBag() : clone $output->getMessageBag();
 
-            if (null !== $streamedAssistantResponse && '' !== $streamedAssistantResponse->content) {
+            if (null !== $streamedAssistantResponse && '' !== $streamedAssistantResponse->getContent()) {
                 $messages->add($streamedAssistantResponse);
             }
 

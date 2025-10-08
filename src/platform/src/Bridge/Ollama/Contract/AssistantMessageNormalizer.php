@@ -46,7 +46,7 @@ final class AssistantMessageNormalizer extends ModelContractNormalizer implement
     {
         return [
             'role' => Role::Assistant,
-            'content' => $data->content ?? '',
+            'content' => $data->getContent() ?? '',
             'tool_calls' => array_values(array_map(function (ToolCall $message): array {
                 return [
                     'type' => 'function',
@@ -56,7 +56,7 @@ final class AssistantMessageNormalizer extends ModelContractNormalizer implement
                         'arguments' => [] === $message->getArguments() ? new \stdClass() : $message->getArguments(),
                     ],
                 ];
-            }, $data->toolCalls ?? [])),
+            }, $data->getToolCalls() ?? [])),
         ];
     }
 

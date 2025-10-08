@@ -27,7 +27,7 @@ class DocumentUrlNormalizer extends ModelContractNormalizer
     {
         return [
             'type' => 'document_url',
-            'document_url' => $data->url,
+            'document_url' => $data->getUrl(),
         ];
     }
 

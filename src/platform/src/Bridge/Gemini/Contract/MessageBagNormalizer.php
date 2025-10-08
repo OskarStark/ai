@@ -43,7 +43,7 @@ final class MessageBagNormalizer extends ModelContractNormalizer implements Norm
 
         if (null !== $systemMessage = $data->getSystemMessage()) {
             $array['system_instruction'] = [
-                'parts' => [['text' => $systemMessage->content]],
+                'parts' => [['text' => $systemMessage->getContent()]],
             ];
         }
 

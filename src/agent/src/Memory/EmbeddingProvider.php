@@ -43,7 +43,7 @@ final readonly class EmbeddingProvider implements MemoryProviderInterface
         }
 
         $userMessageTextContent = array_filter(
-            $userMessage->content,
+            $userMessage->getContent(),
             static fn (ContentInterface $content): bool => $content instanceof Text,
         );
 
@@ -53,7 +53,7 @@ final readonly class EmbeddingProvider implements MemoryProviderInterface
 
         $userMessageTextContent = array_shift($userMessageTextContent);
 
-        $vectors = $this->platform->invoke($this->model->getName(), $userMessageTextContent->text)->asVectors();
+        $vectors = $this->platform->invoke($this->model->getName(), $userMessageTextContent->getText())->asVectors();
         $foundEmbeddingContent = $this->vectorStore->query($vectors[0]);
         if (0 === \count($foundEmbeddingContent)) {
             return [];

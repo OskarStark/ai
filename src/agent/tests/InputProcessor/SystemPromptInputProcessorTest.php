@@ -41,7 +41,7 @@ final class SystemPromptInputProcessorTest extends TestCase
         $this->assertCount(2, $messages);
         $this->assertInstanceOf(SystemMessage::class, $messages[0]);
         $this->assertInstanceOf(UserMessage::class, $messages[1]);
-        $this->assertSame('This is a system prompt', $messages[0]->content);
+        $this->assertSame('This is a system prompt', $messages[0]->getContent());
     }
 
     public function testProcessInputDoesNotAddSystemMessageWhenOneExists()
@@ -59,7 +59,7 @@ final class SystemPromptInputProcessorTest extends TestCase
         $this->assertCount(2, $messages);
         $this->assertInstanceOf(SystemMessage::class, $messages[0]);
         $this->assertInstanceOf(UserMessage::class, $messages[1]);
-        $this->assertSame('This is already a system prompt', $messages[0]->content);
+        $this->assertSame('This is already a system prompt', $messages[0]->getContent());
     }
 
     public function testDoesNotIncludeToolsIfToolboxIsEmpty()
@@ -86,7 +86,7 @@ final class SystemPromptInputProcessorTest extends TestCase
         $this->assertCount(2, $messages);
         $this->assertInstanceOf(SystemMessage::class, $messages[0]);
         $this->assertInstanceOf(UserMessage::class, $messages[1]);
-        $this->assertSame('This is a system prompt', $messages[0]->content);
+        $this->assertSame('This is a system prompt', $messages[0]->getContent());
     }
 
     public function testIncludeToolDefinitions()
@@ -138,7 +138,7 @@ final class SystemPromptInputProcessorTest extends TestCase
             ## tool_required_params
             A tool with required parameters
             or not
-            PROMPT, $messages[0]->content);
+            PROMPT, $messages[0]->getContent());
     }
 
     public function testWithStringableSystemPrompt()
@@ -176,7 +176,7 @@ final class SystemPromptInputProcessorTest extends TestCase
 
             ## tool_no_params
             A tool without parameters
-            PROMPT, $messages[0]->content);
+            PROMPT, $messages[0]->getContent());
     }
 
     public function testWithTranslatedSystemPrompt()
@@ -190,7 +190,7 @@ final class SystemPromptInputProcessorTest extends TestCase
         $this->assertCount(2, $messages);
         $this->assertInstanceOf(SystemMessage::class, $messages[0]);
         $this->assertInstanceOf(UserMessage::class, $messages[1]);
-        $this->assertSame('This is a cool translated system prompt', $messages[0]->content);
+        $this->assertSame('This is a cool translated system prompt', $messages[0]->getContent());
     }
 
     public function testWithTranslationDomainSystemPrompt()
@@ -207,7 +207,7 @@ final class SystemPromptInputProcessorTest extends TestCase
         $messages = $input->getMessageBag()->getMessages();
         $this->assertCount(1, $messages);
         $this->assertInstanceOf(SystemMessage::class, $messages[0]);
-        $this->assertSame('This is a cool translated system prompt with a translation domain', $messages[0]->content);
+        $this->assertSame('This is a cool translated system prompt with a translation domain', $messages[0]->getContent());
     }
 
     public function testWithMissingTranslator()
@@ -237,7 +237,7 @@ final class SystemPromptInputProcessorTest extends TestCase
             $this->assertCount(2, $messages);
             $this->assertInstanceOf(SystemMessage::class, $messages[0]);
             $this->assertInstanceOf(UserMessage::class, $messages[1]);
-            $this->assertSame('This is a system prompt from a file', $messages[0]->content);
+            $this->assertSame('This is a system prompt from a file', $messages[0]->getContent());
         } finally {
             unlink($tempFile);
         }
@@ -258,7 +258,7 @@ final class SystemPromptInputProcessorTest extends TestCase
             $messages = $input->getMessageBag()->getMessages();
             $this->assertCount(2, $messages);
             $this->assertInstanceOf(SystemMessage::class, $messages[0]);
-            $this->assertSame("Line 1\nLine 2\nLine 3", $messages[0]->content);
+            $this->assertSame("Line 1\nLine 2\nLine 3", $messages[0]->getContent());
         } finally {
             unlink($tempFile);
         }

@@ -69,7 +69,7 @@ final readonly class MemoryInputProcessor implements InputProcessorInterface
             return;
         }
 
-        $systemMessage = $input->getMessageBag()->getSystemMessage()->content ?? '';
+        $systemMessage = $input->getMessageBag()->getSystemMessage()?->getContent() ?? '';
 
         $combinedMessage = self::MEMORY_PROMPT_MESSAGE.$memory;
         if ('' !== $systemMessage) {

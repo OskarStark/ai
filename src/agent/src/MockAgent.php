@@ -62,9 +62,9 @@ final class MockAgent implements AgentInterface
         $content = '';
 
         if ($lastMessage instanceof UserMessage) {
-            foreach ($lastMessage->content as $messageContent) {
+            foreach ($lastMessage->getContent() as $messageContent) {
                 if ($messageContent instanceof Text) {
-                    $content .= $messageContent->text;
+                    $content .= $messageContent->getText();
                 }
             }
         }

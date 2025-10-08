@@ -35,11 +35,11 @@ final class ToolCallMessageNormalizer extends ModelContractNormalizer
      */
     public function normalize(mixed $data, ?string $format = null, array $context = []): array
     {
-        $resultContent = json_validate($data->content) ? json_decode($data->content, true, 512, \JSON_THROW_ON_ERROR) : $data->content;
+        $resultContent = json_validate($data->getContent()) ? json_decode($data->getContent(), true, 512, \JSON_THROW_ON_ERROR) : $data->getContent();
 
         return [[
             'functionResponse' => array_filter([
-                'name' => $data->toolCall->getName(),
+                'name' => $data->getToolCall()->getName(),
                 'response' => \is_array($resultContent) ? $resultContent : [
                     'rawResponse' => $resultContent,
                 ],

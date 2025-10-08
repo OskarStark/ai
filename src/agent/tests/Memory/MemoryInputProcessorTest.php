@@ -82,7 +82,7 @@ final class MemoryInputProcessorTest extends TestCase
 
                 You are a helpful and kind assistant.
                 MARKDOWN,
-            $input->getMessageBag()->getSystemMessage()->content,
+            $input->getMessageBag()->getSystemMessage()->getContent(),
         );
     }
 
@@ -108,7 +108,7 @@ final class MemoryInputProcessorTest extends TestCase
 
                 First memory content
                 MARKDOWN,
-            $input->getMessageBag()->getSystemMessage()->content,
+            $input->getMessageBag()->getSystemMessage()->getContent(),
         );
     }
 
@@ -135,7 +135,7 @@ final class MemoryInputProcessorTest extends TestCase
                 First memory content
                 Second memory content
                 MARKDOWN,
-            $input->getMessageBag()->getSystemMessage()->content,
+            $input->getMessageBag()->getSystemMessage()->getContent(),
         );
     }
 
@@ -151,6 +151,6 @@ final class MemoryInputProcessorTest extends TestCase
         $memoryInputProcessor->processInput($input = new Input('gpt-4', new MessageBag(), []));
 
         $this->assertArrayNotHasKey('use_memory', $input->getOptions());
-        $this->assertNull($input->getMessageBag()->getSystemMessage()?->content);
+        $this->assertNull($input->getMessageBag()->getSystemMessage()?->getContent());
     }
 }
