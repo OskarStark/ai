@@ -125,9 +125,9 @@ When using the AI Bundle, you can configure memory directly in your configuratio
         agent:
             trainer:
                 model: 'gpt-4o-mini'
-                memory: 'You are a professional trainer with personalized advice'
                 prompt:
                     text: 'Provide short, motivating claims'
+                memory: 'You are a professional trainer with personalized advice'
 
 For dynamic memory using a custom service:
 
@@ -137,10 +137,10 @@ For dynamic memory using a custom service:
         agent:
             trainer:
                 model: 'gpt-4o-mini'
-                memory:
-                    service: 'app.user_memory_provider'
                 prompt:
                     text: 'Provide short, motivating claims'
+                memory:
+                    service: 'app.user_memory_provider'
 
 Best Practices
 --------------
