@@ -21,6 +21,7 @@ use Symfony\AI\Agent\Toolbox\Toolbox;
 use Symfony\AI\Agent\Toolbox\ToolFactory\ChainFactory;
 use Symfony\AI\Agent\Toolbox\ToolFactory\MemoryToolFactory;
 use Symfony\AI\Agent\Toolbox\ToolFactory\ReflectionToolFactory;
+use Symfony\AI\Agent\Toolbox\ToolResult;
 use Symfony\AI\Fixtures\Tool\ToolCustomException;
 use Symfony\AI\Fixtures\Tool\ToolDate;
 use Symfony\AI\Fixtures\Tool\ToolException;
@@ -180,9 +181,11 @@ final class ToolboxTest extends TestCase
     #[DataProvider('executeProvider')]
     public function testExecute(string $expected, string $toolName, array $toolPayload = [])
     {
-        $this->assertSame(
-            $expected,
-            $this->toolbox->execute(new ToolCall('call_1234', $toolName, $toolPayload)),
+        $toolCall = new ToolCall('call_1234', $toolName, $toolPayload);
+
+        $this->assertEquals(
+            new ToolResult($toolCall, $expected),
+            $this->toolbox->execute($toolCall),
         );
     }
 
@@ -244,7 +247,7 @@ final class ToolboxTest extends TestCase
         $toolbox = new Toolbox([new ToolNoAttribute1()], $memoryFactory);
         $result = $toolbox->execute(new ToolCall('call_1234', 'happy_birthday', ['name' => 'John', 'years' => 30]));
 
-        $this->assertSame('Happy Birthday, John! You are 30 years old.', $result);
+        $this->assertSame('Happy Birthday, John! You are 30 years old.', $result->getResult());
     }
 
     public function testToolboxMapWithOverrideViaChain()

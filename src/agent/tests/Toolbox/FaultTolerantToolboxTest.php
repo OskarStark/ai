@@ -17,6 +17,7 @@ use Symfony\AI\Agent\Toolbox\Exception\ToolExecutionExceptionInterface;
 use Symfony\AI\Agent\Toolbox\Exception\ToolNotFoundException;
 use Symfony\AI\Agent\Toolbox\FaultTolerantToolbox;
 use Symfony\AI\Agent\Toolbox\ToolboxInterface;
+use Symfony\AI\Agent\Toolbox\ToolResult;
 use Symfony\AI\Fixtures\Tool\ToolNoParams;
 use Symfony\AI\Fixtures\Tool\ToolRequiredParams;
 use Symfony\AI\Platform\Result\ToolCall;
@@ -37,7 +38,7 @@ final class FaultTolerantToolboxTest extends TestCase
         $toolCall = new ToolCall('987654321', 'tool_foo');
         $actual = $faultTolerantToolbox->execute($toolCall);
 
-        $this->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual->getResult());
     }
 
     public function testFaultyToolCall()
@@ -52,7 +53,7 @@ final class FaultTolerantToolboxTest extends TestCase
         $toolCall = new ToolCall('123456789', 'tool_xyz');
         $actual = $faultTolerantToolbox->execute($toolCall);
 
-        $this->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual->getResult());
     }
 
     public function testCustomToolExecutionException()
@@ -72,7 +73,7 @@ final class FaultTolerantToolboxTest extends TestCase
         $toolCall = new ToolCall('123456789', 'tool_xyz');
         $actual = $faultTolerantToolbox->execute($toolCall);
 
-        $this->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual->getResult());
     }
 
     private function createFaultyToolbox(\Closure $exceptionFactory): ToolboxInterface
@@ -93,7 +94,7 @@ final class FaultTolerantToolboxTest extends TestCase
                 ];
             }
 
-            public function execute(ToolCall $toolCall): mixed
+            public function execute(ToolCall $toolCall): ToolResult
             {
                 throw ($this->exceptionFactory)($toolCall);
             }

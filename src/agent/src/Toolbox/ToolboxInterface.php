@@ -30,5 +30,5 @@ interface ToolboxInterface
      * @throws ToolExecutionExceptionInterface if the tool execution fails
      * @throws ToolNotFoundException           if the tool is not found
      */
-    public function execute(ToolCall $toolCall): mixed;
+    public function execute(ToolCall $toolCall): ToolResult;
 }

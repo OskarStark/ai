@@ -17,6 +17,7 @@ use Symfony\AI\Agent\Input;
 use Symfony\AI\Agent\Output;
 use Symfony\AI\Agent\Toolbox\AgentProcessor;
 use Symfony\AI\Agent\Toolbox\ToolboxInterface;
+use Symfony\AI\Agent\Toolbox\ToolResult;
 use Symfony\AI\Platform\Message\AssistantMessage;
 use Symfony\AI\Platform\Message\MessageBag;
 use Symfony\AI\Platform\Message\ToolCallMessage;
@@ -72,12 +73,15 @@ class AgentProcessorTest extends TestCase
 
     public function testProcessOutputWithToolCallResponseKeepingMessages()
     {
+        $toolCall = new ToolCall('id1', 'tool1', ['arg1' => 'value1']);
         $toolbox = $this->createMock(ToolboxInterface::class);
-        $toolbox->expects($this->once())->method('execute')->willReturn('Test response');
+        $toolbox
+            ->expects($this->once())
+            ->method('execute')
+            ->willReturn(new ToolResult($toolCall, 'Test response'));
 
         $messageBag = new MessageBag();
-
-        $result = new ToolCallResult(new ToolCall('id1', 'tool1', ['arg1' => 'value1']));
+        $result = new ToolCallResult($toolCall);
 
         $agent = $this->createStub(AgentInterface::class);
 
@@ -95,12 +99,15 @@ class AgentProcessorTest extends TestCase
 
     public function testProcessOutputWithToolCallResponseForgettingMessages()
     {
+        $toolCall = new ToolCall('id1', 'tool1', ['arg1' => 'value1']);
         $toolbox = $this->createMock(ToolboxInterface::class);
-        $toolbox->expects($this->once())->method('execute')->willReturn('Test response');
+        $toolbox
+            ->expects($this->once())
+            ->method('execute')
+            ->willReturn(new ToolResult($toolCall, 'Test response'));
 
         $messageBag = new MessageBag();
-
-        $result = new ToolCallResult(new ToolCall('id1', 'tool1', ['arg1' => 'value1']));
+        $result = new ToolCallResult($toolCall);
 
         $agent = $this->createStub(AgentInterface::class);
 

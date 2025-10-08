@@ -15,6 +15,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\AI\Agent\Input;
 use Symfony\AI\Agent\InputProcessor\SystemPromptInputProcessor;
 use Symfony\AI\Agent\Toolbox\ToolboxInterface;
+use Symfony\AI\Agent\Toolbox\ToolResult;
 use Symfony\AI\Fixtures\Tool\ToolNoParams;
 use Symfony\AI\Fixtures\Tool\ToolRequiredParams;
 use Symfony\AI\Platform\Message\Content\File;
@@ -72,9 +73,9 @@ final class SystemPromptInputProcessorTest extends TestCase
                     return [];
                 }
 
-                public function execute(ToolCall $toolCall): mixed
+                public function execute(ToolCall $toolCall): ToolResult
                 {
-                    return null;
+                    return new ToolResult($toolCall, null);
                 }
             },
         );
@@ -110,9 +111,9 @@ final class SystemPromptInputProcessorTest extends TestCase
                     ];
                 }
 
-                public function execute(ToolCall $toolCall): mixed
+                public function execute(ToolCall $toolCall): ToolResult
                 {
-                    return null;
+                    return new ToolResult($toolCall, null);
                 }
             },
             $this->getTranslator(),
@@ -153,9 +154,9 @@ final class SystemPromptInputProcessorTest extends TestCase
                     ];
                 }
 
-                public function execute(ToolCall $toolCall): mixed
+                public function execute(ToolCall $toolCall): ToolResult
                 {
-                    return null;
+                    return new ToolResult($toolCall, null);
                 }
             },
         );

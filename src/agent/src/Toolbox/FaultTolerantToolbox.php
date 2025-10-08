@@ -33,16 +33,19 @@ final readonly class FaultTolerantToolbox implements ToolboxInterface
         return $this->innerToolbox->getTools();
     }
 
-    public function execute(ToolCall $toolCall): mixed
+    public function execute(ToolCall $toolCall): ToolResult
     {
         try {
             return $this->innerToolbox->execute($toolCall);
         } catch (ToolExecutionExceptionInterface $e) {
-            return $e->getToolCallResult();
+            return new ToolResult($toolCall, $e->getToolCallResult());
         } catch (ToolNotFoundException) {
             $names = array_map(fn (Tool $metadata) => $metadata->getName(), $this->getTools());
 
-            return \sprintf('Tool "%s" was not found, please use one of these: %s', $toolCall->getName(), implode(', ', $names));
+            return new ToolResult(
+                $toolCall,
+                \sprintf('Tool "%s" was not found, please use one of these: %s', $toolCall->getName(), implode(', ', $names))
+            );
         }
     }
 }

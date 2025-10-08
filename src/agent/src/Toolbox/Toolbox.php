@@ -72,7 +72,7 @@ final class Toolbox implements ToolboxInterface
         return $this->map = $map;
     }
 
-    public function execute(ToolCall $toolCall): mixed
+    public function execute(ToolCall $toolCall): ToolResult
     {
         $metadata = $this->getMetadata($toolCall);
         $tool = $this->getExecutable($metadata);
@@ -93,7 +93,7 @@ final class Toolbox implements ToolboxInterface
             throw ToolExecutionException::executionFailed($toolCall, $e);
         }
 
-        return $result;
+        return new ToolResult($toolCall, $result);
     }
 
     private function getMetadata(ToolCall $toolCall): Tool
