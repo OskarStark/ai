@@ -304,10 +304,10 @@ When using the AI Bundle, configure RAG with YAML:
         agent:
             rag_assistant:
                 model: 'gpt-4o-mini'
-                tools:
-                    - 'Symfony\AI\Agent\Toolbox\Tool\SimilaritySearch'
                 prompt:
                     text: 'Answer questions using only the SimilaritySearch tool. If you cannot find relevant information, say so.'
+                tools:
+                    - 'Symfony\AI\Agent\Toolbox\Tool\SimilaritySearch'
 
 Then use the indexer command to populate your store:
 
