@@ -124,7 +124,7 @@ This leads to a store implementing two methods::
         }
     }
 
-.. _`Retrieval Augmented Generation`: https://de.wikipedia.org/wiki/Retrieval-Augmented_Generation
+.. _`Retrieval Augmented Generation`: https://en.wikipedia.org/wiki/Retrieval-augmented_generation
 .. _`Similarity Search with Cloudflare (RAG)`: https://github.com/symfony/ai/blob/main/examples/rag/cloudflare.php
 .. _`Similarity Search with MariaDB (RAG)`: https://github.com/symfony/ai/blob/main/examples/rag/mariadb-gemini.php
 .. _`Similarity Search with Meilisearch (RAG)`: https://github.com/symfony/ai/blob/main/examples/rag/meilisearch.php
