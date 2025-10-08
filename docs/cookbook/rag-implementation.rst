@@ -33,7 +33,7 @@ Prerequisites
 * Symfony AI Agent component
 * Symfony AI Store component
 * An embeddings model (e.g., OpenAI's text-embedding-3-small)
-* A language model (e.g., GPT-4o-mini)
+* A language model (e.g., gpt-4o-mini)
 * Optional: A vector store (or use in-memory for testing)
 
 Complete Implementation
