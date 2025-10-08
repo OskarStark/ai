@@ -220,29 +220,24 @@ Advanced Configurations
 Chunking Large Documents
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-For large documents, split them into smaller chunks for better retrieval::
+For large documents, split them into smaller chunks for better retrieval using the
+:class:`Symfony\\AI\\Store\\Document\\Transformer\\TextSplitTransformer`::
 
-    function chunkDocument(string $content, int $chunkSize = 1000): array
-    {
-        $chunks = [];
-        $sentences = preg_split('/(?<=[.!?])\s+/', $content);
-        $currentChunk = '';
+    use Symfony\AI\Store\Document\Transformer\TextSplitTransformer;
 
-        foreach ($sentences as $sentence) {
-            if (strlen($currentChunk) + strlen($sentence) > $chunkSize) {
-                $chunks[] = $currentChunk;
-                $currentChunk = $sentence;
-            } else {
-                $currentChunk .= ' ' . $sentence;
-            }
-        }
+    $transformer = new TextSplitTransformer(
+        chunkSize: 1000,
+        overlap: 200
+    );
 
-        if ($currentChunk) {
-            $chunks[] = $currentChunk;
-        }
+    $chunkedDocuments = $transformer->transform($documents);
 
-        return $chunks;
-    }
+The transformer automatically:
+
+* Splits documents into chunks of the specified size
+* Adds overlap between chunks to maintain context
+* Preserves original document metadata
+* Tracks parent document IDs for reference
 
 Custom Similarity Metrics
 ~~~~~~~~~~~~~~~~~~~~~~~~~
