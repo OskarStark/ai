@@ -256,14 +256,20 @@ Some vector stores support different similarity metrics:
 Metadata Filtering
 ~~~~~~~~~~~~~~~~~~
 
-Filter search results based on metadata::
+ChromaDB supports filtering search results based on metadata using the ``where`` option::
 
     $result = $store->query($vector, [
-        'limit' => 5,
-        'metadata_filter' => [
+        'where' => [
             'category' => 'technical',
-            'published_after' => '2024-01-01',
+            'status' => 'published',
         ],
+    ]);
+
+You can also filter based on document content using ``whereDocument``::
+
+    $result = $store->query($vector, [
+        'where' => ['category' => 'technical'],
+        'whereDocument' => ['$contains' => 'machine learning'],
     ]);
 
 Bundle Configuration
