@@ -96,8 +96,8 @@ How It Works
 4. **Conversation Flow**: The memory persists across multiple calls, enabling continuous
    personalized interactions.
 
-Alternative: Dynamic Memory with Embeddings
--------------------------------------------
+Use Dynamic Memory with Embeddings
+----------------------------------
 
 For more sophisticated scenarios, use :class:`Symfony\\AI\\Agent\\Memory\\EmbeddingProvider` to retrieve relevant context
 based on semantic similarity::
