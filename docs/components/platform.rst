@@ -283,10 +283,10 @@ Server Tools
 
 Some platforms provide built-in server-side tools for enhanced capabilities without custom implementations:
 
-1. **[Gemini](platform/gemini-server-tools.rst)** - URL Context, Google Search, Code Execution
-1. **[VertexAI](platform/vertexai-server-tools.rst)** - URL Context, Google Search, Code Execution
+* :doc:`platform/gemini-server-tools` - URL Context, Google Search, Code Execution
+* :doc:`platform/vertexai-server-tools` - URL Context, Google Search, Code Execution
 
-For complete Vertex AI setup and usage guide, see :doc:`vertexai`.
+For complete Vertex AI setup and usage guide, see :doc:`platform/vertexai`.
 
 Parallel Platform Calls
 -----------------------
