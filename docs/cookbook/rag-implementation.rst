@@ -120,7 +120,7 @@ Create a tool that performs semantic search on your vector store::
     $toolbox = new Toolbox([$similaritySearch]);
     $processor = new AgentProcessor($toolbox);
 
-The ``SimilaritySearch`` tool:
+The :class:`Symfony\\AI\\Agent\\Toolbox\\Tool\\SimilaritySearch` tool:
 
 * Converts the user's query into a vector
 * Searches for similar vectors in the store

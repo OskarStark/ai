@@ -40,7 +40,7 @@ Key Components
 Memory Provider
 ~~~~~~~~~~~~~~~
 
-The ``StaticMemoryProvider`` stores fixed information that should be consistently available
+The :class:`Symfony\\AI\\Agent\\Memory\\StaticMemoryProvider` stores fixed information that should be consistently available
 to the agent::
 
     use Symfony\AI\Agent\Memory\StaticMemoryProvider;
@@ -57,13 +57,13 @@ context about the user without cluttering the conversation messages.
 Memory Input Processor
 ~~~~~~~~~~~~~~~~~~~~~~
 
-The ``MemoryInputProcessor`` handles the injection of memory content into the agent's context::
+The :class:`Symfony\\AI\\Agent\\Memory\\MemoryInputProcessor` handles the injection of memory content into the agent's context::
 
     use Symfony\AI\Agent\Memory\MemoryInputProcessor;
 
     $memoryProcessor = new MemoryInputProcessor($personalFacts);
 
-This processor works alongside other input processors like ``SystemPromptInputProcessor``
+This processor works alongside other input processors like :class:`Symfony\\AI\\Agent\\InputProcessor\\SystemPromptInputProcessor`
 to build a complete context for the agent.
 
 Agent Configuration
@@ -97,7 +97,7 @@ How It Works
 Alternative: Dynamic Memory with Embeddings
 -------------------------------------------
 
-For more sophisticated scenarios, use ``EmbeddingProvider`` to retrieve relevant context
+For more sophisticated scenarios, use :class:`Symfony\\AI\\Agent\\Memory\\EmbeddingProvider` to retrieve relevant context
 based on semantic similarity::
 
     use Symfony\AI\Agent\Memory\EmbeddingProvider;
