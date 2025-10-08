@@ -26,7 +26,7 @@ with a ``Symfony\AI\Agent\AgentInterface`` and a ``Symfony\AI\Chat\MessageStoreI
 
     $platform = PlatformFactory::create($apiKey);
 
-    $agent = new Agent($platform, 'gpt-40-mini');
+    $agent = new Agent($platform, 'gpt-4o-mini');
     $chat = new Chat($agent, new InMemoryStore());
 
     $chat->submit(Message::ofUser('Hello'));
