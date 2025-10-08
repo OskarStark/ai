@@ -44,10 +44,10 @@ Complete Implementation
    :linenos:
 
 Step-by-Step Breakdown
------------------------
+----------------------
 
 Step 1: Initialize the Vector Store
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 First, create a store to hold your vector embeddings::
 
@@ -58,7 +58,7 @@ First, create a store to hold your vector embeddings::
 For production use, consider using persistent stores like ChromaDB, Pinecone, or MongoDB Atlas.
 
 Step 2: Prepare Your Documents
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Create text documents with relevant content and metadata::
 
@@ -84,7 +84,7 @@ Each document should contain:
 * **Metadata**: Additional information preserved with the document
 
 Step 3: Create Embeddings and Index Documents
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Use a vectorizer to convert documents into embeddings and store them::
 
@@ -108,7 +108,7 @@ The indexer handles:
 * Storing vectors in the vector store
 
 Step 4: Configure Similarity Search Tool
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Create a tool that performs semantic search on your vector store::
 
@@ -127,7 +127,7 @@ The ``SimilaritySearch`` tool:
 * Returns the most relevant documents
 
 Step 5: Create RAG-Enabled Agent
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Configure the agent with the similarity search processor::
 
@@ -143,7 +143,7 @@ Configure the agent with the similarity search processor::
 The agent will automatically use the similarity search tool when needed.
 
 Step 6: Query with Context
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Create messages that instruct the agent to use the similarity search::
 
@@ -164,7 +164,7 @@ The agent will:
 4. Generate a response based on the retrieved context
 
 Production-Ready RAG Systems
------------------------------
+----------------------------
 
 Vector Store Selection
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -206,7 +206,7 @@ For production environments, use persistent vector stores:
 See :doc:`../components/store` for all supported vector stores.
 
 Document Loading Strategies
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **File-based loading** for static content::
 
@@ -262,7 +262,7 @@ For large documents, split them into smaller chunks for better retrieval::
     }
 
 Custom Similarity Metrics
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Some vector stores support different similarity metrics:
 
