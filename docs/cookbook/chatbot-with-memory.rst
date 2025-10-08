@@ -71,6 +71,8 @@ Agent Configuration
 
 The agent is configured with both system prompt and memory processors::
 
+    use Symfony\AI\Agent\Agent;
+
     $agent = new Agent(
         $platform,
         'gpt-4o-mini',
