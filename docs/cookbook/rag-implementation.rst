@@ -169,9 +169,7 @@ Production-Ready RAG Systems
 Vector Store Selection
 ~~~~~~~~~~~~~~~~~~~~~~
 
-For production environments, use persistent vector stores:
-
-**ChromaDB** - Local or self-hosted vector database::
+For production environments, use persistent vector stores like ChromaDB::
 
     use Symfony\AI\Store\Bridge\ChromaDB\ChromaStore;
 
@@ -181,29 +179,14 @@ For production environments, use persistent vector stores:
         'my_collection'
     );
 
-**Pinecone** - Managed cloud vector database::
+ChromaDB is a great choice for production RAG systems as it provides:
 
-    use Symfony\AI\Store\Bridge\Pinecone\PineconeStore;
+* Local or self-hosted deployment options
+* Efficient vector similarity search
+* Built-in persistence
+* Easy integration with Symfony AI
 
-    $store = new PineconeStore(
-        $httpClient,
-        $_ENV['PINECONE_API_KEY'],
-        $_ENV['PINECONE_ENVIRONMENT'],
-        'my-index'
-    );
-
-**MongoDB Atlas** - MongoDB with vector search::
-
-    use Symfony\AI\Store\Bridge\MongoDB\MongoDBStore;
-
-    $store = new MongoDBStore(
-        $client,
-        'database_name',
-        'collection_name',
-        'vector_index_name'
-    );
-
-See :doc:`../components/store` for all supported vector stores.
+See :doc:`../components/store` for all supported vector stores including Pinecone, MongoDB Atlas, Weaviate, and more.
 
 Document Loading Strategies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
