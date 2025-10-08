@@ -11,12 +11,12 @@ Getting Started
 Symfony AI consists of several components and bundles that work together to bring
 AI capabilities to your application:
 
-* **Platform Component**: Unified interface to various AI models and providers
-* **Agent Component**: Framework for building AI agents with tools and workflows
-* **Chat Component**: API to interact with agents and store conversation history
-* **Store Component**: Data storage abstraction for vector databases and RAG applications
-* **AI Bundle**: Symfony integration bringing all components together
-* **MCP Bundle**: Integration for the Model Context Protocol SDK
+* :doc:`Platform Component </components/platform>`: Unified interface to various AI models and providers
+* :doc:`Agent Component </components/agent>`: Framework for building AI agents with tools and workflows
+* :doc:`Chat Component </components/chat>`: API to interact with agents and store conversation history
+* :doc:`Store Component </components/store>`: Data storage abstraction for vector databases and RAG applications
+* :doc:`AI Bundle </bundles/ai-bundle>`: Symfony integration bringing all components together
+* :doc:`MCP Bundle </bundles/mcp-bundle>`: Integration for the Model Context Protocol SDK
 
 Quick Start
 -----------
