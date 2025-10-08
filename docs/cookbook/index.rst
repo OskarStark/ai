@@ -19,6 +19,6 @@ Memory & Context Management
 * :doc:`chatbot-with-memory` - Build chatbots that remember user preferences and conversation history
 
 Retrieval Augmented Generation
--------------------------------
+------------------------------
 
 * :doc:`rag-implementation` - Implement complete RAG systems with vector stores and semantic search
