@@ -113,8 +113,6 @@ based on semantic similarity::
 This approach allows the agent to recall specific pieces of information from a large
 knowledge base based on the current conversation context.
 
-See the :doc:`mariadb-memory` cookbook for a complete example using embedding-based memory.
-
 Bundle Configuration
 --------------------
 
