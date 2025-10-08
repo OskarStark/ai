@@ -14,7 +14,7 @@ Getting Started Guides
     rag-implementation
 
 Memory & Context Management
-----------------------------
+---------------------------
 
 * :doc:`chatbot-with-memory` - Build chatbots that remember user preferences and conversation history
 
