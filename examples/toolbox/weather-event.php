@@ -32,9 +32,9 @@ $agent = new Agent($platform, 'gpt-4o-mini', [$processor], [$processor]);
 
 // Add tool call result listener to enforce chain exits direct with structured response for weather tools
 $eventDispatcher->addListener(ToolCallsExecuted::class, function (ToolCallsExecuted $event): void {
-    foreach ($event->toolResults as $toolCallResult) {
-        if (str_starts_with($toolCallResult->toolCall->getName(), 'weather_')) {
-            $event->result = new ObjectResult($toolCallResult->result);
+    foreach ($event->getToolResults() as $toolCallResult) {
+        if (str_starts_with($toolCallResult->getToolCall()->getName(), 'weather_')) {
+            $event->setResult(new ObjectResult($toolCallResult->getResult()));
         }
     }
 });

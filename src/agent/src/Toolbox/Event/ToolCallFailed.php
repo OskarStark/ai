@@ -22,10 +22,33 @@ final readonly class ToolCallFailed
      * @param array<string, mixed> $arguments
      */
     public function __construct(
-        public object $tool,
-        public Tool $metadata,
-        public array $arguments,
-        public \Throwable $exception,
+        private object $tool,
+        private Tool $metadata,
+        private array $arguments,
+        private \Throwable $exception,
     ) {
+    }
+
+    public function getTool(): object
+    {
+        return $this->tool;
+    }
+
+    public function getMetadata(): Tool
+    {
+        return $this->metadata;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getArguments(): array
+    {
+        return $this->arguments;
+    }
+
+    public function getException(): \Throwable
+    {
+        return $this->exception;
     }
 }

@@ -40,6 +40,6 @@ final class StaticMemoryProviderTest extends TestCase
         $this->assertCount(1, $memory);
         $this->assertInstanceOf(Memory::class, $memory[0]);
         $expectedContent = "## Static Memory\n\n- {$fact1}\n- {$fact2}";
-        $this->assertSame($expectedContent, $memory[0]->content);
+        $this->assertSame($expectedContent, $memory[0]->getContent());
     }
 }

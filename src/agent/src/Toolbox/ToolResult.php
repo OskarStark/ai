@@ -19,8 +19,18 @@ use Symfony\AI\Platform\Result\ToolCall;
 final readonly class ToolResult
 {
     public function __construct(
-        public ToolCall $toolCall,
-        public mixed $result,
+        private ToolCall $toolCall,
+        private mixed $result,
     ) {
+    }
+
+    public function getToolCall(): ToolCall
+    {
+        return $this->toolCall;
+    }
+
+    public function getResult(): mixed
+    {
+        return $this->result;
     }
 }

@@ -61,7 +61,7 @@ final readonly class MemoryInputProcessor implements InputProcessorInterface
             $memory .= \PHP_EOL.\PHP_EOL;
             $memory .= implode(
                 \PHP_EOL,
-                array_map(static fn (Memory $memory): string => $memory->content, $memoryMessages),
+                array_map(static fn (Memory $memory): string => $memory->getContent(), $memoryMessages),
             );
         }
 

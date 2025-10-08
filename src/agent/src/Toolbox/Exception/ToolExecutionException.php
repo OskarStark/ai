@@ -18,7 +18,7 @@ use Symfony\AI\Platform\Result\ToolCall;
  */
 final class ToolExecutionException extends \RuntimeException implements ToolExecutionExceptionInterface
 {
-    public ?ToolCall $toolCall = null;
+    private ?ToolCall $toolCall = null;
 
     public static function executionFailed(ToolCall $toolCall, \Throwable $previous): self
     {
@@ -26,6 +26,11 @@ final class ToolExecutionException extends \RuntimeException implements ToolExec
         $exception->toolCall = $toolCall;
 
         return $exception;
+    }
+
+    public function getToolCall(): ?ToolCall
+    {
+        return $this->toolCall;
     }
 
     public function getToolCallResult(): string

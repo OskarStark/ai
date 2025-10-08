@@ -91,8 +91,8 @@ final class MultiAgent implements AgentInterface
         }
 
         $this->logger->debug('MultiAgent: Agent selection completed', [
-            'selected_agent' => $decision->agentName,
-            'reasoning' => $decision->reasoning,
+            'selected_agent' => $decision->getAgentName(),
+            'reasoning' => $decision->getReasoning(),
         ]);
 
         if (!$decision->hasAgent()) {
@@ -104,7 +104,7 @@ final class MultiAgent implements AgentInterface
         // Find the target agent by name
         $targetAgent = null;
         foreach ($this->handoffs as $handoff) {
-            if ($handoff->getTo()->getName() === $decision->agentName) {
+            if ($handoff->getTo()->getName() === $decision->getAgentName()) {
                 $targetAgent = $handoff->getTo();
                 break;
             }
@@ -112,14 +112,14 @@ final class MultiAgent implements AgentInterface
 
         if (!$targetAgent) {
             $this->logger->debug('MultiAgent: Target agent not found, using fallback agent', [
-                'requested_agent' => $decision->agentName,
+                'requested_agent' => $decision->getAgentName(),
                 'reason' => 'agent_not_found',
             ]);
 
             return $this->fallback->call($messages, $options);
         }
 
-        $this->logger->debug('MultiAgent: Delegating to agent', ['agent_name' => $decision->agentName]);
+        $this->logger->debug('MultiAgent: Delegating to agent', ['agent_name' => $decision->getAgentName()]);
 
         // Call the selected agent with the original user question
         return $targetAgent->call(new MessageBag($userMessage), $options);

@@ -16,7 +16,13 @@ namespace Symfony\AI\Agent\Memory;
  */
 final readonly class Memory
 {
-    public function __construct(public string $content)
+    public function __construct(
+        private string $content,
+    ) {
+    }
+
+    public function getContent(): string
     {
+        return $this->content;
     }
 }

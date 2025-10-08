@@ -22,8 +22,8 @@ final class ToolCallsExecuted
     /**
      * @var ToolResult[]
      */
-    public readonly array $toolResults;
-    public ResultInterface $result;
+    private readonly array $toolResults;
+    private ResultInterface $result;
 
     public function __construct(ToolResult ...$toolResults)
     {
@@ -33,5 +33,23 @@ final class ToolCallsExecuted
     public function hasResponse(): bool
     {
         return isset($this->result);
+    }
+
+    public function setResult(ResultInterface $result): void
+    {
+        $this->result = $result;
+    }
+
+    public function getResult(): ResultInterface
+    {
+        return $this->result;
+    }
+
+    /**
+     * @return ToolResult[]
+     */
+    public function getToolResults(): array
+    {
+        return $this->toolResults;
     }
 }

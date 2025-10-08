@@ -19,7 +19,7 @@ use Symfony\AI\Platform\Tool\ExecutionReference;
  */
 final class ToolNotFoundException extends \RuntimeException implements ExceptionInterface
 {
-    public ?ToolCall $toolCall = null;
+    private ?ToolCall $toolCall = null;
 
     public static function notFoundForToolCall(ToolCall $toolCall): self
     {
@@ -32,5 +32,10 @@ final class ToolNotFoundException extends \RuntimeException implements Exception
     public static function notFoundForReference(ExecutionReference $reference): self
     {
         return new self(\sprintf('Tool not found for reference: %s::%s.', $reference->getClass(), $reference->getMethod()));
+    }
+
+    public function getToolCall(): ?ToolCall
+    {
+        return $this->toolCall;
     }
 }

@@ -145,7 +145,7 @@ final class EmbeddingProviderTest extends TestCase
 
                 {"fact":"The sky is blue"}{"fact":"Water is wet"}
                 MARKDOWN,
-            $memory[0]->content,
+            $memory[0]->getContent(),
         );
     }
 }

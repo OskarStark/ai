@@ -22,10 +22,33 @@ final readonly class ToolCallSucceeded
      * @param array<string, mixed> $arguments
      */
     public function __construct(
-        public object $tool,
-        public Tool $metadata,
-        public array $arguments,
-        public mixed $result,
+        private object $tool,
+        private Tool $metadata,
+        private array $arguments,
+        private mixed $result,
     ) {
+    }
+
+    public function getTool(): object
+    {
+        return $this->tool;
+    }
+
+    public function getMetadata(): Tool
+    {
+        return $this->metadata;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getArguments(): array
+    {
+        return $this->arguments;
+    }
+
+    public function getResult(): mixed
+    {
+        return $this->result;
     }
 }

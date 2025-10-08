@@ -23,8 +23,8 @@ final readonly class Decision
      * @param string $reasoning The reasoning behind the selection
      */
     public function __construct(
-        public string $agentName,
-        public string $reasoning = 'No reasoning provided',
+        private string $agentName,
+        private string $reasoning = 'No reasoning provided',
     ) {
     }
 
@@ -34,5 +34,15 @@ final readonly class Decision
     public function hasAgent(): bool
     {
         return '' !== $this->agentName;
+    }
+
+    public function getAgentName(): string
+    {
+        return $this->agentName;
+    }
+
+    public function getReasoning(): string
+    {
+        return $this->reasoning;
     }
 }

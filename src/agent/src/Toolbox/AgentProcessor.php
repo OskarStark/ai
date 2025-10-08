@@ -107,7 +107,7 @@ final class AgentProcessor implements InputProcessorInterface, OutputProcessorIn
                 $event = new ToolCallsExecuted(...$results);
                 $this->eventDispatcher?->dispatch($event);
 
-                $result = $event->hasResponse() ? $event->result : $this->agent->call($messages, $output->getOptions());
+                $result = $event->hasResponse() ? $event->getResult() : $this->agent->call($messages, $output->getOptions());
             } while ($result instanceof ToolCallResult);
 
             return $result;

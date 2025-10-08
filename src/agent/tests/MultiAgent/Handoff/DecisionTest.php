@@ -23,8 +23,8 @@ class DecisionTest extends TestCase
     {
         $decision = new Decision('technical', 'This is a technical question');
 
-        $this->assertSame('technical', $decision->agentName);
-        $this->assertSame('This is a technical question', $decision->reasoning);
+        $this->assertSame('technical', $decision->getAgentName());
+        $this->assertSame('This is a technical question', $decision->getReasoning());
         $this->assertTrue($decision->hasAgent());
     }
 
@@ -32,8 +32,8 @@ class DecisionTest extends TestCase
     {
         $decision = new Decision('', 'No specific agent needed');
 
-        $this->assertSame('', $decision->agentName);
-        $this->assertSame('No specific agent needed', $decision->reasoning);
+        $this->assertSame('', $decision->getAgentName());
+        $this->assertSame('No specific agent needed', $decision->getReasoning());
         $this->assertFalse($decision->hasAgent());
     }
 
@@ -41,8 +41,8 @@ class DecisionTest extends TestCase
     {
         $decision = new Decision('general');
 
-        $this->assertSame('general', $decision->agentName);
-        $this->assertSame('No reasoning provided', $decision->reasoning);
+        $this->assertSame('general', $decision->getAgentName());
+        $this->assertSame('No reasoning provided', $decision->getReasoning());
         $this->assertTrue($decision->hasAgent());
     }
 
@@ -50,8 +50,8 @@ class DecisionTest extends TestCase
     {
         $decision = new Decision('');
 
-        $this->assertSame('', $decision->agentName);
-        $this->assertSame('No reasoning provided', $decision->reasoning);
+        $this->assertSame('', $decision->getAgentName());
+        $this->assertSame('No reasoning provided', $decision->getReasoning());
         $this->assertFalse($decision->hasAgent());
     }
 
