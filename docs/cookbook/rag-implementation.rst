@@ -62,8 +62,8 @@ Step 2: Prepare Your Documents
 
 Create text documents with relevant content and metadata::
 
-    use Symfony\AI\Store\Document\TextDocument;
     use Symfony\AI\Store\Document\Metadata;
+    use Symfony\AI\Store\Document\TextDocument;
     use Symfony\Component\Uid\Uuid;
 
     $documents = [];
@@ -88,9 +88,9 @@ Step 3: Create Embeddings and Index Documents
 
 Use a vectorizer to convert documents into embeddings and store them::
 
+    use Symfony\AI\Store\Document\Loader\InMemoryLoader;
     use Symfony\AI\Store\Document\Vectorizer;
     use Symfony\AI\Store\Indexer;
-    use Symfony\AI\Store\Document\Loader\InMemoryLoader;
 
     $platform = PlatformFactory::create(env('OPENAI_API_KEY'));
     $vectorizer = new Vectorizer($platform, 'text-embedding-3-small');
@@ -112,9 +112,9 @@ Step 4: Configure Similarity Search Tool
 
 Create a tool that performs semantic search on your vector store::
 
+    use Symfony\AI\Agent\Toolbox\AgentProcessor;
     use Symfony\AI\Agent\Toolbox\Tool\SimilaritySearch;
     use Symfony\AI\Agent\Toolbox\Toolbox;
-    use Symfony\AI\Agent\Toolbox\AgentProcessor;
 
     $similaritySearch = new SimilaritySearch($vectorizer, $store);
     $toolbox = new Toolbox([$similaritySearch]);
