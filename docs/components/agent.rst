@@ -314,6 +314,52 @@ If you want to expose the underlying error to the LLM, you can throw a custom ex
         }
     }
 
+Tool Sources
+~~~~~~~~~~~~
+
+Some tools bring in data to the agent from external sources, like search engines or APIs. Those sources can be exposed
+by enabling `keepToolSources` as argument of the :class:`Symfony\\AI\\Agent\\Toolbox\\AgentProcessor`::
+
+    use Symfony\AI\Agent\Toolbox\AgentProcessor;
+    use Symfony\AI\Agent\Toolbox\Toolbox;
+
+    $toolbox = new Toolbox([new MyTool()]);
+    $toolProcessor = new AgentProcessor($toolbox, keepToolSources: true);
+
+In the tool implementation sources can be added by implementing the
+:class:`Symfony\\AI\\Agent\\Toolbox\\Source\\HasSourcesInterface` in combination with the trait
+:class:`Symfony\\AI\\Agent\\Toolbox\\Source\\HasSourcesTrait`::
+
+    use Symfony\AI\Agent\Toolbox\Source\HasSourcesInterface;
+    use Symfony\AI\Agent\Toolbox\Source\HasSourcesTrait;
+
+    #[AsTool('my_tool', 'Example tool with sources.')]
+    final class MyTool implements HasSourcesInterface
+    {
+        use HasSourcesTrait;
+
+        public function __invoke(string $query): string
+        {
+            // Add sources relevant for the result
+
+            $this->addSource(
+                new Source('Example Source 1', 'https://example.com/source1', 'Relevant content from source 1'),
+            );
+
+            // return result
+        }
+    }
+
+The sources can be fetched from the metadata of the result after the agent execution::
+
+    $result = $agent->call($messages);
+
+    foreach ($result->getMetadata()->get('sources', []) as $source) {
+        echo sprintf(' - %s (%s): %s', $source->getName(), $source->getReference(), $source->getContent());
+    }
+
+See `Anthropic Toolbox Example`_ for a complete example using sources with Wikipedia tool.
+
 Tool Filtering
 ~~~~~~~~~~~~~~
 
@@ -765,6 +811,7 @@ Code Examples
 
 
 .. _`Platform Component`: https://github.com/symfony/ai-platform
+.. _`Anthropic Toolbox Example`: https://github.com/symfony/ai/blob/main/examples/anthropic/toolcall.php
 .. _`Brave Tool`: https://github.com/symfony/ai/blob/main/examples/toolbox/brave.php
 .. _`Clock Tool`: https://github.com/symfony/ai/blob/main/examples/toolbox/clock.php
 .. _`Crawler Tool`: https://github.com/symfony/ai/blob/main/examples/toolbox/brave.php

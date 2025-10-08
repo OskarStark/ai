@@ -18,6 +18,7 @@ use Symfony\AI\Agent\InputProcessorInterface;
 use Symfony\AI\Agent\Output;
 use Symfony\AI\Agent\OutputProcessorInterface;
 use Symfony\AI\Agent\Toolbox\Event\ToolCallsExecuted;
+use Symfony\AI\Agent\Toolbox\Source\Source;
 use Symfony\AI\Agent\Toolbox\StreamResult as ToolboxStreamResponse;
 use Symfony\AI\Platform\Message\AssistantMessage;
 use Symfony\AI\Platform\Message\Message;
@@ -34,11 +35,25 @@ final class AgentProcessor implements InputProcessorInterface, OutputProcessorIn
 {
     use AgentAwareTrait;
 
+    /**
+     * Sources get collected during tool calls on class level to be able to handle consecutive tool calls.
+     * They get added to the result metadata and reset when the outermost agent call is finished via nesting level.
+     *
+     * @var Source[]
+     */
+    private array $sources = [];
+
+    /**
+     * Tracks the nesting level of agent calls.
+     */
+    private int $nestingLevel = 0;
+
     public function __construct(
         private readonly ToolboxInterface $toolbox,
         private readonly ToolResultConverter $resultConverter = new ToolResultConverter(),
         private readonly ?EventDispatcherInterface $eventDispatcher = null,
         private readonly bool $keepToolMessages = false,
+        private readonly bool $keepToolSources = false,
     ) {
     }
 
@@ -87,6 +102,7 @@ final class AgentProcessor implements InputProcessorInterface, OutputProcessorIn
     private function handleToolCallsCallback(Output $output): \Closure
     {
         return function (ToolCallResult $result, ?AssistantMessage $streamedAssistantResponse = null) use ($output): ResultInterface {
+            ++$this->nestingLevel;
             $messages = $this->keepToolMessages ? $output->getMessageBag() : clone $output->getMessageBag();
 
             if (null !== $streamedAssistantResponse && '' !== $streamedAssistantResponse->getContent()) {
@@ -101,6 +117,7 @@ final class AgentProcessor implements InputProcessorInterface, OutputProcessorIn
                 foreach ($toolCalls as $toolCall) {
                     $results[] = $toolResult = $this->toolbox->execute($toolCall);
                     $messages->add(Message::ofToolCall($toolCall, $this->resultConverter->convert($toolResult)));
+                    array_push($this->sources, ...$toolResult->getSources());
                 }
 
                 $event = new ToolCallsExecuted(...$results);
@@ -108,6 +125,12 @@ final class AgentProcessor implements InputProcessorInterface, OutputProcessorIn
 
                 $result = $event->hasResult() ? $event->getResult() : $this->agent->call($messages, $output->getOptions());
             } while ($result instanceof ToolCallResult);
+
+            --$this->nestingLevel;
+            if ($this->keepToolSources && 0 === $this->nestingLevel) {
+                $result->getMetadata()->add('sources', $this->sources);
+                $this->sources = [];
+            }
 
             return $result;
         };

@@ -17,6 +17,7 @@ use Symfony\AI\Agent\Toolbox\Exception\ToolConfigurationException;
 use Symfony\AI\Agent\Toolbox\Exception\ToolExecutionException;
 use Symfony\AI\Agent\Toolbox\Exception\ToolExecutionExceptionInterface;
 use Symfony\AI\Agent\Toolbox\Exception\ToolNotFoundException;
+use Symfony\AI\Agent\Toolbox\Source\Source;
 use Symfony\AI\Agent\Toolbox\Toolbox;
 use Symfony\AI\Agent\Toolbox\ToolFactory\ChainFactory;
 use Symfony\AI\Agent\Toolbox\ToolFactory\MemoryToolFactory;
@@ -30,6 +31,7 @@ use Symfony\AI\Fixtures\Tool\ToolNoAttribute1;
 use Symfony\AI\Fixtures\Tool\ToolNoParams;
 use Symfony\AI\Fixtures\Tool\ToolOptionalParam;
 use Symfony\AI\Fixtures\Tool\ToolRequiredParams;
+use Symfony\AI\Fixtures\Tool\ToolSources;
 use Symfony\AI\Platform\Result\ToolCall;
 use Symfony\AI\Platform\Tool\ExecutionReference;
 use Symfony\AI\Platform\Tool\Tool;
@@ -282,5 +284,17 @@ final class ToolboxTest extends TestCase
         ];
 
         $this->assertEquals($expected, $toolbox->getTools());
+    }
+
+    public function testSourcesGetFromToolIntoResult()
+    {
+        $toolbox = new Toolbox([new ToolSources()]);
+        $result = $toolbox->execute(new ToolCall('call_1234', 'tool_sources', ['query' => 'random']));
+
+        $this->assertCount(1, $result->getSources());
+        $this->assertInstanceOf(Source::class, $source = $result->getSources()[0]);
+        $this->assertSame('Relevant Article', $source->getName());
+        $this->assertSame('https://example.com/relevant-article', $source->getReference());
+        $this->assertSame('Content of that relevant article.', $source->getContent());
     }
 }

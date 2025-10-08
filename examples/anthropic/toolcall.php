@@ -11,6 +11,7 @@
 
 use Symfony\AI\Agent\Agent;
 use Symfony\AI\Agent\Toolbox\AgentProcessor;
+use Symfony\AI\Agent\Toolbox\Source\Source;
 use Symfony\AI\Agent\Toolbox\Tool\Wikipedia;
 use Symfony\AI\Agent\Toolbox\Toolbox;
 use Symfony\AI\Platform\Bridge\Anthropic\PlatformFactory;
@@ -23,10 +24,16 @@ $platform = PlatformFactory::create(env('ANTHROPIC_API_KEY'), httpClient: http_c
 
 $wikipedia = new Wikipedia(http_client());
 $toolbox = new Toolbox([$wikipedia], logger: logger());
-$processor = new AgentProcessor($toolbox);
+$processor = new AgentProcessor($toolbox, keepToolSources: true);
 $agent = new Agent($platform, 'claude-3-5-sonnet-20241022', [$processor], [$processor]);
 
 $messages = new MessageBag(Message::ofUser('Who is the current chancellor of Germany?'));
 $result = $agent->call($messages);
 
-echo $result->getContent().\PHP_EOL;
+echo $result->getContent().\PHP_EOL.\PHP_EOL;
+
+echo 'Used sources:'.\PHP_EOL;
+foreach ($result->getMetadata()->get('sources', []) as $source) {
+    echo sprintf(' - %s (%s)', $source->getName(), $source->getReference()).\PHP_EOL;
+}
+echo \PHP_EOL;

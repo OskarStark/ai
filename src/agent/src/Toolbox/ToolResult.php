@@ -11,6 +11,7 @@
 
 namespace Symfony\AI\Agent\Toolbox;
 
+use Symfony\AI\Agent\Toolbox\Source\Source;
 use Symfony\AI\Platform\Result\ToolCall;
 
 /**
@@ -18,9 +19,13 @@ use Symfony\AI\Platform\Result\ToolCall;
  */
 final readonly class ToolResult
 {
+    /**
+     * @param Source[] $sources
+     */
     public function __construct(
         private ToolCall $toolCall,
         private mixed $result,
+        private array $sources = [],
     ) {
     }
 
@@ -32,5 +37,13 @@ final readonly class ToolResult
     public function getResult(): mixed
     {
         return $this->result;
+    }
+
+    /**
+     * @return Source[]
+     */
+    public function getSources(): array
+    {
+        return $this->sources;
     }
 }
