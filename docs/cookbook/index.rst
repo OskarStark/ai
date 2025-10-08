@@ -22,15 +22,3 @@ Retrieval Augmented Generation
 -------------------------------
 
 * :doc:`rag-implementation` - Implement complete RAG systems with vector stores and semantic search
-
-Coming Soon
------------
-
-More cookbook articles are being developed:
-
-* Building Multi-Modal Applications
-* Stream Processing Patterns
-* Custom Tool Development
-* Multi-Agent Orchestration
-* Production Deployment Best Practices
-* Cost Optimization Strategies
