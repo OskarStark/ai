@@ -53,7 +53,7 @@ final class AgentProcessor implements InputProcessorInterface, OutputProcessorIn
         private readonly ToolResultConverter $resultConverter = new ToolResultConverter(),
         private readonly ?EventDispatcherInterface $eventDispatcher = null,
         private readonly bool $keepToolMessages = false,
-        private readonly bool $keepToolSources = false,
+        private readonly bool $includeSources = false,
     ) {
     }
 
@@ -127,7 +127,7 @@ final class AgentProcessor implements InputProcessorInterface, OutputProcessorIn
             } while ($result instanceof ToolCallResult);
 
             --$this->nestingLevel;
-            if ($this->keepToolSources && 0 === $this->nestingLevel) {
+            if ($this->includeSources && 0 === $this->nestingLevel) {
                 $result->getMetadata()->add('sources', $this->sources);
                 $this->sources = [];
             }

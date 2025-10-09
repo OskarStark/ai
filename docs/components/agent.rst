@@ -318,13 +318,13 @@ Tool Sources
 ~~~~~~~~~~~~
 
 Some tools bring in data to the agent from external sources, like search engines or APIs. Those sources can be exposed
-by enabling `keepToolSources` as argument of the :class:`Symfony\\AI\\Agent\\Toolbox\\AgentProcessor`::
+by enabling `includeSources` as argument of the :class:`Symfony\\AI\\Agent\\Toolbox\\AgentProcessor`::
 
     use Symfony\AI\Agent\Toolbox\AgentProcessor;
     use Symfony\AI\Agent\Toolbox\Toolbox;
 
     $toolbox = new Toolbox([new MyTool()]);
-    $toolProcessor = new AgentProcessor($toolbox, keepToolSources: true);
+    $toolProcessor = new AgentProcessor($toolbox, includeSources: true);
 
 In the tool implementation sources can be added by implementing the
 :class:`Symfony\\AI\\Agent\\Toolbox\\Source\\HasSourcesInterface` in combination with the trait

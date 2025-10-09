@@ -24,7 +24,7 @@ $platform = PlatformFactory::create(env('ANTHROPIC_API_KEY'), httpClient: http_c
 
 $wikipedia = new Wikipedia(http_client());
 $toolbox = new Toolbox([$wikipedia], logger: logger());
-$processor = new AgentProcessor($toolbox, keepToolSources: true);
+$processor = new AgentProcessor($toolbox, includeSources: true);
 $agent = new Agent($platform, 'claude-3-5-sonnet-20241022', [$processor], [$processor]);
 
 $messages = new MessageBag(Message::ofUser('Who is the current chancellor of Germany?'));

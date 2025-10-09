@@ -148,7 +148,7 @@ class AgentProcessorTest extends TestCase
             ->method('call')
             ->willReturn(new TextResult('Final response based on the two articles.'));
 
-        $processor = new AgentProcessor($toolbox, keepToolSources: true);
+        $processor = new AgentProcessor($toolbox, includeSources: true);
         $processor->setAgent($agent);
 
         $output = new Output('gpt-4', $result, $messageBag);
@@ -181,7 +181,7 @@ class AgentProcessorTest extends TestCase
             ->method('call')
             ->willReturn(new TextResult('Final response based on the two articles.'));
 
-        $processor = new AgentProcessor($toolbox, keepToolSources: false);
+        $processor = new AgentProcessor($toolbox, includeSources: false);
         $processor->setAgent($agent);
 
         $output = new Output('gpt-4', $result, $messageBag);
@@ -220,7 +220,7 @@ class AgentProcessorTest extends TestCase
                 new DeferredResult(new PlainConverter(new TextResult('Final response based on both articles.')), new InMemoryRawResult())
             );
 
-        $processor = new AgentProcessor($toolbox, keepToolSources: true);
+        $processor = new AgentProcessor($toolbox, includeSources: true);
         $agent = new Agent($platform, 'foo-bar', [$processor], [$processor]);
         $processor->setAgent($agent);
 
