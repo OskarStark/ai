@@ -82,7 +82,7 @@ final class Toolbox implements ToolboxInterface
 
             $arguments = $this->argumentResolver->resolveArguments($metadata, $toolCall);
             $this->eventDispatcher?->dispatch(new ToolCallArgumentsResolved($tool, $metadata, $arguments));
-            $result = $tool->{$metadata->getReference()->getMethod()}(...$arguments);
+            $result = new ToolResult($toolCall, $tool->{$metadata->getReference()->getMethod()}(...$arguments));
             $this->eventDispatcher?->dispatch(new ToolCallSucceeded($tool, $metadata, $arguments, $result));
         } catch (ToolExecutionExceptionInterface $e) {
             $this->eventDispatcher?->dispatch(new ToolCallFailed($tool, $metadata, $arguments ?? [], $e));
@@ -93,7 +93,7 @@ final class Toolbox implements ToolboxInterface
             throw ToolExecutionException::executionFailed($toolCall, $e);
         }
 
-        return new ToolResult($toolCall, $result);
+        return $result;
     }
 
     private function getMetadata(ToolCall $toolCall): Tool

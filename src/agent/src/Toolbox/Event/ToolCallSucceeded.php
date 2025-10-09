@@ -11,6 +11,7 @@
 
 namespace Symfony\AI\Agent\Toolbox\Event;
 
+use Symfony\AI\Agent\Toolbox\ToolResult;
 use Symfony\AI\Platform\Tool\Tool;
 
 /**
@@ -25,7 +26,7 @@ final readonly class ToolCallSucceeded
         private object $tool,
         private Tool $metadata,
         private array $arguments,
-        private mixed $result,
+        private ToolResult $result,
     ) {
     }
 
@@ -47,7 +48,7 @@ final readonly class ToolCallSucceeded
         return $this->arguments;
     }
 
-    public function getResult(): mixed
+    public function getResult(): ToolResult
     {
         return $this->result;
     }
