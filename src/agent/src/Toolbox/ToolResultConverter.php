@@ -28,8 +28,10 @@ final readonly class ToolResultConverter
     ) {
     }
 
-    public function convert(mixed $result): ?string
+    public function convert(ToolResult $toolResult): ?string
     {
+        $result = $toolResult->getResult();
+
         if (null === $result || \is_string($result)) {
             return $result;
         }
