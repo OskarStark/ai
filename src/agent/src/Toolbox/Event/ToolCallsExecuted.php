@@ -30,7 +30,7 @@ final class ToolCallsExecuted
         $this->toolResults = $toolResults;
     }
 
-    public function hasResponse(): bool
+    public function hasResult(): bool
     {
         return isset($this->result);
     }
