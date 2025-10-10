@@ -26,7 +26,7 @@ final readonly class McpController
 {
     public function __construct(
         private Server $server,
-        private HttpMessageFactoryInterface $psrHttpFactory,
+        private HttpMessageFactoryInterface $httpMessageFactory,
         private HttpFoundationFactoryInterface $httpFoundationFactory,
         private ResponseFactoryInterface $responseFactory,
         private StreamFactoryInterface $streamFactory,
@@ -36,18 +36,15 @@ final readonly class McpController
 
     public function handle(Request $request): Response
     {
-        $psrRequest = $this->psrHttpFactory->createRequest($request);
-
         $transport = new StreamableHttpTransport(
-            $psrRequest,
+            $this->httpMessageFactory->createRequest($request),
             $this->responseFactory,
             $this->streamFactory,
             $this->logger ?? new NullLogger(),
         );
 
-        $this->server->connect($transport);
-        $psrResponse = $transport->listen();
-
-        return $this->httpFoundationFactory->createResponse($psrResponse);
+        return $this->httpFoundationFactory->createResponse(
+            $this->server->run($transport),
+        );
     }
 }
