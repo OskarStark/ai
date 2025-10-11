@@ -11,12 +11,12 @@
 
 namespace Symfony\AI\Platform\Bridge\OpenRouter;
 
-use Symfony\AI\Platform\ModelCatalog\DynamicModelCatalog;
+use Symfony\AI\Platform\ModelCatalog\FallbackModelCatalog;
 
 /**
  * @author Oskar Stark <oskarstark@googlemail.com>
  */
-final class ModelCatalog extends DynamicModelCatalog
+final class ModelCatalog extends FallbackModelCatalog
 {
     // OpenRouter provides access to many different models from various providers
     // Models are dynamically available and identified by provider/model format
