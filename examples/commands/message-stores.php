@@ -15,6 +15,7 @@ use Symfony\AI\Chat\Bridge\HttpFoundation\SessionStore;
 use Symfony\AI\Chat\Bridge\Local\CacheStore;
 use Symfony\AI\Chat\Bridge\Local\InMemoryStore;
 use Symfony\AI\Chat\Bridge\Meilisearch\MessageStore as MeilisearchMessageStore;
+use Symfony\AI\Chat\Bridge\Pogocache\MessageStore as PogocacheMessageStore;
 use Symfony\AI\Chat\Command\DropStoreCommand;
 use Symfony\AI\Chat\Command\SetupStoreCommand;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
@@ -38,6 +39,12 @@ $factories = [
         'symfony',
     ),
     'memory' => static fn (): InMemoryStore => new InMemoryStore('symfony'),
+    'pogocache' => static fn (): PogocacheMessageStore => new PogocacheMessageStore(
+        http_client(),
+        env('POGOCACHE_HOST'),
+        env('POGOCACHE_PASSWORD'),
+        'symfony',
+    ),
     'session' => static function (): SessionStore {
         $request = Request::create('/');
         $request->setSession(new Session(new MockArraySessionStorage()));
