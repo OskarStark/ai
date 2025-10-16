@@ -13,6 +13,7 @@ namespace Symfony\AI\Platform\Bridge\Mistral;
 
 use Symfony\AI\Platform\Bridge\Mistral\Contract\DocumentNormalizer;
 use Symfony\AI\Platform\Bridge\Mistral\Contract\DocumentUrlNormalizer;
+use Symfony\AI\Platform\Bridge\Mistral\Contract\ImageUrlNormalizer;
 use Symfony\AI\Platform\Bridge\Mistral\Contract\ToolNormalizer;
 use Symfony\AI\Platform\Contract;
 use Symfony\AI\Platform\ModelCatalog\ModelCatalogInterface;
@@ -41,6 +42,7 @@ final class PlatformFactory
                 new ToolNormalizer(),
                 new DocumentNormalizer(),
                 new DocumentUrlNormalizer(),
+                new ImageUrlNormalizer(),
             ),
         );
     }
