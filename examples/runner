@@ -51,7 +51,7 @@ $app = (new SingleCommandApplication('Symfony AI Example Runner'))
             ->name($filter)
             ->exclude('vendor')
             ->sortByName()
-            ->notName('bootstrap.php')
+            ->notName(['bootstrap.php', '_[a-z\-]*.php'])
             ->files();
 
         $io->comment(sprintf('Found %d example(s) to run.', count($examples)));
