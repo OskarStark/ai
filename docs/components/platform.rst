@@ -278,6 +278,76 @@ Code Examples
 * `Embeddings with Voyage`_
 * `Embeddings with Mistral`_
 
+Structured Output
+-----------------
+
+A typical use-case of LLMs is to classify and extract data from unstructured sources, which is supported by some models
+by features like Structured Output or providing a Response Format.
+
+PHP Classes as Output
+~~~~~~~~~~~~~~~~~~~~~
+
+Symfony AI supports that use-case by abstracting the hustle of defining and providing schemas to the LLM and converting
+the result back to PHP objects.
+
+To achieve this, the ``Symfony\AI\Platform\StructuredOutput\PlatformSubscriber`` needs to be registered with the platform::
+
+    use Symfony\AI\Fixtures\StructuredOutput\MathReasoning;
+    use Symfony\AI\Platform\Bridge\Mistral\PlatformFactory;
+    use Symfony\AI\Platform\Message\Message;
+    use Symfony\AI\Platform\Message\MessageBag;
+    use Symfony\AI\Platform\StructuredOutput\PlatformSubscriber;
+    use Symfony\Component\EventDispatcher\EventDispatcher;
+
+    $dispatcher = new EventDispatcher();
+    $dispatcher->addSubscriber(new PlatformSubscriber());
+
+    $platform = PlatformFactory::create($apiKey, eventDispatcher: $dispatcher);
+    $messages = new MessageBag(
+        Message::forSystem('You are a helpful math tutor. Guide the user through the solution step by step.'),
+        Message::ofUser('how can I solve 8x + 7 = -23'),
+    );
+    $result = $platform->invoke('mistral-small-latest', $messages, ['output_structure' => MathReasoning::class]);
+
+    dump($result->asObject()); // returns an instance of `MathReasoning` class
+
+Array Structures as Output
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Also PHP array structures as response_format are supported, which also requires the event subscriber mentioned above. On
+top this example uses the feature through the agent to leverage tool calling::
+
+    use Symfony\AI\Platform\Message\Message;
+    use Symfony\AI\Platform\Message\MessageBag;
+
+    // Initialize Platform, LLM and agent with processors and Clock tool
+
+    $messages = new MessageBag(Message::ofUser('What date and time is it?'));
+    $result = $agent->call($messages, ['response_format' => [
+        'type' => 'json_schema',
+        'json_schema' => [
+            'name' => 'clock',
+            'strict' => true,
+            'schema' => [
+                'type' => 'object',
+                'properties' => [
+                    'date' => ['type' => 'string', 'description' => 'The current date in the format YYYY-MM-DD.'],
+                    'time' => ['type' => 'string', 'description' => 'The current time in the format HH:MM:SS.'],
+                ],
+                'required' => ['date', 'time'],
+                'additionalProperties' => false,
+            ],
+        ],
+    ]]);
+
+    dump($result->getContent()); // returns an array
+
+Code Examples
+~~~~~~~~~~~~~
+
+* `Structured Output with PHP class`_
+* `Structured Output with array`_
+
 Server Tools
 ------------
 
@@ -426,6 +496,8 @@ Code Examples
 .. _`Embeddings with OpenAI`: https://github.com/symfony/ai/blob/main/examples/openai/embeddings.php
 .. _`Embeddings with Voyage`: https://github.com/symfony/ai/blob/main/examples/voyage/embeddings.php
 .. _`Embeddings with Mistral`: https://github.com/symfony/ai/blob/main/examples/mistral/embeddings.php
+.. _`Structured Output with PHP class`: https://github.com/symfony/ai/blob/main/examples/openai/structured-output-math.php
+.. _`Structured Output with array`: https://github.com/symfony/ai/blob/main/examples/openai/structured-output-clock.php
 .. _`Parallel GPT Calls`: https://github.com/symfony/ai/blob/main/examples/misc/parallel-chat-gpt.php
 .. _`Parallel Embeddings Calls`: https://github.com/symfony/ai/blob/main/examples/misc/parallel-embeddings.php
 .. _`LM Studio`: https://lmstudio.ai/

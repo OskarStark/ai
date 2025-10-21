@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\AI\Agent\StructuredOutput;
+namespace Symfony\AI\Platform\StructuredOutput;
 
 use Symfony\AI\Platform\Contract\JsonSchema\Factory;
 

@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\AI\Agent\Tests\StructuredOutput;
+namespace Symfony\AI\Platform\Tests\StructuredOutput;
 
-use Symfony\AI\Agent\StructuredOutput\ResponseFormatFactoryInterface;
+use Symfony\AI\Platform\StructuredOutput\ResponseFormatFactoryInterface;
 
 final readonly class ConfigurableResponseFormatFactory implements ResponseFormatFactoryInterface
 {

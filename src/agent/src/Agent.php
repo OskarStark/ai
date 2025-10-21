@@ -12,7 +12,6 @@
 namespace Symfony\AI\Agent;
 
 use Symfony\AI\Agent\Exception\InvalidArgumentException;
-use Symfony\AI\Agent\Exception\MissingModelSupportException;
 use Symfony\AI\Agent\Exception\RuntimeException;
 use Symfony\AI\Platform\Exception\ExceptionInterface;
 use Symfony\AI\Platform\Message\MessageBag;
@@ -63,10 +62,9 @@ final readonly class Agent implements AgentInterface
     /**
      * @param array<string, mixed> $options
      *
-     * @throws MissingModelSupportException When the model doesn't support audio or image inputs present in the messages
-     * @throws InvalidArgumentException     When the platform returns a client error (4xx) indicating invalid request parameters
-     * @throws RuntimeException             When the platform returns a server error (5xx) or network failure occurs
-     * @throws ExceptionInterface           When the platform converter throws an exception
+     * @throws InvalidArgumentException When the platform returns a client error (4xx) indicating invalid request parameters
+     * @throws RuntimeException         When the platform returns a server error (5xx) or network failure occurs
+     * @throws ExceptionInterface       When the platform converter throws an exception
      */
     public function call(MessageBag $messages, array $options = []): ResultInterface
     {

@@ -483,80 +483,6 @@ Code Examples
 * `RAG with MongoDB`_
 * `RAG with Pinecone`_
 
-Structured Output
------------------
-
-A typical use-case of LLMs is to classify and extract data from unstructured sources, which is supported by some models
-by features like Structured Output or providing a Response Format.
-
-PHP Classes as Output
-~~~~~~~~~~~~~~~~~~~~~
-
-Symfony AI supports that use-case by abstracting the hustle of defining and providing schemas to the LLM and converting
-the result back to PHP objects.
-
-To achieve this, a specific agent processor needs to be registered::
-
-    use Symfony\AI\Agent\Agent;
-    use Symfony\AI\Agent\StructuredOutput\AgentProcessor;
-    use Symfony\AI\Agent\StructuredOutput\ResponseFormatFactory;
-    use Symfony\AI\Fixtures\StructuredOutput\MathReasoning;
-    use Symfony\AI\Platform\Message\Message;
-    use Symfony\AI\Platform\Message\MessageBag;
-    use Symfony\Component\Serializer\Encoder\JsonEncoder;
-    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-    use Symfony\Component\Serializer\Serializer;
-
-    // Initialize Platform and LLM
-
-    $serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
-    $processor = new AgentProcessor(new ResponseFormatFactory(), $serializer);
-    $agent = new Agent($platform, $model, [$processor], [$processor]);
-
-    $messages = new MessageBag(
-        Message::forSystem('You are a helpful math tutor. Guide the user through the solution step by step.'),
-        Message::ofUser('how can I solve 8x + 7 = -23'),
-    );
-    $result = $agent->call($messages, ['output_structure' => MathReasoning::class]);
-
-    dump($result->getContent()); // returns an instance of `MathReasoning` class
-
-Array Structures as Output
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Also PHP array structures as response_format are supported, which also requires the agent processor mentioned above::
-
-    use Symfony\AI\Platform\Message\Message;
-    use Symfony\AI\Platform\Message\MessageBag;
-
-    // Initialize Platform, LLM and agent with processors and Clock tool
-
-    $messages = new MessageBag(Message::ofUser('What date and time is it?'));
-    $result = $agent->call($messages, ['response_format' => [
-        'type' => 'json_schema',
-        'json_schema' => [
-            'name' => 'clock',
-            'strict' => true,
-            'schema' => [
-                'type' => 'object',
-                'properties' => [
-                    'date' => ['type' => 'string', 'description' => 'The current date in the format YYYY-MM-DD.'],
-                    'time' => ['type' => 'string', 'description' => 'The current time in the format HH:MM:SS.'],
-                ],
-                'required' => ['date', 'time'],
-                'additionalProperties' => false,
-            ],
-        ],
-    ]]);
-
-    dump($result->getContent()); // returns an array
-
-Code Examples
-~~~~~~~~~~~~~
-
-* `Structured Output with PHP class`_
-* `Structured Output with array`_
-
 Input & Output Processing
 -------------------------
 
@@ -825,7 +751,5 @@ Code Examples
 .. _`Store Component`: https://github.com/symfony/ai-store
 .. _`RAG with MongoDB`: https://github.com/symfony/ai/blob/main/examples/rag/mongodb.php
 .. _`RAG with Pinecone`: https://github.com/symfony/ai/blob/main/examples/rag/pinecone.php
-.. _`Structured Output with PHP class`: https://github.com/symfony/ai/blob/main/examples/openai/structured-output-math.php
-.. _`Structured Output with array`: https://github.com/symfony/ai/blob/main/examples/openai/structured-output-clock.php
 .. _`Chat with static memory`: https://github.com/symfony/ai/blob/main/examples/memory/static.php
 .. _`Chat with embedding search memory`: https://github.com/symfony/ai/blob/main/examples/memory/mariadb.php

@@ -67,7 +67,6 @@ Advanced Example with Multiple Agents
         agent:
             rag:
                 platform: 'ai.platform.azure.gpt_deployment'
-                structured_output: false # Disables support for "output_structure" option, default is true
                 track_token_usage: true # Enable tracking of token usage for the agent, default is true
                 model: 'gpt-4o-mini'
                 memory: 'You have access to conversation history and user preferences' # Optional: static memory content
@@ -512,11 +511,6 @@ Configuration
 
                 # Fallback agent for unmatched requests (required)
                 fallback: 'general'
-
-.. important::
-
-    The orchestrator agent MUST have ``structured_output: true`` (the default) to work correctly.
-    The multi-agent system uses structured output to reliably parse agent selection decisions.
 
 Each multi-agent configuration automatically registers a service with the ID pattern ``ai.multi_agent.{name}``.
 

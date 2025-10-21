@@ -13,24 +13,23 @@ use Symfony\AI\Agent\Agent;
 use Symfony\AI\Agent\InputProcessor\SystemPromptInputProcessor;
 use Symfony\AI\Agent\MultiAgent\Handoff;
 use Symfony\AI\Agent\MultiAgent\MultiAgent;
-use Symfony\AI\Agent\StructuredOutput\AgentProcessor;
 use Symfony\AI\Platform\Bridge\OpenAi\PlatformFactory;
 use Symfony\AI\Platform\Message\Message;
 use Symfony\AI\Platform\Message\MessageBag;
+use Symfony\AI\Platform\StructuredOutput\PlatformSubscriber;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 require_once dirname(__DIR__).'/bootstrap.php';
 
-$platform = PlatformFactory::create(env('OPENAI_API_KEY'), http_client());
-
-// Create structured output processor for the orchestrator
-$structuredOutputProcessor = new AgentProcessor();
+$dispatcher = new EventDispatcher();
+$dispatcher->addSubscriber(new PlatformSubscriber());
+$platform = PlatformFactory::create(env('OPENAI_API_KEY'), http_client(), eventDispatcher: $dispatcher);
 
 // Create orchestrator agent for routing decisions
 $orchestrator = new Agent(
     $platform,
     'gpt-4o-mini',
-    [new SystemPromptInputProcessor('You are an intelligent agent orchestrator that routes user questions to specialized agents.'), $structuredOutputProcessor],
-    [$structuredOutputProcessor],
+    [new SystemPromptInputProcessor('You are an intelligent agent orchestrator that routes user questions to specialized agents.')],
 );
 
 // Create technical agent for handling technical issues

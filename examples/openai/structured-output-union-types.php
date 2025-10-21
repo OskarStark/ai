@@ -9,18 +9,19 @@
  * file that was distributed with this source code.
  */
 
-use Symfony\AI\Agent\Agent;
-use Symfony\AI\Agent\StructuredOutput\AgentProcessor;
 use Symfony\AI\Fixtures\StructuredOutput\UnionType\UnionTypeDto;
 use Symfony\AI\Platform\Bridge\OpenAi\PlatformFactory;
 use Symfony\AI\Platform\Message\Message;
 use Symfony\AI\Platform\Message\MessageBag;
+use Symfony\AI\Platform\StructuredOutput\PlatformSubscriber;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 require_once dirname(__DIR__).'/bootstrap.php';
 
-$platform = PlatformFactory::create(env('OPENAI_API_KEY'), http_client());
-$processor = new AgentProcessor();
-$agent = new Agent($platform, 'gpt-4o-mini', [$processor], [$processor]);
+$dispatcher = new EventDispatcher();
+$dispatcher->addSubscriber(new PlatformSubscriber());
+
+$platform = PlatformFactory::create(env('OPENAI_API_KEY'), http_client(), eventDispatcher: $dispatcher);
 $messages = new MessageBag(
     Message::forSystem(<<<PROMPT
         You are a time assistant! You can provide time either as a unix timestamp or as a human readable time format.
@@ -28,6 +29,6 @@ $messages = new MessageBag(
     PROMPT),
     Message::ofUser('What is the current time?'),
 );
-$result = $agent->call($messages, ['output_structure' => UnionTypeDto::class]);
+$result = $platform->invoke('gpt-4o-mini', $messages, ['output_structure' => UnionTypeDto::class]);
 
-dump($result->getContent());
+dump($result->asObject());

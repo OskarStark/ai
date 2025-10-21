@@ -9,7 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\AI\Agent\Exception;
+namespace Symfony\AI\Platform\Exception;
+
+use Symfony\AI\Agent\Exception\RuntimeException;
 
 /**
  * @author Christopher Hertel <mail@christopher-hertel.de>

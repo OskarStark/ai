@@ -9,23 +9,24 @@
  * file that was distributed with this source code.
  */
 
-use Symfony\AI\Agent\Agent;
-use Symfony\AI\Agent\StructuredOutput\AgentProcessor;
 use Symfony\AI\Fixtures\StructuredOutput\MathReasoning;
 use Symfony\AI\Platform\Bridge\Scaleway\PlatformFactory;
 use Symfony\AI\Platform\Message\Message;
 use Symfony\AI\Platform\Message\MessageBag;
+use Symfony\AI\Platform\StructuredOutput\PlatformSubscriber;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 require_once dirname(__DIR__).'/bootstrap.php';
 
-$platform = PlatformFactory::create(env('SCALEWAY_SECRET_KEY'), http_client());
+$dispatcher = new EventDispatcher();
+$dispatcher->addSubscriber(new PlatformSubscriber());
 
-$processor = new AgentProcessor();
-$agent = new Agent($platform, 'gpt-oss-120b', [$processor], [$processor]);
+$platform = PlatformFactory::create(env('SCALEWAY_SECRET_KEY'), http_client(), eventDispatcher: $dispatcher);
+
 $messages = new MessageBag(
     Message::forSystem('You are a helpful math tutor. Guide the user through the solution step by step.'),
     Message::ofUser('how can I solve 8x + 7 = -23'),
 );
-$result = $agent->call($messages, ['output_structure' => MathReasoning::class]);
+$result = $platform->invoke('gpt-oss-120b', $messages, ['output_structure' => MathReasoning::class]);
 
-dump($result->getContent());
+dump($result->asObject());

@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\AI\Agent\Tests\StructuredOutput;
+namespace Symfony\AI\Platform\Tests\StructuredOutput;
 
 use PHPUnit\Framework\TestCase;
-use Symfony\AI\Agent\StructuredOutput\ResponseFormatFactory;
 use Symfony\AI\Fixtures\StructuredOutput\User;
+use Symfony\AI\Platform\StructuredOutput\ResponseFormatFactory;
 
 final class ResponseFormatFactoryTest extends TestCase
 {
