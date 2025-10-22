@@ -29,7 +29,7 @@ return static function (ContainerConfigurator $container): void {
             ->call('setLogger', [service('monolog.logger.mcp')])
             ->call('setEventDispatcher', [service('event_dispatcher')])
             ->call('setSession', [service('mcp.session.store')])
-            ->call('setDiscovery', [param('kernel.project_dir'), ['src']])
+            ->call('setDiscovery', [param('kernel.project_dir'), param('mcp.discovery.scan_dirs'), param('mcp.discovery.exclude_dirs')])
 
         ->set('mcp.server', Server::class)
             ->factory([service('mcp.server.builder'), 'build'])
