@@ -24,10 +24,10 @@ require_once dirname(__DIR__).'/bootstrap.php';
 $platform = PlatformFactory::create(env('GEMINI_API_KEY'), http_client());
 
 $clock = new Clock(new SymfonyClock());
-$toolbox = new Toolbox([$clock]);
+$toolbox = new Toolbox([$clock], logger: logger());
 $toolProcessor = new ToolProcessor($toolbox);
 $structuredOutputProcessor = new StructuredOutputProcessor();
-$agent = new Agent($platform, 'gemini-1.5-flash', [$toolProcessor, $structuredOutputProcessor], [$toolProcessor, $structuredOutputProcessor]);
+$agent = new Agent($platform, 'gemini-2.5-flash', [$toolProcessor, $structuredOutputProcessor], [$toolProcessor, $structuredOutputProcessor]);
 
 $messages = new MessageBag(Message::ofUser('What date and time is it?'));
 $result = $agent->call($messages, ['response_format' => [

@@ -25,6 +25,6 @@ $messages = new MessageBag(
         Image::fromFile(dirname(__DIR__, 2).'/fixtures/image.jpg'),
     ),
 );
-$result = $platform->invoke('gemini-1.5-flash', $messages);
+$result = $platform->invoke('gemini-2.5-flash', $messages);
 
 echo $result->asText().\PHP_EOL;

@@ -24,6 +24,6 @@ $messages = new MessageBag(
         'What is this document about?',
     ),
 );
-$result = $platform->invoke('gemini-1.5-flash', $messages);
+$result = $platform->invoke('gemini-2.5-flash', $messages);
 
 echo $result->asText().\PHP_EOL;

@@ -24,6 +24,6 @@ $messages = new MessageBag(
         Audio::fromFile(dirname(__DIR__, 2).'/fixtures/audio.mp3'),
     ),
 );
-$result = $platform->invoke('gemini-1.5-flash', $messages);
+$result = $platform->invoke('gemini-2.5-flash', $messages);
 
 echo $result->asText().\PHP_EOL;
