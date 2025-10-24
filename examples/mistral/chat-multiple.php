@@ -26,6 +26,6 @@ $result = $platform->invoke('mistral-large-latest', $messages, [
     'n' => 10,
 ]);
 
-foreach ($result->asStream() as $key => $choice) {
+foreach ($result->getResult()->getContent() as $key => $choice) {
     echo sprintf('Choice #%d: %s', ++$key, $choice->getContent()).\PHP_EOL;
 }
