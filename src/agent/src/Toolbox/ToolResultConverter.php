@@ -11,7 +11,9 @@
 
 namespace Symfony\AI\Agent\Toolbox;
 
+use Symfony\AI\Agent\Exception\RuntimeException;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Exception\ExceptionInterface as SerializerExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\JsonSerializableNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -28,6 +30,9 @@ final readonly class ToolResultConverter
     ) {
     }
 
+    /**
+     * @throws RuntimeException
+     */
     public function convert(ToolResult $toolResult): ?string
     {
         $result = $toolResult->getResult();
@@ -40,6 +45,10 @@ final readonly class ToolResultConverter
             return (string) $result;
         }
 
-        return $this->serializer->serialize($result, 'json');
+        try {
+            return $this->serializer->serialize($result, 'json');
+        } catch (SerializerExceptionInterface $e) {
+            throw new RuntimeException('Cannot serialize the tool result.', previous: $e);
+        }
     }
 }
