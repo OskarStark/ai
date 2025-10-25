@@ -11,7 +11,7 @@
 
 namespace Symfony\AI\Agent\Toolbox\Source;
 
-class SourceMap
+final class SourceMap
 {
     /**
      * @var Source[]
