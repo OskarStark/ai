@@ -16,7 +16,6 @@ use Mcp\Server\Transport\StreamableHttpTransport;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 use Symfony\Bridge\PsrHttpMessage\HttpFoundationFactoryInterface;
 use Symfony\Bridge\PsrHttpMessage\HttpMessageFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,7 +39,7 @@ final readonly class McpController
             $this->httpMessageFactory->createRequest($request),
             $this->responseFactory,
             $this->streamFactory,
-            $this->logger ?? new NullLogger(),
+            logger: $this->logger,
         );
 
         return $this->httpFoundationFactory->createResponse(
