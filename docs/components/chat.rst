@@ -39,6 +39,7 @@ You can find more advanced usage in combination with an Agent using the store fo
 * `Long-term context with Meilisearch`_
 * `Long-term context with Pogocache`_
 * `Long-term context with Redis`_
+* `Long-term context with SurrealDb`_
 
 Supported Message stores
 ------------------------
@@ -49,6 +50,7 @@ Supported Message stores
 * `Meilisearch`_
 * `Pogocache`_
 * `Redis`_
+* `SurrealDb`_
 
 Implementing a Bridge
 ---------------------
@@ -130,9 +132,11 @@ store and ``bin/console ai:message-store:drop`` to clean up the message store:
 .. _`Long-term context with Meilisearch`: https://github.com/symfony/ai/blob/main/examples/chat/persistent-chat-meilisearch.php
 .. _`Long-term context with Pogocache`: https://github.com/symfony/ai/blob/main/examples/chat/persistent-chat-pogocache.php
 .. _`Long-term context with Redis`: https://github.com/symfony/ai/blob/main/examples/chat/persistent-chat-redis.php
+.. _`Long-term context with SurrealDb`: https://github.com/symfony/ai/blob/main/examples/chat/persistent-chat-surrealdb.php
 .. _`Cache`: https://symfony.com/doc/current/components/cache.html
 .. _`InMemory`: https://www.php.net/manual/en/language.types.array.php
 .. _`HttpFoundation session`: https://developers.cloudflare.com/vectorize/
 .. _`Meilisearch`: https://www.meilisearch.com/
 .. _`Pogocache`: https://pogocache.com/
 .. _`Redis`: https://redis.io/
+.. _`SurrealDb`: https://surrealdb.com/

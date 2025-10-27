@@ -17,6 +17,7 @@ use Symfony\AI\Chat\Bridge\Local\InMemoryStore;
 use Symfony\AI\Chat\Bridge\Meilisearch\MessageStore as MeilisearchMessageStore;
 use Symfony\AI\Chat\Bridge\Pogocache\MessageStore as PogocacheMessageStore;
 use Symfony\AI\Chat\Bridge\Redis\MessageStore as RedisMessageStore;
+use Symfony\AI\Chat\Bridge\SurrealDb\MessageStore as SurrealDbMessageStore;
 use Symfony\AI\Chat\Command\DropStoreCommand;
 use Symfony\AI\Chat\Command\SetupStoreCommand;
 use Symfony\AI\Chat\MessageNormalizer;
@@ -68,6 +69,15 @@ $factories = [
 
         return new SessionStore($requestStack, 'symfony');
     },
+    'surrealdb' => static fn (): SurrealDbMessageStore => new SurrealDbMessageStore(
+        httpClient: http_client(),
+        endpointUrl: env('SURREALDB_HOST'),
+        user: env('SURREALDB_USER'),
+        password: env('SURREALDB_PASS'),
+        namespace: 'default',
+        database: 'chat',
+        table: 'chat',
+    ),
 ];
 
 $storesIds = array_keys($factories);
