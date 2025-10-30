@@ -15,7 +15,7 @@ concurrency:
     cancel-in-progress: true
 
 env:
-    REQUIRED_PHP_EXTENSIONS: 'mongodb'
+    REQUIRED_PHP_EXTENSIONS: 'mongodb, redis'
 
 jobs:
     examples:

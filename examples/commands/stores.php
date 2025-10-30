@@ -24,6 +24,7 @@ use Symfony\AI\Store\Bridge\MongoDb\Store as MongoDbStore;
 use Symfony\AI\Store\Bridge\Neo4j\Store as Neo4jStore;
 use Symfony\AI\Store\Bridge\Postgres\Store as PostgresStore;
 use Symfony\AI\Store\Bridge\Qdrant\Store as QdrantStore;
+use Symfony\AI\Store\Bridge\Redis\Store as RedisStore;
 use Symfony\AI\Store\Bridge\SurrealDb\Store as SurrealDbStore;
 use Symfony\AI\Store\Bridge\Typesense\Store as TypesenseStore;
 use Symfony\AI\Store\Bridge\Weaviate\Store as WeaviateStore;
@@ -87,6 +88,13 @@ $factories = [
         env('QDRANT_HOST'),
         env('QDRANT_SERVICE_API_KEY'),
         'symfony',
+    ),
+    'redis' => static fn (): RedisStore => new RedisStore(
+        new Redis([
+            'host' => env('REDIS_HOST'),
+            'port' => 6379,
+        ]),
+        'symfony'
     ),
     'surrealdb' => static fn (): SurrealDbStore => new SurrealDbStore(
         httpClient: http_client(),
