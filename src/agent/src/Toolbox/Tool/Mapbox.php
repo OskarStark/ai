@@ -20,11 +20,11 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  */
 #[AsTool(name: 'geocode', description: 'Convert addresses to coordinates using Mapbox Geocoding API', method: 'geocode')]
 #[AsTool(name: 'reverse_geocode', description: 'Convert coordinates to addresses using Mapbox Reverse Geocoding API', method: 'reverseGeocode')]
-final readonly class Mapbox
+final class Mapbox
 {
     public function __construct(
-        private HttpClientInterface $httpClient,
-        #[\SensitiveParameter] private string $accessToken,
+        private readonly HttpClientInterface $httpClient,
+        #[\SensitiveParameter] private readonly string $accessToken,
     ) {
     }
 

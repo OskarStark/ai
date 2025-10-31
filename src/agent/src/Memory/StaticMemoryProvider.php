@@ -16,12 +16,12 @@ use Symfony\AI\Agent\Input;
 /**
  * @author Denis Zunke <denis.zunke@gmail.com>
  */
-final readonly class StaticMemoryProvider implements MemoryProviderInterface
+final class StaticMemoryProvider implements MemoryProviderInterface
 {
     /**
      * @var array<string>
      */
-    private array $memory;
+    private readonly array $memory;
 
     public function __construct(string ...$memory)
     {

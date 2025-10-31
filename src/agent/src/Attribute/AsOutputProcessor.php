@@ -15,15 +15,15 @@ namespace Symfony\AI\Agent\Attribute;
  * @author Vincent Langlet <vincentlanglet@github.com>
  */
 #[\Attribute(\Attribute::TARGET_CLASS | \Attribute::IS_REPEATABLE)]
-final readonly class AsOutputProcessor
+final class AsOutputProcessor
 {
     /**
      * @param string|null $agent the service id of the agent which will use this processor,
      *                           null to register this processor for all existing agents
      */
     public function __construct(
-        public ?string $agent = null,
-        public int $priority = 0,
+        public readonly ?string $agent = null,
+        public readonly int $priority = 0,
     ) {
     }
 }

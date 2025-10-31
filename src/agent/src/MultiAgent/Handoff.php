@@ -19,14 +19,14 @@ use Symfony\AI\Agent\Exception\InvalidArgumentException;
  *
  * @author Oskar Stark <oskarstark@googlemail.com>
  */
-final readonly class Handoff
+final class Handoff
 {
     /**
      * @param string[] $when Keywords or phrases that indicate this handoff
      */
     public function __construct(
-        private AgentInterface $to,
-        private array $when,
+        private readonly AgentInterface $to,
+        private readonly array $when,
     ) {
         if ([] === $when) {
             throw new InvalidArgumentException('Handoff must have at least one "when" condition.');

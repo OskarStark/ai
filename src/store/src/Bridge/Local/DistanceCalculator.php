@@ -17,10 +17,10 @@ use Symfony\AI\Store\Document\VectorDocument;
 /**
  * @author Guillaume Loulier <personal@guillaumeloulier.fr>
  */
-final readonly class DistanceCalculator
+final class DistanceCalculator
 {
     public function __construct(
-        private DistanceStrategy $strategy = DistanceStrategy::COSINE_DISTANCE,
+        private readonly DistanceStrategy $strategy = DistanceStrategy::COSINE_DISTANCE,
     ) {
     }
 

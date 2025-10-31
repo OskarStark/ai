@@ -18,7 +18,7 @@ use Symfony\AI\Platform\Message\Message;
 /**
  * @author Denis Zunke <denis.zunke@gmail.com>
  */
-final readonly class MemoryInputProcessor implements InputProcessorInterface
+final class MemoryInputProcessor implements InputProcessorInterface
 {
     private const MEMORY_PROMPT_MESSAGE = <<<MARKDOWN
         # Conversation Memory
@@ -31,7 +31,7 @@ final readonly class MemoryInputProcessor implements InputProcessorInterface
     /**
      * @var MemoryProviderInterface[]
      */
-    private array $memoryProviders;
+    private readonly array $memoryProviders;
 
     public function __construct(
         MemoryProviderInterface ...$memoryProviders,

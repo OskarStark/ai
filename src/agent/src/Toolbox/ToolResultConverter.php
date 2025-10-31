@@ -23,10 +23,10 @@ use Symfony\Component\Serializer\SerializerInterface;
 /**
  * @author Christopher Hertel <mail@christopher-hertel.de>
  */
-final readonly class ToolResultConverter
+final class ToolResultConverter
 {
     public function __construct(
-        private SerializerInterface $serializer = new Serializer([new JsonSerializableNormalizer(), new DateTimeNormalizer(), new ObjectNormalizer()], [new JsonEncoder()]),
+        private readonly SerializerInterface $serializer = new Serializer([new JsonSerializableNormalizer(), new DateTimeNormalizer(), new ObjectNormalizer()], [new JsonEncoder()]),
     ) {
     }
 

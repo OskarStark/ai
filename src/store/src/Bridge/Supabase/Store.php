@@ -33,16 +33,16 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  * @see https://github.com/pgvector/pgvector pgvector extension documentation
  * @see https://supabase.com/docs/guides/ai/vector-columns Supabase vector guide
  */
-final readonly class Store implements StoreInterface
+final class Store implements StoreInterface
 {
     public function __construct(
-        private HttpClientInterface $httpClient,
-        private string $url,
-        private string $apiKey,
-        private string $table = 'documents',
-        private string $vectorFieldName = 'embedding',
-        private int $vectorDimension = 1536,
-        private string $functionName = 'match_documents',
+        private readonly HttpClientInterface $httpClient,
+        private readonly string $url,
+        private readonly string $apiKey,
+        private readonly string $table = 'documents',
+        private readonly string $vectorFieldName = 'embedding',
+        private readonly int $vectorDimension = 1536,
+        private readonly string $functionName = 'match_documents',
     ) {
     }
 

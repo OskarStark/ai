@@ -21,17 +21,17 @@ use Symfony\AI\Platform\Result\ResultInterface;
 /**
  * @author Christopher Hertel <mail@christopher-hertel.de>
  */
-final readonly class Agent implements AgentInterface
+final class Agent implements AgentInterface
 {
     /**
      * @var InputProcessorInterface[]
      */
-    private array $inputProcessors;
+    private readonly array $inputProcessors;
 
     /**
      * @var OutputProcessorInterface[]
      */
-    private array $outputProcessors;
+    private readonly array $outputProcessors;
 
     /**
      * @param InputProcessorInterface[]  $inputProcessors
@@ -39,11 +39,11 @@ final readonly class Agent implements AgentInterface
      * @param non-empty-string           $model
      */
     public function __construct(
-        private PlatformInterface $platform,
-        private string $model,
+        private readonly PlatformInterface $platform,
+        private readonly string $model,
         iterable $inputProcessors = [],
         iterable $outputProcessors = [],
-        private string $name = 'agent',
+        private readonly string $name = 'agent',
     ) {
         $this->inputProcessors = $this->initializeProcessors($inputProcessors, InputProcessorInterface::class);
         $this->outputProcessors = $this->initializeProcessors($outputProcessors, OutputProcessorInterface::class);

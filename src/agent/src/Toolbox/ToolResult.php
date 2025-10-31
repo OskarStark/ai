@@ -17,15 +17,15 @@ use Symfony\AI\Platform\Result\ToolCall;
 /**
  * @author Christopher Hertel <mail@christopher-hertel.de>
  */
-final readonly class ToolResult
+final class ToolResult
 {
     /**
      * @param Source[] $sources
      */
     public function __construct(
-        private ToolCall $toolCall,
-        private mixed $result,
-        private array $sources = [],
+        private readonly ToolCall $toolCall,
+        private readonly mixed $result,
+        private readonly array $sources = [],
     ) {
     }
 

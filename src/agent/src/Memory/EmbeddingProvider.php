@@ -23,12 +23,12 @@ use Symfony\AI\Store\StoreInterface;
 /**
  * @author Denis Zunke <denis.zunke@gmail.com>
  */
-final readonly class EmbeddingProvider implements MemoryProviderInterface
+final class EmbeddingProvider implements MemoryProviderInterface
 {
     public function __construct(
-        private PlatformInterface $platform,
-        private Model $model,
-        private StoreInterface $vectorStore,
+        private readonly PlatformInterface $platform,
+        private readonly Model $model,
+        private readonly StoreInterface $vectorStore,
     ) {
     }
 

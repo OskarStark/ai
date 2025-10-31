@@ -25,12 +25,12 @@ use Symfony\Component\TypeInfo\TypeResolver\TypeResolver;
 /**
  * @author Valtteri R <valtzu@gmail.com>
  */
-final readonly class ToolCallArgumentResolver
+final class ToolCallArgumentResolver
 {
-    private TypeResolver $typeResolver;
+    private readonly TypeResolver $typeResolver;
 
     public function __construct(
-        private DenormalizerInterface $denormalizer = new Serializer([new DateTimeNormalizer(), new ObjectNormalizer(), new ArrayDenormalizer()]),
+        private readonly DenormalizerInterface $denormalizer = new Serializer([new DateTimeNormalizer(), new ObjectNormalizer(), new ArrayDenormalizer()]),
         ?TypeResolver $typeResolver = null,
     ) {
         $this->typeResolver = $typeResolver ?? TypeResolver::create();

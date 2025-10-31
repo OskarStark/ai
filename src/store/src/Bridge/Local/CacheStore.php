@@ -25,12 +25,12 @@ use Symfony\Contracts\Cache\CacheInterface;
 /**
  * @author Guillaume Loulier <personal@guillaumeloulier.fr>
  */
-final readonly class CacheStore implements ManagedStoreInterface, StoreInterface
+final class CacheStore implements ManagedStoreInterface, StoreInterface
 {
     public function __construct(
-        private CacheInterface&CacheItemPoolInterface $cache,
-        private DistanceCalculator $distanceCalculator = new DistanceCalculator(),
-        private string $cacheKey = '_vectors',
+        private readonly CacheInterface&CacheItemPoolInterface $cache,
+        private readonly DistanceCalculator $distanceCalculator = new DistanceCalculator(),
+        private readonly string $cacheKey = '_vectors',
     ) {
         if (!interface_exists(CacheInterface::class)) {
             throw new RuntimeException('For using the CacheStore as vector store, a symfony/contracts cache implementation is required. Try running "composer require symfony/cache" or another symfony/contracts compatible cache.');

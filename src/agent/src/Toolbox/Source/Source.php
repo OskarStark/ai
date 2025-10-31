@@ -11,12 +11,12 @@
 
 namespace Symfony\AI\Agent\Toolbox\Source;
 
-readonly class Source
+class Source
 {
     public function __construct(
-        private string $name,
-        private string $reference,
-        private string $content,
+        private readonly string $name,
+        private readonly string $reference,
+        private readonly string $content,
     ) {
     }
 

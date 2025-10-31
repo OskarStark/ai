@@ -26,17 +26,17 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * @author Christopher Hertel <mail@christopher-hertel.de>
  */
-final readonly class SystemPromptInputProcessor implements InputProcessorInterface
+final class SystemPromptInputProcessor implements InputProcessorInterface
 {
     /**
      * @param \Stringable|TranslatableInterface|string|File $systemPrompt the system prompt to prepend to the input messages, or a File object to read from
      * @param ToolboxInterface|null                         $toolbox      the tool box to be used to append the tool definitions to the system prompt
      */
     public function __construct(
-        private \Stringable|TranslatableInterface|string|File $systemPrompt,
-        private ?ToolboxInterface $toolbox = null,
-        private ?TranslatorInterface $translator = null,
-        private LoggerInterface $logger = new NullLogger(),
+        private readonly \Stringable|TranslatableInterface|string|File $systemPrompt,
+        private readonly ?ToolboxInterface $toolbox = null,
+        private readonly ?TranslatorInterface $translator = null,
+        private readonly LoggerInterface $logger = new NullLogger(),
     ) {
         if ($this->systemPrompt instanceof TranslatableInterface && !$this->translator) {
             throw new RuntimeException('Translatable system prompt is not supported when no translator is provided.');

@@ -14,10 +14,10 @@ namespace Symfony\AI\Agent\Memory;
 /**
  * @author Denis Zunke <denis.zunke@gmail.com>
  */
-final readonly class Memory
+final class Memory
 {
     public function __construct(
-        private string $content,
+        private readonly string $content,
     ) {
     }
 

@@ -24,13 +24,13 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 /**
  * @author Guillaume Loulier <personal@guillaumeloulier.fr>
  */
-final readonly class Store implements ManagedStoreInterface, StoreInterface
+final class Store implements ManagedStoreInterface, StoreInterface
 {
     public function __construct(
-        private HttpClientInterface $httpClient,
-        private string $endpointUrl,
-        #[\SensitiveParameter] private string $apiKey,
-        private string $collection,
+        private readonly HttpClientInterface $httpClient,
+        private readonly string $endpointUrl,
+        #[\SensitiveParameter] private readonly string $apiKey,
+        private readonly string $collection,
     ) {
     }
 

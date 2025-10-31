@@ -24,15 +24,15 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 /**
  * @author Guillaume Loulier <personal@guillaumeloulier.fr>
  */
-final readonly class Store implements ManagedStoreInterface, StoreInterface
+final class Store implements ManagedStoreInterface, StoreInterface
 {
     public function __construct(
-        private HttpClientInterface $httpClient,
-        private string $endpointUrl,
-        #[\SensitiveParameter] private string $apiKey,
-        private string $collectionName,
-        private int $embeddingsDimension = 1536,
-        private string $embeddingsDistance = 'Cosine',
+        private readonly HttpClientInterface $httpClient,
+        private readonly string $endpointUrl,
+        #[\SensitiveParameter] private readonly string $apiKey,
+        private readonly string $collectionName,
+        private readonly int $embeddingsDimension = 1536,
+        private readonly string $embeddingsDistance = 'Cosine',
     ) {
     }
 

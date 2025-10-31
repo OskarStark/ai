@@ -24,16 +24,16 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 /**
  * @author Guillaume Loulier <personal@guillaumeloulier.fr>
  */
-final readonly class Store implements ManagedStoreInterface, StoreInterface
+final class Store implements ManagedStoreInterface, StoreInterface
 {
     public function __construct(
-        private HttpClientInterface $httpClient,
-        private string $accountId,
-        #[\SensitiveParameter] private string $apiKey,
-        private string $index,
-        private int $dimensions = 1536,
-        private string $metric = 'cosine',
-        private string $endpointUrl = 'https://api.cloudflare.com/client/v4/accounts',
+        private readonly HttpClientInterface $httpClient,
+        private readonly string $accountId,
+        #[\SensitiveParameter] private readonly string $apiKey,
+        private readonly string $index,
+        private readonly int $dimensions = 1536,
+        private readonly string $metric = 'cosine',
+        private readonly string $endpointUrl = 'https://api.cloudflare.com/client/v4/accounts',
     ) {
     }
 

@@ -24,17 +24,17 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 /**
  * @author Guillaume Loulier <personal@guillaumeloulier.fr>
  */
-final readonly class Store implements ManagedStoreInterface, StoreInterface
+final class Store implements ManagedStoreInterface, StoreInterface
 {
     public function __construct(
-        private HttpClientInterface $httpClient,
-        private string $endpointUrl,
-        #[\SensitiveParameter] private string $apiKey,
-        private string $database,
-        private string $collection,
-        private string $vectorFieldName = '_vectors',
-        private int $dimensions = 1536,
-        private string $metricType = 'COSINE',
+        private readonly HttpClientInterface $httpClient,
+        private readonly string $endpointUrl,
+        #[\SensitiveParameter] private readonly string $apiKey,
+        private readonly string $database,
+        private readonly string $collection,
+        private readonly string $vectorFieldName = '_vectors',
+        private readonly int $dimensions = 1536,
+        private readonly string $metricType = 'COSINE',
     ) {
     }
 

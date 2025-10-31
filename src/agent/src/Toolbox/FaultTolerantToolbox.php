@@ -21,10 +21,10 @@ use Symfony\AI\Platform\Tool\Tool;
  *
  * @author Christopher Hertel <mail@christopher-hertel.de>
  */
-final readonly class FaultTolerantToolbox implements ToolboxInterface
+final class FaultTolerantToolbox implements ToolboxInterface
 {
     public function __construct(
-        private ToolboxInterface $innerToolbox,
+        private readonly ToolboxInterface $innerToolbox,
     ) {
     }
 

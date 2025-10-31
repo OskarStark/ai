@@ -24,20 +24,20 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 /**
  * @author Guillaume Loulier <personal@guillaumeloulier.fr>
  */
-final readonly class Store implements ManagedStoreInterface, StoreInterface
+final class Store implements ManagedStoreInterface, StoreInterface
 {
     /**
      * @param string $embedder        The name of the embedder where vectors are stored
      * @param string $vectorFieldName The name of the field int the index that contains the vector
      */
     public function __construct(
-        private HttpClientInterface $httpClient,
-        private string $endpointUrl,
-        #[\SensitiveParameter] private string $apiKey,
-        private string $indexName,
-        private string $embedder = 'default',
-        private string $vectorFieldName = '_vectors',
-        private int $embeddingsDimension = 1536,
+        private readonly HttpClientInterface $httpClient,
+        private readonly string $endpointUrl,
+        #[\SensitiveParameter] private readonly string $apiKey,
+        private readonly string $indexName,
+        private readonly string $embedder = 'default',
+        private readonly string $vectorFieldName = '_vectors',
+        private readonly int $embeddingsDimension = 1536,
     ) {
     }
 

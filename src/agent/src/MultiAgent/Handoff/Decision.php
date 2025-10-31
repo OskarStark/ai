@@ -16,15 +16,15 @@ namespace Symfony\AI\Agent\MultiAgent\Handoff;
  *
  * @author Oskar Stark <oskarstark@googlemail.com>
  */
-final readonly class Decision
+final class Decision
 {
     /**
      * @param string $agentName The name of the selected agent, or empty string if no specific agent is selected
      * @param string $reasoning The reasoning behind the selection
      */
     public function __construct(
-        private string $agentName,
-        private string $reasoning = 'No reasoning provided',
+        private readonly string $agentName,
+        private readonly string $reasoning = 'No reasoning provided',
     ) {
     }
 

@@ -16,16 +16,16 @@ use Symfony\AI\Platform\Tool\Tool;
 /**
  * Dispatched after successfully invoking a tool.
  */
-final readonly class ToolCallFailed
+final class ToolCallFailed
 {
     /**
      * @param array<string, mixed> $arguments
      */
     public function __construct(
-        private object $tool,
-        private Tool $metadata,
-        private array $arguments,
-        private \Throwable $exception,
+        private readonly object $tool,
+        private readonly Tool $metadata,
+        private readonly array $arguments,
+        private readonly \Throwable $exception,
     ) {
     }
 

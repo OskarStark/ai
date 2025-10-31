@@ -21,15 +21,15 @@ use Symfony\Bridge\PsrHttpMessage\HttpMessageFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final readonly class McpController
+final class McpController
 {
     public function __construct(
-        private Server $server,
-        private HttpMessageFactoryInterface $httpMessageFactory,
-        private HttpFoundationFactoryInterface $httpFoundationFactory,
-        private ResponseFactoryInterface $responseFactory,
-        private StreamFactoryInterface $streamFactory,
-        private ?LoggerInterface $logger = null,
+        private readonly Server $server,
+        private readonly HttpMessageFactoryInterface $httpMessageFactory,
+        private readonly HttpFoundationFactoryInterface $httpFoundationFactory,
+        private readonly ResponseFactoryInterface $responseFactory,
+        private readonly StreamFactoryInterface $streamFactory,
+        private readonly ?LoggerInterface $logger = null,
     ) {
     }
 

@@ -18,15 +18,15 @@ use Symfony\AI\Platform\Tool\Tool;
  *
  * @author Valtteri R <valtzu@gmail.com>
  */
-final readonly class ToolCallArgumentsResolved
+final class ToolCallArgumentsResolved
 {
     /**
      * @param array<string, mixed> $arguments
      */
     public function __construct(
-        private object $tool,
-        private Tool $metadata,
-        private array $arguments,
+        private readonly object $tool,
+        private readonly Tool $metadata,
+        private readonly array $arguments,
     ) {
     }
 
