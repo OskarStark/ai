@@ -12,11 +12,13 @@
 require_once dirname(__DIR__).'/bootstrap.php';
 
 use Doctrine\DBAL\DriverManager;
+use MongoDB\Client as MongoDbClient;
 use Symfony\AI\Chat\Bridge\Doctrine\DoctrineDbalMessageStore;
 use Symfony\AI\Chat\Bridge\HttpFoundation\SessionStore;
 use Symfony\AI\Chat\Bridge\Local\CacheStore;
 use Symfony\AI\Chat\Bridge\Local\InMemoryStore;
 use Symfony\AI\Chat\Bridge\Meilisearch\MessageStore as MeilisearchMessageStore;
+use Symfony\AI\Chat\Bridge\MongoDb\MessageStore as MongoDbMessageStore;
 use Symfony\AI\Chat\Bridge\Pogocache\MessageStore as PogocacheMessageStore;
 use Symfony\AI\Chat\Bridge\Redis\MessageStore as RedisMessageStore;
 use Symfony\AI\Chat\Bridge\SurrealDb\MessageStore as SurrealDbMessageStore;
@@ -51,6 +53,11 @@ $factories = [
         'symfony',
     ),
     'memory' => static fn (): InMemoryStore => new InMemoryStore('symfony'),
+    'mongodb' => static fn (): MongoDbMessageStore => new MongoDbMessageStore(
+        new MongoDbClient(env('MONGODB_URI')),
+        'chat',
+        'symfony',
+    ),
     'pogocache' => static fn (): PogocacheMessageStore => new PogocacheMessageStore(
         http_client(),
         env('POGOCACHE_HOST'),
