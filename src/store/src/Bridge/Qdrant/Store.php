@@ -33,6 +33,7 @@ final class Store implements ManagedStoreInterface, StoreInterface
         private readonly string $collectionName,
         private readonly int $embeddingsDimension = 1536,
         private readonly string $embeddingsDistance = 'Cosine',
+        private readonly bool $async = false,
     ) {
     }
 
@@ -58,9 +59,14 @@ final class Store implements ManagedStoreInterface, StoreInterface
 
     public function add(VectorDocument ...$documents): void
     {
-        $this->request('PUT', \sprintf('collections/%s/points', $this->collectionName), [
-            'points' => array_map($this->convertToIndexableArray(...), $documents),
-        ]);
+        $this->request(
+            'PUT',
+            \sprintf('collections/%s/points', $this->collectionName),
+            [
+                'points' => array_map($this->convertToIndexableArray(...), $documents),
+            ],
+            ['wait' => $this->async ? 'false' : 'true'],
+        );
     }
 
     /**
@@ -102,10 +108,11 @@ final class Store implements ManagedStoreInterface, StoreInterface
 
     /**
      * @param array<string, mixed> $payload
+     * @param array<string, mixed> $queryParameters
      *
      * @return array<string, mixed>
      */
-    private function request(string $method, string $endpoint, array $payload = []): array
+    private function request(string $method, string $endpoint, array $payload = [], array $queryParameters = []): array
     {
         $url = \sprintf('%s/%s', $this->endpointUrl, $endpoint);
 
@@ -113,6 +120,7 @@ final class Store implements ManagedStoreInterface, StoreInterface
             'headers' => [
                 'api-key' => $this->apiKey,
             ],
+            'query' => $queryParameters,
             'json' => $payload,
         ]);
 
