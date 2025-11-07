@@ -12,14 +12,13 @@
 use Symfony\AI\Platform\Bridge\OpenRouter\PlatformFactory;
 use Symfony\AI\Platform\Message\Message;
 use Symfony\AI\Platform\Message\MessageBag;
-use Symfony\AI\Platform\Model;
 
 require_once dirname(__DIR__).'/bootstrap.php';
 
 $platform = PlatformFactory::create(env('OPENROUTER_KEY'), http_client());
-// In case free is running into 429 rate limit errors, you can use the paid model:
-// $model = 'google/gemini-2.0-flash-lite-001';
 $model = 'google/gemini-2.0-flash-exp:free';
+// In case free is running into 404 errors, you can use the paid model:
+// $model = 'google/gemini-2.0-flash-lite-001';
 
 $messages = new MessageBag(
     Message::forSystem('You are a helpful assistant.'),
