@@ -36,9 +36,9 @@ $messages = new MessageBag(
         'Use the provided context to answer questions accurately.'
     ),
     Message::ofUser($documentContext),
-    Message::ofUser('What are the main objectives of France\'s AI strategy?'),
+    Message::ofUser('Summarize the main objectives of France\'s AI strategy in one sentence.'),
 );
 
-$result = $platform->invoke('llama-3.3-70b-instruct', $messages);
+$result = $platform->invoke('albert-small', $messages);
 
 echo $result->asText().\PHP_EOL;
