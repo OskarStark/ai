@@ -19,12 +19,12 @@ $platform = PlatformFactory::create(env('HUGGINGFACE_KEY'), httpClient: http_cli
 $input = [
     'query' => 'select year where city = beijing',
     'table' => [
-        'year' => [1896, 1900, 1904, 2004, 2008, 2012],
+        'year' => ['1896', '1900', '1904', '2004', '2008', '2012'],
         'city' => ['athens', 'paris', 'st. louis', 'athens', 'beijing', 'london'],
     ],
 ];
 
-$result = $platform->invoke('microsoft/tapex-base', $input, [
+$result = $platform->invoke('google/tapas-base-finetuned-wtq', $input, [
     'task' => Task::TABLE_QUESTION_ANSWERING,
 ]);
 

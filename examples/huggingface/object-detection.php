@@ -17,7 +17,7 @@ require_once dirname(__DIR__).'/bootstrap.php';
 
 $platform = PlatformFactory::create(env('HUGGINGFACE_KEY'), httpClient: http_client());
 
-$image = Image::fromFile(dirname(__DIR__, 2).'/fixtures/image.jpg');
+$image = Image::fromFile(dirname(__DIR__, 2).'/fixtures/accordion.jpg');
 $result = $platform->invoke('facebook/detr-resnet-50', $image, [
     'task' => Task::OBJECT_DETECTION,
 ]);

@@ -16,7 +16,7 @@ require_once dirname(__DIR__).'/bootstrap.php';
 
 $platform = PlatformFactory::create(env('HUGGINGFACE_KEY'), httpClient: http_client());
 
-$result = $platform->invoke('gpt2', 'The quick brown fox jumps over the lazy', [
+$result = $platform->invoke('katanemo/Arch-Router-1.5B', 'The quick brown fox jumps over the lazy', [
     'task' => Task::TEXT_GENERATION,
 ]);
 
