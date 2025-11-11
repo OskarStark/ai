@@ -58,7 +58,7 @@ final class DistanceCalculator
         }
 
         return array_map(
-            static fn (array $embedding): VectorDocument => $embedding['document'],
+            static fn (array $embedding): VectorDocument => $embedding['document']->withScore($embedding['distance']),
             $currentEmbeddings,
         );
     }
