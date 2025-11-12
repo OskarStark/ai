@@ -20,4 +20,4 @@ $result = $platform->invoke('black-forest-labs/FLUX.1-dev', 'Astronaut riding a 
     'task' => Task::TEXT_TO_IMAGE,
 ]);
 
-echo $result->asBase64().\PHP_EOL;
+echo $result->asDataUri().\PHP_EOL;
