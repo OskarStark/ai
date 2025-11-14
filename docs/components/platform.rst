@@ -310,14 +310,14 @@ To achieve this, the ``Symfony\AI\Platform\StructuredOutput\PlatformSubscriber``
         Message::forSystem('You are a helpful math tutor. Guide the user through the solution step by step.'),
         Message::ofUser('how can I solve 8x + 7 = -23'),
     );
-    $result = $platform->invoke('mistral-small-latest', $messages, ['output_structure' => MathReasoning::class]);
+    $result = $platform->invoke('mistral-small-latest', $messages, ['response_format' => MathReasoning::class]);
 
     dump($result->asObject()); // returns an instance of `MathReasoning` class
 
 Array Structures as Output
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Also PHP array structures as response_format are supported, which also requires the event subscriber mentioned above. On
+Also PHP array structures as `response_format` are supported, which also requires the event subscriber mentioned above. On
 top this example uses the feature through the agent to leverage tool calling::
 
     use Symfony\AI\Platform\Message\Message;
