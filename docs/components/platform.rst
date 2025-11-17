@@ -103,8 +103,8 @@ Supported Models & Platforms
     * All models provided by `HuggingFace`_ can be listed with a command in the examples folder,
       and also filtered, e.g. ``php examples/huggingface/_model-listing.php --provider=hf-inference --task=object-detection``
 * **Voice Models**
-    * `Cartesia TTS` with `Cartesia`_ as Platform
-    * `Cartesia STT` with `Cartesia`_ as Platform
+    * `Cartesia TTS`_ with `Cartesia`_ as Platform
+    * `Cartesia STT`_ with `Cartesia`_ as Platform
 
 Options
 -------
@@ -466,7 +466,9 @@ Code Examples
 .. _`Anthropic's Claude`: https://www.anthropic.com/claude
 .. _`Anthropic`: https://www.anthropic.com/
 .. _`AWS Bedrock`: https://aws.amazon.com/bedrock/
-.. _`Cartesia`: https://cartesia.ai/sonic
+.. _`Cartesia`: https://cartesia.ai/
+.. _`Cartesia STT`: https://cartesia.ai/ink
+.. _`Cartesia TTS`: https://cartesia.ai/sonic
 .. _`Meta's Llama`: https://www.llama.com/
 .. _`Ollama`: https://ollama.com/
 .. _`Replicate`: https://replicate.com/
