@@ -53,7 +53,7 @@ You can find more advanced usage in combination with an Agent using the store fo
 
 .. note::
 
-    Both `InMemory` and `PSR-6 cache` vector stores will load all the data into the
+    Both ``InMemory`` and ``PSR-6 cache`` vector stores will load all the data into the
     memory of the PHP process. They can be used only the amount of data fits in the
     PHP memory limit, typically for testing.
 
@@ -61,21 +61,21 @@ Supported Stores
 ----------------
 
 * `Azure AI Search`_
-* `Chroma`_ (requires `codewithkyrian/chromadb-php` as additional dependency)
+* `Chroma`_ (requires ``codewithkyrian/chromadb-php`` as additional dependency)
 * `Cloudflare`_
 * `InMemory`_
 * `Manticore`_
-* `MariaDB`_ (requires `ext-pdo`)
+* `MariaDB`_ (requires ``ext-pdo``)
 * `Meilisearch`_
 * `Milvus`_
-* `MongoDB Atlas`_ (requires `mongodb/mongodb` as additional dependency)
+* `MongoDB Atlas`_ (requires ``mongodb/mongodb`` as additional dependency)
 * `Neo4j`_
-* `Pinecone`_ (requires `probots-io/pinecone-php` as additional dependency)
-* `Postgres`_ (requires `ext-pdo`)
+* `Pinecone`_ (requires ``probots-io/pinecone-php`` as additional dependency)
+* `Postgres`_ (requires ``ext-pdo``)
 * `Qdrant`_
 * `Supabase`_ (requires manual database setup)
 * `SurrealDB`_
-* `Symfony Cache`_ (requires `symfony/cache` as additional dependency)
+* `Symfony Cache`_ (requires ``symfony/cache`` as additional dependency)
 * `Typesense`_
 * `Weaviate`_
 
