@@ -11,6 +11,8 @@
 
 require_once dirname(__DIR__).'/bootstrap.php';
 
+use Doctrine\DBAL\DriverManager;
+use Symfony\AI\Chat\Bridge\Doctrine\DoctrineDbalMessageStore;
 use Symfony\AI\Chat\Bridge\HttpFoundation\SessionStore;
 use Symfony\AI\Chat\Bridge\Local\CacheStore;
 use Symfony\AI\Chat\Bridge\Local\InMemoryStore;
@@ -37,6 +39,10 @@ use Symfony\Component\Serializer\Serializer;
 
 $factories = [
     'cache' => static fn (): CacheStore => new CacheStore(new ArrayAdapter(), cacheKey: 'symfony'),
+    'doctrine' => static fn (): DoctrineDbalMessageStore => new DoctrineDbalMessageStore(
+        'symfony',
+        DriverManager::getConnection(['driver' => 'pdo_sqlite', 'memory' => true]),
+    ),
     'meilisearch' => static fn (): MeilisearchMessageStore => new MeilisearchMessageStore(
         http_client(),
         env('MEILISEARCH_HOST'),
