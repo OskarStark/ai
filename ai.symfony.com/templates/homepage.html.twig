@@ -29,8 +29,13 @@
                     </div>
 
                     <div class="col-xl-6 mt-5 mt-xl-0">
+                        {% set model_typed = stimulus_controller('typed', {
+                            loop: true,
+                            cursorChar: '|',
+                            strings: ['gpt-4o', 'mistral-large-latest', 'gemini-2.0-flash', 'claude-sonnet-4-0'],
+                        }) %}
                         <pre class="terminal"><code><span class="variable">$platform</span> = <span class="title class_">PlatformFactory</span>::<span class="title function_ invoke__">create</span>(...);
-<span class="variable">$agent</span> = <span class="keyword">new</span> <span class="title class_">Agent</span>(<span class="variable">$platform</span>, <span class="string">'gpt-4o'</span>)
+<span class="variable">$agent</span> = <span class="keyword">new</span> <span class="title class_">Agent</span>(<span class="variable">$platform</span>, <span class="string">'</span><span class="string" {{ model_typed|raw }}></span><span class="string">'</span>)
 
 <span class="variable">$messages</span> = <span class="keyword">new</span> <span class="title class_">MessageBag</span>(
     <span class="title class_">Message</span>::<span class="title function_ invoke__">forSystem</span>(<span class="string">'You are a pirate and you write funny.'</span>),

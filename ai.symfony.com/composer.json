@@ -14,6 +14,7 @@
         "symfony/flex": "^2",
         "symfony/framework-bundle": "*",
         "symfony/runtime": "*",
+        "symfony/stimulus-bundle": "^2.31",
         "symfony/twig-bundle": "*",
         "symfony/ux-icons": "^2.31",
         "symfony/yaml": "*",
