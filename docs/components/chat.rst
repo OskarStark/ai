@@ -104,7 +104,7 @@ This leads to a store implementing two methods::
 Commands
 --------
 
-While using the `Chat` component in your Symfony application along with the ``AiBundle``,
+While using the ``Chat`` component in your Symfony application along with the ``AiBundle``,
 you can use the ``bin/console ai:message-store:setup`` command to initialize the message
 store and ``bin/console ai:message-store:drop`` to clean up the message store:
 

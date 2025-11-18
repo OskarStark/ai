@@ -82,7 +82,7 @@ Supported Stores
 Commands
 --------
 
-While using the `Store` component in your Symfony application along with the ``AiBundle``,
+While using the ``Store`` component in your Symfony application along with the ``AiBundle``,
 you can use the ``bin/console ai:store:setup`` command to initialize the store and ``bin/console ai:store:drop`` to clean up the store:
 
 .. code-block:: yaml
