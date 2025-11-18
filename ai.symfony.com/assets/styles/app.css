@@ -218,9 +218,10 @@ button#themeToggle {
 .demo-blog .demo-icon { background: linear-gradient(180deg, #433F77, #C43BC2); }
 .demo-youtube .demo-icon { background: linear-gradient(180deg, #C05920, #CF781A); }
 .demo-wikipedia .demo-icon { background: linear-gradient(180deg, #1CA574, #56AB48); }
-.demo-audio .demo-icon { background: linear-gradient(180deg, #85A72B, #97BC43); }
-.demo-video .demo-icon { background: linear-gradient(180deg, #42DEEE, #7069B0); }
-.demo-tuto .demo-icon { background: linear-gradient(180deg, #3B9D87, #35A781); }
+.demo-crop .demo-icon { background: linear-gradient(180deg, #85A72B, #97BC43); }
+.demo-audio .demo-icon { background: linear-gradient(180deg, #42DEEE, #7069B0); }
+.demo-video .demo-icon { background: linear-gradient(180deg, #3B9D87, #35A781); }
+.demo-turbo .demo-icon { background: linear-gradient(180deg, #E94E77, #D68189); }
 
 .footer-meta {
     font-size: 0.8rem;
