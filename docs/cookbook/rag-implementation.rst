@@ -39,9 +39,7 @@ Prerequisites
 Complete Implementation
 -----------------------
 
-.. literalinclude:: ../../examples/rag/in-memory.php
-   :language: php
-   :linenos:
+See the complete example: `in-memory.php <https://github.com/symfony/ai/blob/main/examples/rag/in-memory.php>`_
 
 Step-by-Step Breakdown
 ----------------------
