@@ -17,6 +17,15 @@ Usage
 
 At first, you need to decide whether your application should act as a MCP server or client. Both can be configured in
 the ``mcp`` section of your ``config/packages/mcp.yaml`` file.
+You also need to add few lines in the routing configuration for this bundle:
+
+.. code-block:: yaml
+
+    # config/routes.yaml
+    mcp:
+        resource: .
+        type: mcp
+
 
 Act as Server
 ~~~~~~~~~~~~~
@@ -199,6 +208,7 @@ Configuration
                 directory: '%kernel.cache_dir%/mcp-sessions' # Directory for file store (default: cache_dir/mcp-sessions)
                 ttl: 3600 # Session TTL in seconds (default: 3600)
 
+        # Not supported yet
         servers:
             name:
                 transport: 'stdio' # Transport method to use, either 'stdio' or 'http'
