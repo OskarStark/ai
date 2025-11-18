@@ -190,7 +190,7 @@ button#themeToggle {
     text-align: center;
 }
 .logo-pill:hover {
-    box-shadow: inset 0 0 0 2px var(--sf-ai-link-color);
+    background: var(--sf-ai-bg-secondary);
 }
 .logo-pill svg {
     display: block;
