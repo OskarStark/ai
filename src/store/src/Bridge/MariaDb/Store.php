@@ -66,7 +66,7 @@ final class Store implements ManagedStoreInterface, StoreInterface
             \sprintf(
                 <<<'SQL'
                     CREATE TABLE IF NOT EXISTS %1$s (
-                        id BINARY(16) NOT NULL PRIMARY KEY,
+                        id UUID NOT NULL PRIMARY KEY,
                         metadata JSON,
                         `%2$s` VECTOR(%4$d) NOT NULL,
                         VECTOR INDEX %3$s (`%2$s`)
@@ -126,7 +126,7 @@ final class Store implements ManagedStoreInterface, StoreInterface
 
         foreach ($documents as $document) {
             $operation = [
-                'id' => $document->id->toBinary(),
+                'id' => $document->id->toRfc4122(),
                 'metadata' => json_encode($document->metadata->getArrayCopy()),
                 'vector' => json_encode($document->vector->getData()),
             ];
@@ -173,7 +173,7 @@ final class Store implements ManagedStoreInterface, StoreInterface
 
         foreach ($statement->fetchAll(\PDO::FETCH_ASSOC) as $result) {
             $documents[] = new VectorDocument(
-                id: Uuid::fromBinary($result['id']),
+                id: Uuid::fromRfc4122($result['id']),
                 vector: new Vector(json_decode((string) $result['embedding'], true)),
                 metadata: new Metadata(json_decode($result['metadata'] ?? '{}', true)),
                 score: $result['score'],
