@@ -68,8 +68,8 @@ final class Store implements ManagedStoreInterface, StoreInterface
                     CREATE TABLE IF NOT EXISTS %1$s (
                         id BINARY(16) NOT NULL PRIMARY KEY,
                         metadata JSON,
-                        %2$s VECTOR(%4$d) NOT NULL,
-                        VECTOR INDEX %3$s (%2$s)
+                        `%2$s` VECTOR(%4$d) NOT NULL,
+                        VECTOR INDEX %3$s (`%2$s`)
                     )
                     SQL,
                 $this->tableName,
@@ -115,9 +115,9 @@ final class Store implements ManagedStoreInterface, StoreInterface
         $statement = $this->connection->prepare(
             \sprintf(
                 <<<'SQL'
-                    INSERT INTO %1$s (id, metadata, %2$s)
+                    INSERT INTO %1$s (id, metadata, `%2$s`)
                     VALUES (:id, :metadata, VEC_FromText(:vector))
-                    ON DUPLICATE KEY UPDATE metadata = :metadata, %2$s = VEC_FromText(:vector)
+                    ON DUPLICATE KEY UPDATE metadata = :metadata, `%2$s` = VEC_FromText(:vector)
                     SQL,
                 $this->tableName,
                 $this->vectorFieldName,
@@ -148,7 +148,7 @@ final class Store implements ManagedStoreInterface, StoreInterface
         $statement = $this->connection->prepare(
             \sprintf(
                 <<<'SQL'
-                    SELECT id, VEC_ToText(%1$s) embedding, metadata, VEC_DISTANCE_EUCLIDEAN(%1$s, VEC_FromText(:embedding)) AS score
+                    SELECT id, VEC_ToText(`%1$s`) embedding, metadata, VEC_DISTANCE_EUCLIDEAN(`%1$s`, VEC_FromText(:embedding)) AS score
                     FROM %2$s
                     %3$s
                     ORDER BY score ASC
