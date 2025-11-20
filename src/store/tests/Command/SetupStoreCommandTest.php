@@ -34,6 +34,12 @@ final class SetupStoreCommandTest extends TestCase
         $storeArgument = $definition->getArgument('store');
         $this->assertSame('Name of the store to setup', $storeArgument->getDescription());
         $this->assertTrue($storeArgument->isRequired());
+
+        $this->assertTrue($definition->hasOption('option'));
+
+        $optionOption = $definition->getOption('option');
+        $this->assertSame('Pass an option to the store setup (multiple values allowed)', $optionOption->getDescription());
+        $this->assertTrue($optionOption->isArray());
     }
 
     public function testCommandCannotSetupUndefinedStore()
@@ -42,9 +48,9 @@ final class SetupStoreCommandTest extends TestCase
 
         $tester = new CommandTester($command);
 
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('The "foo" store does not exist.');
-        $this->expectExceptionCode(0);
+        self::expectException(RuntimeException::class);
+        self::expectExceptionMessage('The "foo" store does not exist.');
+        self::expectExceptionCode(0);
         $tester->execute([
             'store' => 'foo',
         ]);
@@ -60,9 +66,9 @@ final class SetupStoreCommandTest extends TestCase
 
         $tester = new CommandTester($command);
 
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('The "foo" store does not support setup.');
-        $this->expectExceptionCode(0);
+        self::expectException(RuntimeException::class);
+        self::expectExceptionMessage('The "foo" store does not support setup.');
+        self::expectExceptionCode(0);
         $tester->execute([
             'store' => 'foo',
         ]);
@@ -79,9 +85,9 @@ final class SetupStoreCommandTest extends TestCase
 
         $tester = new CommandTester($command);
 
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('An error occurred while setting up the "foo" store: foo');
-        $this->expectExceptionCode(0);
+        self::expectException(RuntimeException::class);
+        self::expectExceptionMessage('An error occurred while setting up the "foo" store: foo');
+        self::expectExceptionCode(0);
         $tester->execute([
             'store' => 'foo',
         ]);
@@ -90,7 +96,7 @@ final class SetupStoreCommandTest extends TestCase
     public function testCommandCanSetupDefinedStore()
     {
         $store = $this->createMock(ManagedStoreInterface::class);
-        $store->expects($this->once())->method('setup');
+        $store->expects($this->once())->method('setup')->with([]);
 
         $command = new SetupStoreCommand(new ServiceLocator([
             'foo' => static fn (): object => $store,
@@ -103,5 +109,45 @@ final class SetupStoreCommandTest extends TestCase
         ]);
 
         $this->assertStringContainsString('The "foo" store was set up successfully.', $tester->getDisplay());
+    }
+
+    public function testCommandCanSetupDefinedStoreWithOptions()
+    {
+        $store = $this->createMock(ManagedStoreInterface::class);
+        $store->expects($this->once())->method('setup')->with([
+            'key1' => 'value1',
+            'key2' => 'value2',
+        ]);
+
+        $command = new SetupStoreCommand(new ServiceLocator([
+            'foo' => static fn (): object => $store,
+        ]));
+
+        $tester = new CommandTester($command);
+
+        $tester->execute([
+            'store' => 'foo',
+            '--option' => ['key1=value1', 'key2=value2'],
+        ]);
+
+        $this->assertStringContainsString('The "foo" store was set up successfully.', $tester->getDisplay());
+    }
+
+    public function testCommandThrowsExceptionForInvalidOptionFormat()
+    {
+        $store = $this->createMock(ManagedStoreInterface::class);
+
+        $command = new SetupStoreCommand(new ServiceLocator([
+            'foo' => static fn (): object => $store,
+        ]));
+
+        $tester = new CommandTester($command);
+
+        self::expectException(RuntimeException::class);
+        self::expectExceptionMessage('Invalid option format: "invalid". Expected format: key=value');
+        $tester->execute([
+            'store' => 'foo',
+            '--option' => ['invalid'],
+        ]);
     }
 }

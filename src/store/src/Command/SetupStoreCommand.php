@@ -19,6 +19,7 @@ use Symfony\Component\Console\Completion\CompletionInput;
 use Symfony\Component\Console\Completion\CompletionSuggestions;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ServiceLocator;
@@ -49,6 +50,7 @@ final class SetupStoreCommand extends Command
     {
         $this
             ->addArgument('store', InputArgument::REQUIRED, 'Name of the store to setup')
+            ->addOption('option', 'o', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Pass an option to the store setup (multiple values allowed)')
             ->setHelp(<<<EOF
 The <info>%command.name%</info> command setups the stores:
 
@@ -57,6 +59,10 @@ The <info>%command.name%</info> command setups the stores:
 Or a specific store only:
 
     <info>php %command.full_name% <store></info>
+
+You can pass options to the store setup:
+
+    <info>php %command.full_name% <store> --option=key=value --option=foo=bar</info>
 EOF
             )
         ;
@@ -83,13 +89,36 @@ EOF
 
         $store = $this->stores->get($storeName);
 
+        $options = $this->parseOptions($input->getOption('option'));
+
         try {
-            $store->setup();
+            $store->setup($options);
             $io->success(\sprintf('The "%s" store was set up successfully.', $storeName));
         } catch (\Exception $e) {
             throw new RuntimeException(\sprintf('An error occurred while setting up the "%s" store: ', $storeName).$e->getMessage(), previous: $e);
         }
 
         return Command::SUCCESS;
+    }
+
+    /**
+     * @param array<string> $rawOptions
+     *
+     * @return array<string, mixed>
+     */
+    private function parseOptions(array $rawOptions): array
+    {
+        $options = [];
+
+        foreach ($rawOptions as $option) {
+            if (!str_contains($option, '=')) {
+                throw new RuntimeException(\sprintf('Invalid option format: "%s". Expected format: key=value', $option));
+            }
+
+            [$key, $value] = explode('=', $option, 2);
+            $options[$key] = $value;
+        }
+
+        return $options;
     }
 }
