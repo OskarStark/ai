@@ -22,7 +22,7 @@ specific use cases or performance requirements.
 Usage
 -----
 
-The instantiation of the :class:`Symfony\\AI\\Platform\Platform` class is
+The instantiation of the :class:`Symfony\\AI\\Platform\\Platform` class is
 usually delegated to a provider-specific factory, with a provider being
 OpenAI, Anthropic, Google, Replicate, and others.
 
@@ -34,7 +34,7 @@ For example, to use the OpenAI provider, you would typically do something like t
 
     $platform = PlatformFactory::create(env('OPENAI_API_KEY'));
 
-With this :class:`Symfony\\AI\\Platform\PlatformInterface` instance you can now interact with the LLM::
+With this :class:`Symfony\\AI\\Platform\\PlatformInterface` instance you can now interact with the LLM::
 
     // Generate a vector embedding for a text, returns a Symfony\AI\Platform\Result\VectorResult
     $vectorResult = $platform->invoke($embeddings, 'What is the capital of France?');
