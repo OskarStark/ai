@@ -109,22 +109,23 @@ Supported Models & Platforms
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * **Language Models**
-    * `OpenAI's GPT`_ with `OpenAI`_ and `Azure`_ as Platform
+    * `OpenAI's GPT`_ with `OpenAI`_, `Azure`_ and `OpenRouter`_ as Platform
     * `Anthropic's Claude`_ with `Anthropic`_ and `AWS Bedrock`_ as Platform
-    * `Meta's Llama`_ with `Azure`_, `Ollama`_, `Replicate`_ and `AWS Bedrock`_ as Platform
+    * `Meta's Llama`_ with `Azure`_, `Ollama`_, `Replicate`_, `AWS Bedrock`_ and `OpenRouter`_ as Platform
     * `Gemini`_ with `Google`_, `Vertex AI`_ and `OpenRouter`_ as Platform
     * `Vertex AI Gen AI`_ with `Vertex AI`_ as Platform
     * `DeepSeek's R1`_ with `OpenRouter`_ as Platform
     * `Amazon's Nova`_ with `AWS Bedrock`_ as Platform
-    * `Mistral's Mistral`_ with `Mistral`_ as Platform
+    * `Mistral's Mistral`_ with `Mistral`_ and `OpenRouter`_ as Platform
     * `Albert API`_ models with `Albert`_ as Platform (French government's sovereign AI gateway)
     * `LiteLLM`_ as unified Platform
 * **Embeddings Models**
-    * `Gemini Text Embeddings`_ with `Google`_
+    * `Gemini Text Embeddings`_ with `Google`_ and `OpenRouter`_
     * `Vertex AI Text Embeddings`_ with `Vertex AI`_
-    * `OpenAI's Text Embeddings`_ with `OpenAI`_ and `Azure`_ as Platform
+    * `OpenAI's Text Embeddings`_ with `OpenAI`_, `Azure`_ and `OpenRouter`_ as Platform
     * `Voyage's Embeddings`_ with `Voyage`_ as Platform
-    * `Mistral Embed`_ with `Mistral`_ as Platform
+    * `Mistral Embed`_ with `Mistral`_ and `OpenRouter`_ as Platform
+    * `Qwen`_ with `OpenRouter`_ as Platform
 * **Other Models**
     * `OpenAI's Dall·E`_ with `OpenAI`_ as Platform
     * `OpenAI's Whisper`_ with `OpenAI`_ and `Azure`_ as Platform
@@ -532,6 +533,7 @@ Code Examples
 .. _`DeepSeek's R1`: https://www.deepseek.com/
 .. _`Amazon's Nova`: https://nova.amazon.com
 .. _`Mistral's Mistral`: https://www.mistral.ai/
+.. _`Qwen`: https://qwen.ai/
 .. _`Albert API`: https://github.com/etalab-ia/albert-api
 .. _`Albert`: https://alliance.numerique.gouv.fr/produit/produits-interminist%C3%A9rielles/albert-api/
 .. _`Mistral`: https://www.mistral.ai/
