@@ -787,7 +787,7 @@ To use existing tools, you can register them as a service:
         Symfony\AI\Agent\Toolbox\Tool\SimilaritySearch: ~
         Symfony\AI\Agent\Toolbox\Tool\Wikipedia: ~
         Symfony\AI\Agent\Toolbox\Tool\YouTubeTranscriber: ~
-        Symfony\AI\Agent\Toolbox\Tool\Firecrawl:
+        Symfony\AI\Agent\Bridge\Firecrawl\Firecrawl:
           $endpoint: '%env(FIRECRAWL_ENDPOINT)%'
           $apiKey: '%env(FIRECRAWL_API_KEY)%'
         Symfony\AI\Agent\Bridge\Brave\Brave:
