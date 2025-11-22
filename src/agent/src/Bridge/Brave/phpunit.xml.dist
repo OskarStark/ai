@@ -14,7 +14,7 @@
     </php>
 
     <testsuites>
-        <testsuite name="Symfony Brave AI Tool Test Suite">
+        <testsuite name="Symfony AI Brave Tool Test Suite">
             <directory>./Tests/</directory>
         </testsuite>
     </testsuites>
