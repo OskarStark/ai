@@ -118,6 +118,7 @@ Supported Models & Platforms
     * `Amazon's Nova`_ with `AWS Bedrock`_ as Platform
     * `Mistral's Mistral`_ with `Mistral`_ as Platform
     * `Albert API`_ models with `Albert`_ as Platform (French government's sovereign AI gateway)
+    * `LiteLLM`_ as unified Platform
 * **Embeddings Models**
     * `Gemini Text Embeddings`_ with `Google`_
     * `Vertex AI Text Embeddings`_ with `Vertex AI`_
@@ -494,6 +495,7 @@ Code Examples
 .. _`Anthropic's Claude`: https://www.anthropic.com/claude
 .. _`Anthropic`: https://www.anthropic.com/
 .. _`AWS Bedrock`: https://aws.amazon.com/bedrock/
+.. _`LiteLLM`: https://docs.litellm.ai/docs/
 .. _`Cartesia`: https://cartesia.ai/
 .. _`Cartesia STT`: https://cartesia.ai/ink
 .. _`Cartesia TTS`: https://cartesia.ai/sonic
