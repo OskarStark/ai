@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\AI\Agent\Toolbox\Tool;
+namespace Symfony\AI\Agent\Bridge\SerpApi;
 
 use Symfony\AI\Agent\Toolbox\Attribute\AsTool;
 use Symfony\AI\Agent\Toolbox\Source\HasSourcesInterface;

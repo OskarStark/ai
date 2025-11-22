@@ -779,6 +779,7 @@ The following tools can be installed as dedicated packages, no configuration is 
     $ composer require symfony/ai-firecrawl-tool
     $ composer require symfony/ai-mapbox-tool
     $ composer require symfony/ai-openmeteo-tool
+    $ composer require symfony/ai-serpapi-tool
     $ composer require symfony/ai-tavily-tool
 
 For tools not available as dedicated packages (those in the ``Toolbox\Tool`` namespace), register them manually as services:
@@ -791,8 +792,6 @@ For tools not available as dedicated packages (those in the ``Toolbox\Tool`` nam
             autoconfigure: true
 
         Symfony\AI\Agent\Toolbox\Tool\Clock: ~
-        Symfony\AI\Agent\Toolbox\Tool\SerpApi:
-            $apiKey: '%env(SERP_API_KEY)%'
         Symfony\AI\Agent\Toolbox\Tool\SimilaritySearch: ~
         Symfony\AI\Agent\Toolbox\Tool\Wikipedia: ~
         Symfony\AI\Agent\Toolbox\Tool\YouTubeTranscriber: ~
