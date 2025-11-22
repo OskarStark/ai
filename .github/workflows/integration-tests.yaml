@@ -95,15 +95,14 @@ jobs:
             - name: Install root dependencies
               uses: ramsey/composer-install@v3
 
+            - name: Build root packages
+              run: php .github/build-packages.php
+
             - name: Install demo dependencies
               uses: ramsey/composer-install@v3
               with:
                   composer-options: "--no-scripts"
                   working-directory: demo
-
-            - name: Link demo
-              working-directory: demo
-              run: ../link
 
             - run: composer run-script auto-scripts --no-interaction
               working-directory: demo

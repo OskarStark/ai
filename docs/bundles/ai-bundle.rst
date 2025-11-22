@@ -781,7 +781,7 @@ To use existing tools, you can register them as a service:
             autoconfigure: true
 
         Symfony\AI\Agent\Toolbox\Tool\Clock: ~
-        Symfony\AI\Agent\Toolbox\Tool\OpenMeteo: ~
+        Symfony\AI\Agent\Bridge\OpenMeteo\OpenMeteo: ~
         Symfony\AI\Agent\Toolbox\Tool\SerpApi:
             $apiKey: '%env(SERP_API_KEY)%'
         Symfony\AI\Agent\Toolbox\Tool\SimilaritySearch: ~
