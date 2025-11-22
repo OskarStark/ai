@@ -41,7 +41,7 @@ jobs:
             SYMFONY_REQUIRE: ${{ matrix.symfony-version || '>=7.3' }}
 
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
 
             - name: Configure environment
               run: |
