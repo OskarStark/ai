@@ -1,5 +1,5 @@
 {
-    "name": "symfony/ai-openmeteo-tool",
+    "name": "symfony/ai-open-meteo-tool",
     "description": "OpenMeteo weather AI tool bridge for Symfony applications.",
     "license": "MIT",
     "type": "library",

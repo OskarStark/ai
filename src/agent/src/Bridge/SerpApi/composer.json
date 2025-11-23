@@ -1,5 +1,5 @@
 {
-    "name": "symfony/ai-serpapi-tool",
+    "name": "symfony/ai-serp-api-tool",
     "description": "SerpApi AI tool bridge for Symfony applications.",
     "license": "MIT",
     "type": "library",
