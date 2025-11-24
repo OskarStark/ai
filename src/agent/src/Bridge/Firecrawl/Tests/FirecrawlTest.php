@@ -21,7 +21,7 @@ final class FirecrawlTest extends TestCase
     public function testScrape()
     {
         $httpClient = new MockHttpClient([
-            JsonMockResponse::fromFile(__DIR__.'/fixtures/scrape.json'),
+            JsonMockResponse::fromFile(__DIR__.'/Fixtures/scrape.json'),
         ]);
 
         $firecrawl = new Firecrawl($httpClient, 'test', 'https://127.0.0.1:3002');
@@ -37,10 +37,10 @@ final class FirecrawlTest extends TestCase
     public function testCrawl()
     {
         $httpClient = new MockHttpClient([
-            JsonMockResponse::fromFile(__DIR__.'/fixtures/crawl-wait.json'),
-            JsonMockResponse::fromFile(__DIR__.'/fixtures/crawl-status.json'),
-            JsonMockResponse::fromFile(__DIR__.'/fixtures/crawl-status-done.json'),
-            JsonMockResponse::fromFile(__DIR__.'/fixtures/crawl.json'),
+            JsonMockResponse::fromFile(__DIR__.'/Fixtures/crawl-wait.json'),
+            JsonMockResponse::fromFile(__DIR__.'/Fixtures/crawl-status.json'),
+            JsonMockResponse::fromFile(__DIR__.'/Fixtures/crawl-status-done.json'),
+            JsonMockResponse::fromFile(__DIR__.'/Fixtures/crawl.json'),
         ]);
 
         $firecrawl = new Firecrawl($httpClient, 'test', 'https://127.0.0.1:3002');
@@ -60,7 +60,7 @@ final class FirecrawlTest extends TestCase
     public function testMap()
     {
         $httpClient = new MockHttpClient([
-            JsonMockResponse::fromFile(__DIR__.'/fixtures/map.json'),
+            JsonMockResponse::fromFile(__DIR__.'/Fixtures/map.json'),
         ]);
 
         $firecrawl = new Firecrawl($httpClient, 'test', 'https://127.0.0.1:3002');

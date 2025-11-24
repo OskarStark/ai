@@ -20,7 +20,7 @@ final class SerpApiTest extends TestCase
 {
     public function testReturnsSearchResults()
     {
-        $result = JsonMockResponse::fromFile(__DIR__.'/fixtures/search-results.json');
+        $result = JsonMockResponse::fromFile(__DIR__.'/Fixtures/search-results.json');
         $httpClient = new MockHttpClient($result);
         $serpApi = new SerpApi($httpClient, 'test-api-key');
 
@@ -37,7 +37,7 @@ final class SerpApiTest extends TestCase
 
     public function testPassesCorrectParametersToApi()
     {
-        $result = JsonMockResponse::fromFile(__DIR__.'/fixtures/search-results.json');
+        $result = JsonMockResponse::fromFile(__DIR__.'/Fixtures/search-results.json');
         $httpClient = new MockHttpClient($result);
         $serpApi = new SerpApi($httpClient, 'test-api-key');
 

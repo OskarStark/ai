@@ -20,7 +20,7 @@ final class MapboxTest extends TestCase
 {
     public function testGeocodeWithSingleResult()
     {
-        $result = JsonMockResponse::fromFile(__DIR__.'/fixtures/geocode-single.json');
+        $result = JsonMockResponse::fromFile(__DIR__.'/Fixtures/geocode-single.json');
         $httpClient = new MockHttpClient($result);
 
         $mapbox = new Mapbox($httpClient, 'test_token');
@@ -46,7 +46,7 @@ final class MapboxTest extends TestCase
 
     public function testGeocodeWithMultipleResults()
     {
-        $result = JsonMockResponse::fromFile(__DIR__.'/fixtures/geocode-multiple.json');
+        $result = JsonMockResponse::fromFile(__DIR__.'/Fixtures/geocode-multiple.json');
         $httpClient = new MockHttpClient($result);
 
         $mapbox = new Mapbox($httpClient, 'test_token');
@@ -81,7 +81,7 @@ final class MapboxTest extends TestCase
 
     public function testGeocodeWithNoResults()
     {
-        $result = JsonMockResponse::fromFile(__DIR__.'/fixtures/geocode-empty.json');
+        $result = JsonMockResponse::fromFile(__DIR__.'/Fixtures/geocode-empty.json');
         $httpClient = new MockHttpClient($result);
 
         $mapbox = new Mapbox($httpClient, 'test_token');
@@ -97,7 +97,7 @@ final class MapboxTest extends TestCase
 
     public function testReverseGeocodeWithValidCoordinates()
     {
-        $result = JsonMockResponse::fromFile(__DIR__.'/fixtures/reverse-geocode.json');
+        $result = JsonMockResponse::fromFile(__DIR__.'/Fixtures/reverse-geocode.json');
         $httpClient = new MockHttpClient($result);
 
         $mapbox = new Mapbox($httpClient, 'test_token');
@@ -139,7 +139,7 @@ final class MapboxTest extends TestCase
 
     public function testReverseGeocodeWithNoResults()
     {
-        $result = JsonMockResponse::fromFile(__DIR__.'/fixtures/reverse-geocode-empty.json');
+        $result = JsonMockResponse::fromFile(__DIR__.'/Fixtures/reverse-geocode-empty.json');
         $httpClient = new MockHttpClient($result);
 
         $mapbox = new Mapbox($httpClient, 'test_token');

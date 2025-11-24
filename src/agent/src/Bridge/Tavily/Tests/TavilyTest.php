@@ -23,7 +23,7 @@ final class TavilyTest extends TestCase
 {
     public function testSearchReturnsResults()
     {
-        $result = JsonMockResponse::fromFile(__DIR__.'/fixtures/search-results.json');
+        $result = JsonMockResponse::fromFile(__DIR__.'/Fixtures/search-results.json');
         $httpClient = new MockHttpClient($result);
         $tavily = new Tavily($httpClient, 'test-api-key');
 
@@ -34,7 +34,7 @@ final class TavilyTest extends TestCase
 
     public function testSearchPassesCorrectParameters()
     {
-        $result = JsonMockResponse::fromFile(__DIR__.'/fixtures/search-results.json');
+        $result = JsonMockResponse::fromFile(__DIR__.'/Fixtures/search-results.json');
         $httpClient = new MockHttpClient($result);
         $tavily = new Tavily($httpClient, 'test-api-key', ['include_images' => true]);
 
@@ -53,7 +53,7 @@ final class TavilyTest extends TestCase
 
     public function testSearchAddsSourcesFromResults()
     {
-        $result = JsonMockResponse::fromFile(__DIR__.'/fixtures/search-results.json');
+        $result = JsonMockResponse::fromFile(__DIR__.'/Fixtures/search-results.json');
         $httpClient = new MockHttpClient($result);
         $tavily = new Tavily($httpClient, 'test-api-key');
 
@@ -67,7 +67,7 @@ final class TavilyTest extends TestCase
 
     public function testExtractReturnsResults()
     {
-        $result = JsonMockResponse::fromFile(__DIR__.'/fixtures/extract-results.json');
+        $result = JsonMockResponse::fromFile(__DIR__.'/Fixtures/extract-results.json');
         $httpClient = new MockHttpClient($result);
         $tavily = new Tavily($httpClient, 'test-api-key');
 
@@ -78,7 +78,7 @@ final class TavilyTest extends TestCase
 
     public function testExtractPassesCorrectParameters()
     {
-        $result = JsonMockResponse::fromFile(__DIR__.'/fixtures/extract-results.json');
+        $result = JsonMockResponse::fromFile(__DIR__.'/Fixtures/extract-results.json');
         $httpClient = new MockHttpClient($result);
         $tavily = new Tavily($httpClient, 'test-api-key');
 
@@ -97,7 +97,7 @@ final class TavilyTest extends TestCase
 
     public function testExtractAddsSourcesFromResults()
     {
-        $result = JsonMockResponse::fromFile(__DIR__.'/fixtures/extract-results.json');
+        $result = JsonMockResponse::fromFile(__DIR__.'/Fixtures/extract-results.json');
         $httpClient = new MockHttpClient($result);
         $tavily = new Tavily($httpClient, 'test-api-key');
 

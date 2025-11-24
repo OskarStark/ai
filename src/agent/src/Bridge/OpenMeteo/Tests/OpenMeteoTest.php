@@ -20,7 +20,7 @@ final class OpenMeteoTest extends TestCase
 {
     public function testCurrent()
     {
-        $result = JsonMockResponse::fromFile(__DIR__.'/fixtures/current.json');
+        $result = JsonMockResponse::fromFile(__DIR__.'/Fixtures/current.json');
         $httpClient = new MockHttpClient($result);
 
         $openMeteo = new OpenMeteo($httpClient);
@@ -38,7 +38,7 @@ final class OpenMeteoTest extends TestCase
 
     public function testForecast()
     {
-        $result = JsonMockResponse::fromFile(__DIR__.'/fixtures/forecast.json');
+        $result = JsonMockResponse::fromFile(__DIR__.'/Fixtures/forecast.json');
         $httpClient = new MockHttpClient($result);
 
         $openMeteo = new OpenMeteo($httpClient);
