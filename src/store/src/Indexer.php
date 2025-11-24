@@ -26,7 +26,7 @@ use Symfony\AI\Store\Document\VectorizerInterface;
 class Indexer implements IndexerInterface
 {
     /**
-     * @var array<string|null>
+     * @var array<string>
      */
     private array $sources = [];
 
