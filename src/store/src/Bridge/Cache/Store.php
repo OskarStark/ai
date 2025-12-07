@@ -17,7 +17,6 @@ use Symfony\AI\Store\Distance\DistanceCalculator;
 use Symfony\AI\Store\Document\Metadata;
 use Symfony\AI\Store\Document\VectorDocument;
 use Symfony\AI\Store\Exception\InvalidArgumentException;
-use Symfony\AI\Store\Exception\RuntimeException;
 use Symfony\AI\Store\ManagedStoreInterface;
 use Symfony\AI\Store\StoreInterface;
 use Symfony\Component\Uid\Uuid;
@@ -33,9 +32,6 @@ final class Store implements ManagedStoreInterface, StoreInterface
         private readonly DistanceCalculator $distanceCalculator = new DistanceCalculator(),
         private readonly string $cacheKey = '_vectors',
     ) {
-        if (!interface_exists(CacheInterface::class)) {
-            throw new RuntimeException('For using the Cache store as vector store, a symfony/contracts cache implementation is required. Try running "composer require symfony/cache" or another symfony/contracts compatible cache.');
-        }
     }
 
     public function setup(array $options = []): void
