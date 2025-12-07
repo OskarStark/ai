@@ -1356,6 +1356,10 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('opensearch' === $type) {
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-opensearch-store', OpenSearchStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('OpenSearch store configuration requires "symfony/ai-opensearch-store" package. Try running "composer require symfony/ai-opensearch-store".');
+            }
+
             foreach ($stores as $name => $store) {
                 $definition = new Definition(OpenSearchStore::class);
                 $definition
