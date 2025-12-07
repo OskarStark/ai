@@ -1,5 +1,5 @@
 {
-    "name": "symfony/ai-mongodb-store",
+    "name": "symfony/ai-mongo-db-store",
     "description": "MongoDB Atlas vector store bridge for Symfony AI",
     "license": "MIT",
     "type": "symfony-ai-store",

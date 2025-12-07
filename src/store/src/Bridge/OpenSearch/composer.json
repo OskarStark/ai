@@ -1,5 +1,5 @@
 {
-    "name": "symfony/ai-opensearch-store",
+    "name": "symfony/ai-open-search-store",
     "description": "OpenSearch vector store bridge for Symfony AI",
     "license": "MIT",
     "type": "symfony-ai-store",

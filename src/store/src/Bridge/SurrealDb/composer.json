@@ -1,5 +1,5 @@
 {
-    "name": "symfony/ai-surrealdb-store",
+    "name": "symfony/ai-surreal-db-store",
     "description": "SurrealDB vector store bridge for Symfony AI",
     "license": "MIT",
     "type": "symfony-ai-store",

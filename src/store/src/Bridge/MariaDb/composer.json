@@ -1,5 +1,5 @@
 {
-    "name": "symfony/ai-mariadb-store",
+    "name": "symfony/ai-maria-db-store",
     "description": "MariaDB vector store bridge for Symfony AI",
     "license": "MIT",
     "type": "symfony-ai-store",

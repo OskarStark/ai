@@ -1065,8 +1065,8 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('clickhouse' === $type) {
-            if (!ContainerBuilder::willBeAvailable('symfony/ai-clickhouse-store', ClickHouseStore::class, ['symfony/ai-bundle'])) {
-                throw new RuntimeException('ClickHouse store configuration requires "symfony/ai-clickhouse-store" package. Try running "composer require symfony/ai-clickhouse-store".');
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-click-house-store', ClickHouseStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('ClickHouse store configuration requires "symfony/ai-click-house-store" package. Try running "composer require symfony/ai-click-house-store".');
             }
 
             foreach ($stores as $name => $store) {
@@ -1130,8 +1130,8 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('manticoresearch' === $type) {
-            if (!ContainerBuilder::willBeAvailable('symfony/ai-manticoresearch-store', ManticoreSearchStore::class, ['symfony/ai-bundle'])) {
-                throw new RuntimeException('ManticoreSearch store configuration requires "symfony/ai-manticoresearch-store" package. Try running "composer require symfony/ai-manticoresearch-store".');
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-manticore-search-store', ManticoreSearchStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('ManticoreSearch store configuration requires "symfony/ai-manticore-search-store" package. Try running "composer require symfony/ai-manticore-search-store".');
             }
 
             foreach ($stores as $name => $store) {
@@ -1162,8 +1162,8 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('mariadb' === $type) {
-            if (!ContainerBuilder::willBeAvailable('symfony/ai-mariadb-store', MariaDbStore::class, ['symfony/ai-bundle'])) {
-                throw new RuntimeException('MariaDB store configuration requires "symfony/ai-mariadb-store" package. Try running "composer require symfony/ai-mariadb-store".');
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-maria-db-store', MariaDbStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('MariaDB store configuration requires "symfony/ai-maria-db-store" package. Try running "composer require symfony/ai-maria-db-store".');
             }
 
             foreach ($stores as $name => $store) {
@@ -1287,8 +1287,8 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('mongodb' === $type) {
-            if (!ContainerBuilder::willBeAvailable('symfony/ai-mongodb-store', MongoDbStore::class, ['symfony/ai-bundle'])) {
-                throw new RuntimeException('MongoDB store configuration requires "symfony/ai-mongodb-store" package. Try running "composer require symfony/ai-mongodb-store".');
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-mongo-db-store', MongoDbStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('MongoDB store configuration requires "symfony/ai-mongo-db-store" package. Try running "composer require symfony/ai-mongo-db-store".');
             }
 
             foreach ($stores as $name => $store) {
@@ -1356,8 +1356,8 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('opensearch' === $type) {
-            if (!ContainerBuilder::willBeAvailable('symfony/ai-opensearch-store', OpenSearchStore::class, ['symfony/ai-bundle'])) {
-                throw new RuntimeException('OpenSearch store configuration requires "symfony/ai-opensearch-store" package. Try running "composer require symfony/ai-opensearch-store".');
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-open-search-store', OpenSearchStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('OpenSearch store configuration requires "symfony/ai-open-search-store" package. Try running "composer require symfony/ai-open-search-store".');
             }
 
             foreach ($stores as $name => $store) {
@@ -1556,8 +1556,8 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('surrealdb' === $type) {
-            if (!ContainerBuilder::willBeAvailable('symfony/ai-surrealdb-store', SurrealDbStore::class, ['symfony/ai-bundle'])) {
-                throw new RuntimeException('SurrealDB store configuration requires "symfony/ai-surrealdb-store" package. Try running "composer require symfony/ai-surrealdb-store".');
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-surreal-db-store', SurrealDbStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('SurrealDB store configuration requires "symfony/ai-surreal-db-store" package. Try running "composer require symfony/ai-surreal-db-store".');
             }
 
             foreach ($stores as $name => $store) {

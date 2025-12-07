@@ -1,5 +1,5 @@
 {
-    "name": "symfony/ai-clickhouse-store",
+    "name": "symfony/ai-click-house-store",
     "description": "ClickHouse vector store bridge for Symfony AI",
     "license": "MIT",
     "type": "symfony-ai-store",
