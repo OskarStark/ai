@@ -1,7 +1,7 @@
-Manticore Store
-===============
+ManticoreSearch Store
+=====================
 
-Provides [Manticore Search](https://manticoresearch.com/) vector store integration for Symfony AI Store.
+Provides [ManticoreSearch](https://manticoresearch.com/) vector store integration for Symfony AI Store.
 
 Resources
 ---------

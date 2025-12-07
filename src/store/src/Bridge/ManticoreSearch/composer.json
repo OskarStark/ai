@@ -1,13 +1,12 @@
 {
-    "name": "symfony/ai-manticore-store",
-    "description": "Manticore Search vector store bridge for Symfony AI",
+    "name": "symfony/ai-manticoresearch-store",
+    "description": "ManticoreSearch vector store bridge for Symfony AI",
     "license": "MIT",
     "type": "symfony-ai-store",
     "keywords": [
         "ai",
         "bridge",
-        "manticore",
-        "search",
+        "manticoresearch",
         "store",
         "vector"
     ],
@@ -38,12 +37,12 @@
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "Symfony\\AI\\Store\\Bridge\\Manticore\\": ""
+            "Symfony\\AI\\Store\\Bridge\\ManticoreSearch\\": ""
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Symfony\\AI\\Store\\Bridge\\Manticore\\Tests\\": "Tests/"
+            "Symfony\\AI\\Store\\Bridge\\ManticoreSearch\\Tests\\": "Tests/"
         }
     },
     "config": {

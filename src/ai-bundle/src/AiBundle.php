@@ -978,6 +978,10 @@ final class AiBundle extends AbstractBundle
     private function processStoreConfig(string $type, array $stores, ContainerBuilder $container, array &$setupStoresOptions): void
     {
         if ('azuresearch' === $type) {
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-azure-search-store', AzureSearchStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('Azure Search store configuration requires "symfony/ai-azure-search-store" package. Try running "composer require symfony/ai-azure-search-store".');
+            }
+
             foreach ($stores as $name => $store) {
                 $arguments = [
                     new Reference('http_client'),
@@ -1005,6 +1009,10 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('cache' === $type) {
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-local-store', LocalCacheStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('Local cache store configuration requires "symfony/ai-local-store" package. Try running "composer require symfony/ai-local-store".');
+            }
+
             foreach ($stores as $name => $store) {
                 $distanceCalculatorDefinition = new Definition(DistanceCalculator::class);
                 $distanceCalculatorDefinition->setLazy(true);
@@ -1057,6 +1065,10 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('clickhouse' === $type) {
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-clickhouse-store', ClickHouseStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('ClickHouse store configuration requires "symfony/ai-clickhouse-store" package. Try running "composer require symfony/ai-clickhouse-store".');
+            }
+
             foreach ($stores as $name => $store) {
                 if (isset($store['http_client'])) {
                     $httpClient = new Reference($store['http_client']);
@@ -1087,6 +1099,10 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('cloudflare' === $type) {
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-cloudflare-store', CloudflareStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('Cloudflare store configuration requires "symfony/ai-cloudflare-store" package. Try running "composer require symfony/ai-cloudflare-store".');
+            }
+
             foreach ($stores as $name => $store) {
                 $definition = new Definition(CloudflareStore::class);
                 $definition
@@ -1114,6 +1130,10 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('manticoresearch' === $type) {
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-manticoresearch-store', ManticoreSearchStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('ManticoreSearch store configuration requires "symfony/ai-manticoresearch-store" package. Try running "composer require symfony/ai-manticoresearch-store".');
+            }
+
             foreach ($stores as $name => $store) {
                 $definition = new Definition(ManticoreSearchStore::class);
                 $definition
@@ -1142,6 +1162,10 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('mariadb' === $type) {
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-mariadb-store', MariaDbStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('MariaDB store configuration requires "symfony/ai-mariadb-store" package. Try running "composer require symfony/ai-mariadb-store".');
+            }
+
             foreach ($stores as $name => $store) {
                 $definition = new Definition(MariaDbStore::class);
                 $definition
@@ -1166,6 +1190,10 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('meilisearch' === $type) {
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-meilisearch-store', MeilisearchStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('Meilisearch store configuration requires "symfony/ai-meilisearch-store" package. Try running "composer require symfony/ai-meilisearch-store".');
+            }
+
             foreach ($stores as $name => $store) {
                 $definition = new Definition(MeilisearchStore::class);
                 $definition
@@ -1191,6 +1219,10 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('memory' === $type) {
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-local-store', LocalInMemoryStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('Local memory store configuration requires "symfony/ai-local-store" package. Try running "composer require symfony/ai-local-store".');
+            }
+
             foreach ($stores as $name => $store) {
                 $arguments = [
                     new Definition(DistanceCalculator::class),
@@ -1221,6 +1253,10 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('milvus' === $type) {
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-milvus-store', MilvusStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('Milvus store configuration requires "symfony/ai-milvus-store" package. Try running "composer require symfony/ai-milvus-store".');
+            }
+
             foreach ($stores as $name => $store) {
                 $arguments = [
                     new Reference('http_client'),
@@ -1251,6 +1287,10 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('mongodb' === $type) {
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-mongodb-store', MongoDbStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('MongoDB store configuration requires "symfony/ai-mongodb-store" package. Try running "composer require symfony/ai-mongodb-store".');
+            }
+
             foreach ($stores as $name => $store) {
                 $arguments = [
                     new Reference($store['client']),
@@ -1279,6 +1319,10 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('neo4j' === $type) {
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-neo4j-store', Neo4jStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('Neo4j store configuration requires "symfony/ai-neo4j-store" package. Try running "composer require symfony/ai-neo4j-store".');
+            }
+
             foreach ($stores as $name => $store) {
                 $arguments = [
                     new Reference('http_client'),
@@ -1335,6 +1379,10 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('pinecone' === $type) {
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-pinecone-store', PineconeStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('Pinecone store configuration requires "symfony/ai-pinecone-store" package. Try running "composer require symfony/ai-pinecone-store".');
+            }
+
             foreach ($stores as $name => $store) {
                 $arguments = [
                     new Reference($store['client']),
@@ -1360,6 +1408,10 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('postgres' === $type) {
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-postgres-store', PostgresStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('Postgres store configuration requires "symfony/ai-postgres-store" package. Try running "composer require symfony/ai-postgres-store".');
+            }
+
             foreach ($stores as $name => $store) {
                 $definition = new Definition(PostgresStore::class);
 
@@ -1403,6 +1455,10 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('qdrant' === $type) {
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-qdrant-store', QdrantStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('Qdrant store configuration requires "symfony/ai-qdrant-store" package. Try running "composer require symfony/ai-qdrant-store".');
+            }
+
             foreach ($stores as $name => $store) {
                 $arguments = [
                     new Reference('http_client'),
@@ -1432,6 +1488,10 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('redis' === $type) {
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-redis-store', RedisStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('Redis store configuration requires "symfony/ai-redis-store" package. Try running "composer require symfony/ai-redis-store".');
+            }
+
             foreach ($stores as $name => $store) {
                 if (isset($store['client'])) {
                     $redisClient = new Reference($store['client']);
@@ -1460,6 +1520,10 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('supabase' === $type) {
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-supabase-store', SupabaseStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('Supabase store configuration requires "symfony/ai-supabase-store" package. Try running "composer require symfony/ai-supabase-store".');
+            }
+
             foreach ($stores as $name => $store) {
                 $arguments = [
                     new Reference($store['http_client']),
@@ -1488,6 +1552,10 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('surrealdb' === $type) {
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-surrealdb-store', SurrealDbStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('SurrealDB store configuration requires "symfony/ai-surrealdb-store" package. Try running "composer require symfony/ai-surrealdb-store".');
+            }
+
             foreach ($stores as $name => $store) {
                 $arguments = [
                     new Reference('http_client'),
@@ -1521,6 +1589,10 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('typesense' === $type) {
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-typesense-store', TypesenseStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('Typesense store configuration requires "symfony/ai-typesense-store" package. Try running "composer require symfony/ai-typesense-store".');
+            }
+
             foreach ($stores as $name => $store) {
                 $definition = new Definition(TypesenseStore::class);
                 $definition
@@ -1544,6 +1616,10 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('weaviate' === $type) {
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-weaviate-store', WeaviateStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('Weaviate store configuration requires "symfony/ai-weaviate-store" package. Try running "composer require symfony/ai-weaviate-store".');
+            }
+
             foreach ($stores as $name => $store) {
                 $definition = new Definition(WeaviateStore::class);
                 $definition

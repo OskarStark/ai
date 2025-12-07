@@ -14,7 +14,7 @@
     </php>
 
     <testsuites>
-        <testsuite name="Symfony AI Manticore Store Test Suite">
+        <testsuite name="Symfony AI ManticoreSearch Store Test Suite">
             <directory>./Tests/</directory>
         </testsuite>
     </testsuites>
