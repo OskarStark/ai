@@ -1009,6 +1009,10 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('cache' === $type) {
+            if (!ContainerBuilder::willBeAvailable('symfony/ai-cache-store', CacheStore::class, ['symfony/ai-bundle'])) {
+                throw new RuntimeException('Cache store configuration requires "symfony/ai-cache-store" package. Try running "composer require symfony/ai-cache-store".');
+            }
+
             foreach ($stores as $name => $store) {
                 $distanceCalculatorDefinition = new Definition(DistanceCalculator::class);
                 $distanceCalculatorDefinition->setLazy(true);

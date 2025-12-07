@@ -69,6 +69,10 @@ deptrac:
       collectors:
         - type: classLike
           value: Symfony\\AI\\Store\\Bridge\\AzureSearch\\.*
+    - name: CacheStore
+      collectors:
+        - type: classLike
+          value: Symfony\\AI\\Store\\Bridge\\Cache\\.*
     - name: ChromaDbStore
       collectors:
         - type: classLike
@@ -178,6 +182,9 @@ deptrac:
     StoreComponent:
       - PlatformComponent
     AzureSearchStore:
+      - StoreComponent
+      - PlatformComponent
+    CacheStore:
       - StoreComponent
       - PlatformComponent
     ChromaDbStore:
