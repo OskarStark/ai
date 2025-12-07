@@ -19,6 +19,86 @@
         {
             "type": "path",
             "url": "../src/store"
+        },
+        {
+            "type": "path",
+            "url": "../src/store/src/Bridge/AzureSearch"
+        },
+        {
+            "type": "path",
+            "url": "../src/store/src/Bridge/Cache"
+        },
+        {
+            "type": "path",
+            "url": "../src/store/src/Bridge/ChromaDb"
+        },
+        {
+            "type": "path",
+            "url": "../src/store/src/Bridge/ClickHouse"
+        },
+        {
+            "type": "path",
+            "url": "../src/store/src/Bridge/Cloudflare"
+        },
+        {
+            "type": "path",
+            "url": "../src/store/src/Bridge/ManticoreSearch"
+        },
+        {
+            "type": "path",
+            "url": "../src/store/src/Bridge/MariaDb"
+        },
+        {
+            "type": "path",
+            "url": "../src/store/src/Bridge/Meilisearch"
+        },
+        {
+            "type": "path",
+            "url": "../src/store/src/Bridge/Milvus"
+        },
+        {
+            "type": "path",
+            "url": "../src/store/src/Bridge/MongoDb"
+        },
+        {
+            "type": "path",
+            "url": "../src/store/src/Bridge/Neo4j"
+        },
+        {
+            "type": "path",
+            "url": "../src/store/src/Bridge/OpenSearch"
+        },
+        {
+            "type": "path",
+            "url": "../src/store/src/Bridge/Pinecone"
+        },
+        {
+            "type": "path",
+            "url": "../src/store/src/Bridge/Postgres"
+        },
+        {
+            "type": "path",
+            "url": "../src/store/src/Bridge/Qdrant"
+        },
+        {
+            "type": "path",
+            "url": "../src/store/src/Bridge/Redis"
+        },
+        {
+            "type": "path",
+            "url": "../src/store/src/Bridge/Supabase"
+        },
+        {
+            "type": "path",
+            "url": "../src/store/src/Bridge/SurrealDb"
+        },
+        {
+            "type": "path",
+            "url": "../src/store/src/Bridge/Typesense"
+        },
+        {
+            "type": "path",
+            "url": "../src/store/src/Bridge/Weaviate"
         }
     ],
     "require": {
@@ -26,7 +106,6 @@
         "ext-pdo": "*",
         "ext-redis": "*",
         "async-aws/bedrock-runtime": "^1.1",
-        "symfony/ai-chroma-db-store": "@dev",
         "codewithkyrian/transformers": "^0.6.2",
         "doctrine/dbal": "^3.3|^4.0",
         "google/auth": "^1.47",
@@ -36,16 +115,36 @@
         "probots-io/pinecone-php": "^1.0",
         "psr/http-factory-implementation": "*",
         "symfony/ai-agent": "@dev",
+        "symfony/ai-azure-search-store": "@dev",
         "symfony/ai-brave-tool": "@dev",
+        "symfony/ai-cache-store": "@dev",
         "symfony/ai-chat": "@dev",
+        "symfony/ai-chroma-db-store": "@dev",
+        "symfony/ai-click-house-store": "@dev",
         "symfony/ai-clock-tool": "@dev",
+        "symfony/ai-cloudflare-store": "@dev",
+        "symfony/ai-manticore-search-store": "@dev",
+        "symfony/ai-maria-db-store": "@dev",
+        "symfony/ai-meilisearch-store": "@dev",
+        "symfony/ai-milvus-store": "@dev",
+        "symfony/ai-mongo-db-store": "@dev",
+        "symfony/ai-neo4j-store": "@dev",
         "symfony/ai-open-meteo-tool": "@dev",
+        "symfony/ai-open-search-store": "@dev",
+        "symfony/ai-pinecone-store": "@dev",
         "symfony/ai-platform": "@dev",
+        "symfony/ai-postgres-store": "@dev",
+        "symfony/ai-qdrant-store": "@dev",
+        "symfony/ai-redis-store": "@dev",
         "symfony/ai-scraper-tool": "@dev",
         "symfony/ai-serp-api-tool": "@dev",
         "symfony/ai-similarity-search-tool": "@dev",
         "symfony/ai-store": "@dev",
+        "symfony/ai-supabase-store": "@dev",
+        "symfony/ai-surreal-db-store": "@dev",
         "symfony/ai-tavily-tool": "@dev",
+        "symfony/ai-typesense-store": "@dev",
+        "symfony/ai-weaviate-store": "@dev",
         "symfony/ai-wikipedia-tool": "@dev",
         "symfony/ai-youtube-tool": "@dev",
         "symfony/cache": "^7.3|^8.0",
