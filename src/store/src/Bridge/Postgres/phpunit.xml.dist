@@ -14,7 +14,7 @@
     </php>
 
     <testsuites>
-        <testsuite name="Symfony AI PostgreSQL pgvector Store Test Suite">
+        <testsuite name="Symfony AI Postgres Store Test Suite">
             <directory>./Tests/</directory>
         </testsuite>
     </testsuites>

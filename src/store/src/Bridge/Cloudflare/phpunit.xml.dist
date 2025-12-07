@@ -14,7 +14,7 @@
     </php>
 
     <testsuites>
-        <testsuite name="Symfony AI Cloudflare Vectorize Store Test Suite">
+        <testsuite name="Symfony AI Cloudflare Store Test Suite">
             <directory>./Tests/</directory>
         </testsuite>
     </testsuites>

@@ -14,7 +14,7 @@
     </php>
 
     <testsuites>
-        <testsuite name="Symfony AI MongoDB Atlas Store Test Suite">
+        <testsuite name="Symfony AI MongoDB Store Test Suite">
             <directory>./Tests/</directory>
         </testsuite>
     </testsuites>
