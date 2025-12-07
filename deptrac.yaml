@@ -65,10 +65,86 @@ deptrac:
       collectors:
         - type: classLike
           value: ^Symfony\\AI\\Store\\(?!Bridge\\).*
+    - name: AzureSearchStore
+      collectors:
+        - type: classLike
+          value: Symfony\\AI\\Store\\Bridge\\AzureSearch\\.*
     - name: ChromaDbStore
       collectors:
         - type: classLike
           value: Symfony\\AI\\Store\\Bridge\\ChromaDb\\.*
+    - name: ClickHouseStore
+      collectors:
+        - type: classLike
+          value: Symfony\\AI\\Store\\Bridge\\ClickHouse\\.*
+    - name: CloudflareStore
+      collectors:
+        - type: classLike
+          value: Symfony\\AI\\Store\\Bridge\\Cloudflare\\.*
+    - name: LocalStore
+      collectors:
+        - type: classLike
+          value: Symfony\\AI\\Store\\Bridge\\Local\\.*
+    - name: ManticoreSearchStore
+      collectors:
+        - type: classLike
+          value: Symfony\\AI\\Store\\Bridge\\ManticoreSearch\\.*
+    - name: MariaDbStore
+      collectors:
+        - type: classLike
+          value: Symfony\\AI\\Store\\Bridge\\MariaDb\\.*
+    - name: MeilisearchStore
+      collectors:
+        - type: classLike
+          value: Symfony\\AI\\Store\\Bridge\\Meilisearch\\.*
+    - name: MilvusStore
+      collectors:
+        - type: classLike
+          value: Symfony\\AI\\Store\\Bridge\\Milvus\\.*
+    - name: MongoDbStore
+      collectors:
+        - type: classLike
+          value: Symfony\\AI\\Store\\Bridge\\MongoDb\\.*
+    - name: Neo4jStore
+      collectors:
+        - type: classLike
+          value: Symfony\\AI\\Store\\Bridge\\Neo4j\\.*
+    - name: OpenSearchStore
+      collectors:
+        - type: classLike
+          value: Symfony\\AI\\Store\\Bridge\\OpenSearch\\.*
+    - name: PineconeStore
+      collectors:
+        - type: classLike
+          value: Symfony\\AI\\Store\\Bridge\\Pinecone\\.*
+    - name: PostgresStore
+      collectors:
+        - type: classLike
+          value: Symfony\\AI\\Store\\Bridge\\Postgres\\.*
+    - name: QdrantStore
+      collectors:
+        - type: classLike
+          value: Symfony\\AI\\Store\\Bridge\\Qdrant\\.*
+    - name: RedisStore
+      collectors:
+        - type: classLike
+          value: Symfony\\AI\\Store\\Bridge\\Redis\\.*
+    - name: SupabaseStore
+      collectors:
+        - type: classLike
+          value: Symfony\\AI\\Store\\Bridge\\Supabase\\.*
+    - name: SurrealDbStore
+      collectors:
+        - type: classLike
+          value: Symfony\\AI\\Store\\Bridge\\SurrealDb\\.*
+    - name: TypesenseStore
+      collectors:
+        - type: classLike
+          value: Symfony\\AI\\Store\\Bridge\\Typesense\\.*
+    - name: WeaviateStore
+      collectors:
+        - type: classLike
+          value: Symfony\\AI\\Store\\Bridge\\Weaviate\\.*
   ruleset:
     AgentComponent:
       - PlatformComponent
@@ -105,7 +181,64 @@ deptrac:
     PlatformComponent: ~
     StoreComponent:
       - PlatformComponent
+    AzureSearchStore:
+      - StoreComponent
+      - PlatformComponent
     ChromaDbStore:
+      - StoreComponent
+      - PlatformComponent
+    ClickHouseStore:
+      - StoreComponent
+      - PlatformComponent
+    CloudflareStore:
+      - StoreComponent
+      - PlatformComponent
+    LocalStore:
+      - StoreComponent
+      - PlatformComponent
+    ManticoreSearchStore:
+      - StoreComponent
+      - PlatformComponent
+    MariaDbStore:
+      - StoreComponent
+      - PlatformComponent
+    MeilisearchStore:
+      - StoreComponent
+      - PlatformComponent
+    MilvusStore:
+      - StoreComponent
+      - PlatformComponent
+    MongoDbStore:
+      - StoreComponent
+      - PlatformComponent
+    Neo4jStore:
+      - StoreComponent
+      - PlatformComponent
+    OpenSearchStore:
+      - StoreComponent
+      - PlatformComponent
+    PineconeStore:
+      - StoreComponent
+      - PlatformComponent
+    PostgresStore:
+      - StoreComponent
+      - PlatformComponent
+    QdrantStore:
+      - StoreComponent
+      - PlatformComponent
+    RedisStore:
+      - StoreComponent
+      - PlatformComponent
+    SupabaseStore:
+      - StoreComponent
+      - PlatformComponent
+    SurrealDbStore:
+      - StoreComponent
+      - PlatformComponent
+    TypesenseStore:
+      - StoreComponent
+      - PlatformComponent
+    WeaviateStore:
       - StoreComponent
       - PlatformComponent
   # Baseline of known violations to be skipped for now

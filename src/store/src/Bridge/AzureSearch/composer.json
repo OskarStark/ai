@@ -38,12 +38,12 @@
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "Symfony\\AI\\Store\\Bridge\\Azure\\": ""
+            "Symfony\\AI\\Store\\Bridge\\AzureSearch\\": ""
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Symfony\\AI\\Store\\Bridge\\Azure\\Tests\\": "Tests/"
+            "Symfony\\AI\\Store\\Bridge\\AzureSearch\\Tests\\": "Tests/"
         }
     },
     "config": {
