@@ -18,7 +18,7 @@ To initiate a chat, you need to instantiate the ``Symfony\AI\Chat\Chat`` along
 with a ``Symfony\AI\Agent\AgentInterface`` and a ``Symfony\AI\Chat\MessageStoreInterface``::
 
     use Symfony\AI\Agent\Agent;
-    use Symfony\AI\Chat\Bridge\Memory\Store as InMemoryStore;
+    use Symfony\AI\Chat\InMemory\Store as InMemoryStore;
     use Symfony\AI\Chat\Chat;
     use Symfony\AI\Platform\Bridge\OpenAi\Gpt;
     use Symfony\AI\Platform\Bridge\OpenAi\PlatformFactory;
