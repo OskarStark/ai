@@ -81,10 +81,6 @@ deptrac:
       collectors:
         - type: classLike
           value: Symfony\\AI\\Store\\Bridge\\Cloudflare\\.*
-    - name: LocalStore
-      collectors:
-        - type: classLike
-          value: Symfony\\AI\\Store\\Bridge\\Local\\.*
     - name: ManticoreSearchStore
       collectors:
         - type: classLike
@@ -191,9 +187,6 @@ deptrac:
       - StoreComponent
       - PlatformComponent
     CloudflareStore:
-      - StoreComponent
-      - PlatformComponent
-    LocalStore:
       - StoreComponent
       - PlatformComponent
     ManticoreSearchStore:

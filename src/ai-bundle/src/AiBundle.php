@@ -1009,10 +1009,6 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('cache' === $type) {
-            if (!ContainerBuilder::willBeAvailable('symfony/ai-local-store', LocalCacheStore::class, ['symfony/ai-bundle'])) {
-                throw new RuntimeException('Local cache store configuration requires "symfony/ai-local-store" package. Try running "composer require symfony/ai-local-store".');
-            }
-
             foreach ($stores as $name => $store) {
                 $distanceCalculatorDefinition = new Definition(DistanceCalculator::class);
                 $distanceCalculatorDefinition->setLazy(true);
@@ -1219,10 +1215,6 @@ final class AiBundle extends AbstractBundle
         }
 
         if ('memory' === $type) {
-            if (!ContainerBuilder::willBeAvailable('symfony/ai-local-store', LocalInMemoryStore::class, ['symfony/ai-bundle'])) {
-                throw new RuntimeException('Local memory store configuration requires "symfony/ai-local-store" package. Try running "composer require symfony/ai-local-store".');
-            }
-
             foreach ($stores as $name => $store) {
                 $arguments = [
                     new Definition(DistanceCalculator::class),
