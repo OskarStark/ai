@@ -69,7 +69,7 @@ services:
             - etcd_vlm:/etcd
         command: etcd -advertise-client-urls=http://etcd:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd
         healthcheck:
-            test: [ "CMD", "etcdctl", "endpoint", "health" ]
+            test: [ 'CMD', 'etcdctl', 'endpoint', 'health' ]
             interval: 30s
             timeout: 20s
             retries: 3
@@ -86,7 +86,7 @@ services:
             - minio_vlm:/minio_data
         command: minio server /minio_data --console-address ":9001"
         healthcheck:
-            test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/live" ]
+            test: [ 'CMD', 'curl', '-f', 'http://localhost:9000/minio/health/live' ]
             interval: 30s
             timeout: 20s
             retries: 3
@@ -94,7 +94,7 @@ services:
     milvus:
         container_name: milvus-standalone
         image: milvusdb/milvus:v2.6.0
-        command: [ "milvus", "run", "standalone" ]
+        command: [ 'milvus', 'run', 'standalone' ]
         security_opt:
             - seccomp:unconfined
         environment:
@@ -104,7 +104,7 @@ services:
         volumes:
             - milvus_vlm:/var/lib/milvus
         healthcheck:
-            test: [ "CMD", "curl", "-f", "http://localhost:9091/healthz" ]
+            test: [ 'CMD', 'curl', '-f', 'http://localhost:9091/healthz' ]
             interval: 30s
             start_period: 90s
             timeout: 20s
@@ -140,7 +140,7 @@ services:
                 soft: 65536
                 hard: 65536
         healthcheck:
-            test: [ 'CMD', 'curl', "-f", "http://127.0.0.1:9200" ]
+            test: [ 'CMD', 'curl', '-f', 'http://127.0.0.1:9200' ]
             interval: 30s
             start_period: 120s
             timeout: 20s
@@ -196,7 +196,7 @@ services:
 
     weaviate:
         image: cr.weaviate.io/semitechnologies/weaviate:1.32.4
-        command: ['--host', '0.0.0.0', '--port', '8080', '--scheme', 'http']
+        command: [ '--host', '0.0.0.0', '--port', '8080', '--scheme', 'http' ]
         environment:
             QUERY_DEFAULTS_LIMIT: 25
             AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'false'
@@ -216,14 +216,14 @@ services:
     litellm:
         image: ghcr.io/berriai/litellm:v1.79.1-stable
         ports:
-            - "4000:4000"
+            - '4000:4000'
         volumes:
             - ./litellm/config.yaml:/app/config.yaml
         env_file:
             - .env
             - path: .env.local
               required: false
-        command: [ "--config", "/app/config.yaml", "--port", "4000", "--num_workers", "8" ]
+        command: [ '--config', '/app/config.yaml', '--port', '4000', '--num_workers', '8' ]
 
     litellm-db:
         image: pgvector/pgvector:0.8.0-pg17
