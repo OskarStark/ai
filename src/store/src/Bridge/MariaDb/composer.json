@@ -45,6 +45,7 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "Symfony\\AI\\PHPStan\\": "../../../../../.phpstan/",
             "Symfony\\AI\\Store\\Bridge\\MariaDb\\Tests\\": "Tests/"
         }
     },

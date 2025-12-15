@@ -40,6 +40,7 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "Symfony\\AI\\PHPStan\\": "../../../../../.phpstan/",
             "Symfony\\AI\\Store\\Bridge\\Elasticsearch\\Tests\\": "Tests/"
         }
     },
