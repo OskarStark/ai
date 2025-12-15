@@ -4,7 +4,7 @@ includes:
 parameters:
     level: 6
     paths:
-        - ./*.php
+        - SearchStore.php
     treatPhpDocTypesAsCertain: false
     ignoreErrors:
         -

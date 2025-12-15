@@ -4,7 +4,8 @@ includes:
 parameters:
     level: 6
     paths:
-        - ./*.php
+        - Store.php
+        - Distance.php
     treatPhpDocTypesAsCertain: false
     ignoreErrors:
         -
