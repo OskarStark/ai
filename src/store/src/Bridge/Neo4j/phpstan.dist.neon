@@ -6,8 +6,10 @@ parameters:
     paths:
         - ./
     excludePaths:
-        - ./Tests/
-        - ./vendor/
+        analyse:
+            - ./Tests/
+        analyseAndScan:
+            - ./vendor/
     treatPhpDocTypesAsCertain: false
     ignoreErrors:
         -
