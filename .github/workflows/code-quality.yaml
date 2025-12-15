@@ -73,3 +73,11 @@ jobs:
                   source .github/workflows/.utils.sh
 
                   echo "$PACKAGES" | xargs -n1 | parallel -j +3 "_run_task {} '(cd src/{} && $COMPOSER_UP && $PHPSTAN)'"
+
+            - name: Run PHPStan on store bridges
+              run: |
+                  source .github/workflows/.utils.sh
+
+                  BRIDGES=$(find src/store/src/Bridge/ -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | sort | tr '\n' ' ')
+                  echo "Bridges: $BRIDGES"
+                  echo "$BRIDGES" | xargs -n1 | parallel -j +3 "_run_task {} '(cd src/store/src/Bridge/{} && $COMPOSER_UP && $PHPSTAN)'"
