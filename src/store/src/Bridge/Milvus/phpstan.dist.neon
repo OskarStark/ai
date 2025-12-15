@@ -4,12 +4,7 @@ includes:
 parameters:
     level: 6
     paths:
-        - ./
-    excludePaths:
-        analyse:
-            - ./Tests/
-        analyseAndScan:
-            - ./vendor/
+        - ./*.php
     treatPhpDocTypesAsCertain: false
     ignoreErrors:
         -
