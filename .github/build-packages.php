@@ -1,42 +1,73 @@
 <?php
 
-/**
- * Updates the composer.json files to use the local version of the Symfony AI packages.
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
-require __DIR__.'/../vendor/autoload.php';
+$baseDir = realpath(__DIR__.'/..');
 
-use Symfony\Component\Finder\Finder;
+/**
+ * Find all composer.json files in the given directories.
+ *
+ * @return list<string>
+ */
+function findComposerFiles(string $baseDir): array
+{
+    $composerFiles = [];
 
-$finder = (new Finder())
-    ->in([__DIR__.'/../src/*/', __DIR__.'/../src/*/src/Bridge/*/', __DIR__.'/../examples/', __DIR__.'/../demo/'])
-    ->depth(0)
-    ->name('composer.json')
-;
+    // src/*/composer.json (packages)
+    foreach (glob($baseDir.'/src/*/composer.json') as $file) {
+        $composerFiles[] = $file;
+    }
+
+    // src/*/src/Bridge/*/composer.json (bridges)
+    foreach (glob($baseDir.'/src/*/src/Bridge/*/composer.json') as $file) {
+        $composerFiles[] = $file;
+    }
+
+    // examples/composer.json
+    if (file_exists($baseDir.'/examples/composer.json')) {
+        $composerFiles[] = $baseDir.'/examples/composer.json';
+    }
+
+    // demo/composer.json
+    if (file_exists($baseDir.'/demo/composer.json')) {
+        $composerFiles[] = $baseDir.'/demo/composer.json';
+    }
+
+    return $composerFiles;
+}
+
+$composerFiles = findComposerFiles($baseDir);
 
 // 1. Find all AI packages
 $aiPackages = [];
-foreach ($finder as $composerFile) {
-    $json = file_get_contents($composerFile->getPathname());
+foreach ($composerFiles as $composerFile) {
+    $json = file_get_contents($composerFile);
     if (null === $packageData = json_decode($json, true)) {
-        passthru(sprintf('composer validate %s', $composerFile->getPathname()));
+        passthru(sprintf('composer validate %s', $composerFile));
         exit(1);
     }
 
-    if (str_starts_with($composerFile->getPathname(), __DIR__ . '/../src/')) {
+    if (str_starts_with($composerFile, $baseDir.'/src/')) {
         $packageName = $packageData['name'];
 
         $aiPackages[$packageName] = [
-            'path' => realpath($composerFile->getPath()),
+            'path' => realpath(dirname($composerFile)),
         ];
     }
 }
 
 // 2. Update all composer.json files from the repository, to use the local version of the AI packages
-foreach ($finder as $composerFile) {
-    $json = file_get_contents($composerFile->getPathname());
+foreach ($composerFiles as $composerFile) {
+    $json = file_get_contents($composerFile);
     if (null === $packageData = json_decode($json, true)) {
-        passthru(sprintf('composer validate %s', $composerFile->getPathname()));
+        passthru(sprintf('composer validate %s', $composerFile));
         exit(1);
     }
 
@@ -60,5 +91,5 @@ foreach ($finder as $composerFile) {
     }
 
     $json = json_encode($packageData, \JSON_PRETTY_PRINT | \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE);
-    file_put_contents($composerFile->getPathname(), $json."\n");
+    file_put_contents($composerFile, $json."\n");
 }

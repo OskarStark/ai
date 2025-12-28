@@ -43,10 +43,7 @@ jobs:
                   php-version: ${{ env.PHP_VERSION }}
                   extensions: ${{ env.REQUIRED_PHP_EXTENSIONS }}
 
-            - name: Install root dependencies
-              uses: ramsey/composer-install@v3
-
-            - name: Build root packages
+            - name: Build packages
               run: php .github/build-packages.php
 
             - name: Install dependencies
@@ -74,10 +71,7 @@ jobs:
                   php-version: ${{ env.PHP_VERSION }}
                   extensions: ${{ env.REQUIRED_PHP_EXTENSIONS }}
 
-            - name: Install root dependencies
-              uses: ramsey/composer-install@v3
-
-            - name: Build root packages
+            - name: Build packages
               run: php .github/build-packages.php
 
             - name: Install dependencies
@@ -109,10 +103,7 @@ jobs:
                   php-version: ${{ env.PHP_VERSION }}
                   extensions: ${{ env.REQUIRED_PHP_EXTENSIONS }}
 
-            - name: Install root dependencies
-              uses: ramsey/composer-install@v3
-
-            - name: Build root packages
+            - name: Build packages
               run: php .github/build-packages.php
 
             - name: Install dependencies
@@ -146,10 +137,7 @@ jobs:
                   mkdir -p tmp/${{ matrix.bridge.component }}/src/Bridge
                   mv src/${{ matrix.bridge.component }}/src/Bridge/${{ matrix.bridge.bridge }} tmp/${{ matrix.bridge.component }}/src/Bridge
 
-            - name: Install root dependencies
-              uses: ramsey/composer-install@v3
-
-            - name: Build root packages
+            - name: Build packages
               run: php .github/build-packages.php
 
             - name: Install dependencies

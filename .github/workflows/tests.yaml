@@ -60,11 +60,6 @@ jobs:
                   tools: flex
                   extensions: ${{ env.REQUIRED_PHP_EXTENSIONS }}
 
-            # deptrac does not support Symfony 8 yet
-            - name: Remove deptrac for Symfony 8
-              if: startsWith(matrix.symfony-version, '8.')
-              run: composer remove --dev deptrac/deptrac --no-update
-
             - name: Install dependencies
               uses: ramsey/composer-install@v3
               with:
@@ -99,15 +94,8 @@ jobs:
                   tools: flex
                   extensions: ${{ env.REQUIRED_PHP_EXTENSIONS }}
 
-            - name: Install root dependencies
-              uses: ramsey/composer-install@v3
-
             - name: Build packages
               run: php .github/build-packages.php
-
-            # Remove root vendor and bridge vendor to avoid circular symlinks when installing bridge dependencies
-            - name: Clean vendor folders
-              run: rm -rf vendor src/platform/src/Bridge/${{ matrix.bridge.bridge }}/vendor
 
             - name: Install dependencies
               uses: ramsey/composer-install@v3
@@ -143,15 +131,8 @@ jobs:
                   tools: flex
                   extensions: ${{ env.REQUIRED_PHP_EXTENSIONS }}
 
-            - name: Install root dependencies
-              uses: ramsey/composer-install@v3
-
             - name: Build packages
               run: php .github/build-packages.php
-
-            # Remove root vendor and bridge vendor to avoid circular symlinks when installing bridge dependencies
-            - name: Clean vendor folders
-              run: rm -rf vendor src/platform/src/Bridge/${{ matrix.bridge.bridge }}/vendor
 
             - name: Install dependencies
               uses: ramsey/composer-install@v3
@@ -187,15 +168,8 @@ jobs:
                   tools: flex
                   extensions: ${{ env.REQUIRED_PHP_EXTENSIONS }}
 
-            - name: Install root dependencies
-              uses: ramsey/composer-install@v3
-
             - name: Build packages
               run: php .github/build-packages.php
-
-            # Remove root vendor and bridge vendor to avoid circular symlinks when installing bridge dependencies
-            - name: Clean vendor folders
-              run: rm -rf vendor src/platform/src/Bridge/${{ matrix.bridge.bridge }}/vendor
 
             - name: Install dependencies
               uses: ramsey/composer-install@v3
@@ -231,15 +205,8 @@ jobs:
                   tools: flex
                   extensions: ${{ env.REQUIRED_PHP_EXTENSIONS }}
 
-            - name: Install root dependencies
-              uses: ramsey/composer-install@v3
-
             - name: Build packages
               run: php .github/build-packages.php
-
-            # Remove root vendor and bridge vendor to avoid circular symlinks when installing bridge dependencies
-            - name: Clean vendor folders
-              run: rm -rf vendor src/platform/src/Bridge/${{ matrix.bridge.bridge }}/vendor
 
             - name: Install dependencies
               uses: ramsey/composer-install@v3
@@ -275,15 +242,8 @@ jobs:
                   tools: flex
                   extensions: ${{ env.REQUIRED_PHP_EXTENSIONS }}
 
-            - name: Install root dependencies
-              uses: ramsey/composer-install@v3
-
             - name: Build packages
               run: php .github/build-packages.php
-
-            # Remove root vendor and bridge vendor to avoid circular symlinks when installing bridge dependencies
-            - name: Clean vendor folders
-              run: rm -rf vendor src/platform/src/Bridge/${{ matrix.bridge.bridge }}/vendor
 
             - name: Install dependencies
               uses: ramsey/composer-install@v3
@@ -308,10 +268,7 @@ jobs:
                   tools: flex
                   extensions: "${{ env.REQUIRED_PHP_EXTENSIONS }}"
 
-            - name: Install root dependencies
-              uses: ramsey/composer-install@v3
-
-            - name: Build root packages
+            - name: Build packages
               run: php .github/build-packages.php
 
             - name: Install demo dependencies
@@ -351,10 +308,7 @@ jobs:
                   tools: flex
                   extensions: "${{ env.REQUIRED_PHP_EXTENSIONS }}"
 
-            - name: Install root dependencies
-              uses: ramsey/composer-install@v3
-
-            - name: Build root packages
+            - name: Build packages
               run: php .github/build-packages.php
 
             - name: Install demo dependencies (no-dev)
@@ -422,18 +376,10 @@ jobs:
                   tools: flex
                   extensions: "${{ env.REQUIRED_PHP_EXTENSIONS }}"
 
-            # deptrac does not support Symfony 8 yet
-            - name: Remove deptrac for Symfony 8
-              if: startsWith(matrix.symfony-version, '8.')
-              run: composer remove --dev deptrac/deptrac --no-update
-
-            - name: Install root dependencies
-              uses: ramsey/composer-install@v3
-
-            - name: Build root packages
+            - name: Build packages
               run: php .github/build-packages.php
 
-            - name: Install root dependencies
+            - name: Install examples dependencies
               uses: ramsey/composer-install@v3
               with:
                   working-directory: examples
