@@ -143,8 +143,8 @@ jobs:
 
             - name: Isolate Bridge
               run: |
-                  mkdir -p tmp/${{ matrix.bridge.component }}/src/Bridge
-                  mv src/${{ matrix.bridge.component }}/src/Bridge/${{ matrix.bridge.bridge }} tmp/${{ matrix.bridge.component }}/src/Bridge
+                  mkdir -p tmp/${{ matrix.bridge_component }}/src/Bridge
+                  mv src/${{ matrix.bridge_component }}/src/Bridge/${{ matrix.bridge.bridge }} tmp/${{ matrix.bridge_component }}/src/Bridge
 
             - name: Install root dependencies
               uses: ramsey/composer-install@v3
@@ -155,7 +155,7 @@ jobs:
             - name: Install dependencies
               uses: ramsey/composer-install@v3
               with:
-                  working-directory: tmp/${{ matrix.bridge.component }}/src/Bridge/${{ matrix.bridge.bridge }}
+                  working-directory: tmp/${{ matrix.bridge_component }}/src/Bridge/${{ matrix.bridge.bridge }}
 
             - name: Run PHPStan
-              run: cd tmp/${{ matrix.bridge.component }}/src/Bridge/${{ matrix.bridge.bridge }} && vendor/bin/phpstan
+              run: cd tmp/${{ matrix.bridge_component }}/src/Bridge/${{ matrix.bridge.bridge }} && vendor/bin/phpstan
