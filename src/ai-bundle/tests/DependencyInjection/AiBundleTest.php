@@ -6889,23 +6889,23 @@ class AiBundleTest extends TestCase
             ],
         ]);
 
-        self::assertTrue($container->hasDefinition('ai.platform.vertexai'));
+        $this->assertTrue($container->hasDefinition('ai.platform.vertexai'));
 
         $definition = $container->getDefinition('ai.platform.vertexai');
         $arguments = $definition->getArguments();
 
-        self::assertSame('us-central1', $arguments[0]);
-        self::assertSame('my-project', $arguments[1]);
+        $this->assertSame('us-central1', $arguments[0]);
+        $this->assertSame('my-project', $arguments[1]);
 
         // Argument 2 is the http client definition which uses the configured http_client service
         $httpClientDefinition = $arguments[2];
-        self::assertInstanceOf(Definition::class, $httpClientDefinition);
+        $this->assertInstanceOf(Definition::class, $httpClientDefinition);
 
         $factory = $httpClientDefinition->getFactory();
-        self::assertIsArray($factory);
-        self::assertInstanceOf(Reference::class, $factory[0]);
-        self::assertSame('my_custom_http_client', (string) $factory[0]);
-        self::assertSame('withOptions', $factory[1]);
+        $this->assertIsArray($factory);
+        $this->assertInstanceOf(Reference::class, $factory[0]);
+        $this->assertSame('my_custom_http_client', (string) $factory[0]);
+        $this->assertSame('withOptions', $factory[1]);
     }
 
     #[TestDox('Model configuration is ignored for unknown platform')]
