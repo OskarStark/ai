@@ -115,7 +115,7 @@ class ProcessorCompilerPassTest extends TestCase
 
         // MultiAgent service - should NOT be processed
         $orchestratorRef = new Reference('orchestrator');
-        $handoffs = [new Definition('Symfony\AI\Agent\MultiAgent\Handoff')];
+        $handoffs = [new Definition(Handoff::class)];
         $fallbackRef = new Reference('fallback');
         $name = 'support';
 
