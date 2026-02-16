@@ -28,7 +28,7 @@ $redis = new Redis([
 $store = new MessageStore($redis, 'symfony');
 $store->setup();
 
-$agent = new Agent($platform, 'gpt-5-mini');
+$agent = new Agent($platform, 'gpt-4o-mini');
 $chat = new Chat($agent, $store);
 
 $messages = new MessageBag(

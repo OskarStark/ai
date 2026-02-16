@@ -52,7 +52,7 @@ class ToolCallMessageNormalizerTest extends TestCase
             new ToolCall('some-id', 'roll-die', ['sides' => 24]),
             'Critical hit!'
         );
-        $responsesModel = new ResponsesModel('gpt-5-mini');
+        $responsesModel = new ResponsesModel('gpt-4o-mini');
 
         yield 'supported' => [$toolCallMessage, $responsesModel, true];
         yield 'unsupported model' => [$toolCallMessage, new Model('foo'), false];

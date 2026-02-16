@@ -28,7 +28,7 @@ $store = new MessageStore(
 );
 $store->setup();
 
-$agent = new Agent($platform, 'gpt-5-mini');
+$agent = new Agent($platform, 'gpt-4o-mini');
 $chat = new Chat($agent, $store);
 
 $messages = new MessageBag(
