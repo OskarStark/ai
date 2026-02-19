@@ -63,8 +63,10 @@ Parse the PR body against the template table:
 | `Issues` | Must reference at least one issue (`Fix #N`) **or** contain an explanatory description below the table |
 | `License` | Must be `MIT` |
 
-Also verify that the HTML comment block (`<!-- Replace this notice … -->`) has
-been removed and replaced with an actual description.
+Also verify that there is an actual description below the table explaining the
+rationale behind the PR (what problem it solves, what it changes, or why it is
+needed). A PR body that contains only the template table with no explanatory
+text fails this check.
 
 ---
 
