@@ -15,6 +15,24 @@ report the maintainer can use to give actionable review feedback.
 
 ---
 
+## Step 0 — Pre-flight checks
+
+Before doing anything else, verify GitHub CLI authentication:
+
+```
+gh auth status 2>&1
+```
+
+If this fails (exit code non-zero or output contains "not logged in"), stop
+immediately and tell the user:
+
+> GitHub authentication is required for this skill. Please run `gh auth login`
+> first, then re-run the skill.
+
+Do NOT proceed to any other step if this check fails.
+
+---
+
 ## Step 1 — Fetch PR metadata
 
 Run the following in parallel:
