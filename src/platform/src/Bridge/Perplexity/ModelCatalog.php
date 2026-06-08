@@ -24,6 +24,8 @@ final class ModelCatalog extends AbstractModelCatalog
      */
     public function __construct(array $additionalModels = [])
     {
+        // STATIC LIST START
+        // This list is generated from external metadata. Run dev/update-model-catalogs.php to refresh it.
         $defaultModels = [
             'sonar' => [
                 'class' => Perplexity::class,
@@ -34,6 +36,16 @@ final class ModelCatalog extends AbstractModelCatalog
                     Capability::OUTPUT_STREAMING,
                     Capability::OUTPUT_STRUCTURED,
                     Capability::INPUT_IMAGE,
+                ],
+            ],
+            'sonar-deep-research' => [
+                'class' => Perplexity::class,
+                'capabilities' => [
+                    Capability::INPUT_MESSAGES,
+                    Capability::INPUT_PDF,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
                 ],
             ],
             'sonar-pro' => [
@@ -69,18 +81,8 @@ final class ModelCatalog extends AbstractModelCatalog
                     Capability::INPUT_IMAGE,
                 ],
             ],
-            'sonar-deep-research' => [
-                'class' => Perplexity::class,
-                'capabilities' => [
-                    Capability::INPUT_MESSAGES,
-                    Capability::INPUT_PDF,
-                    Capability::OUTPUT_TEXT,
-                    Capability::OUTPUT_STREAMING,
-                    Capability::OUTPUT_STRUCTURED,
-                    // Note: sonar-deep-research does not support INPUT_IMAGE
-                ],
-            ],
         ];
+        // STATIC LIST END
 
         $this->models = array_merge($defaultModels, $additionalModels);
     }

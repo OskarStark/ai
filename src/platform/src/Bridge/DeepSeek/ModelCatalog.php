@@ -24,6 +24,8 @@ final class ModelCatalog extends AbstractModelCatalog
      */
     public function __construct(array $additionalModels = [])
     {
+        // STATIC LIST START
+        // This list is generated from external metadata. Run dev/update-model-catalogs.php to refresh it.
         $defaultModels = [
             'deepseek-chat' => [
                 'class' => DeepSeek::class,
@@ -43,7 +45,30 @@ final class ModelCatalog extends AbstractModelCatalog
                     Capability::THINKING,
                 ],
             ],
+            'deepseek-v4-flash' => [
+                'class' => DeepSeek::class,
+                'capabilities' => [
+                    Capability::INPUT_MESSAGES,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::THINKING,
+                ],
+            ],
+            'deepseek-v4-pro' => [
+                'class' => DeepSeek::class,
+                'capabilities' => [
+                    Capability::INPUT_MESSAGES,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::THINKING,
+                ],
+            ],
         ];
+        // STATIC LIST END
 
         $this->models = array_merge($defaultModels, $additionalModels);
     }

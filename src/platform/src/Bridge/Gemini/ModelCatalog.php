@@ -24,68 +24,34 @@ final class ModelCatalog extends AbstractModelCatalog
      */
     public function __construct(array $additionalModels = [])
     {
+        // STATIC LIST START
+        // This list is generated from external metadata. Run dev/update-model-catalogs.php to refresh it.
         $defaultModels = [
-            'gemini-3.1-pro-preview' => [
+            'gemini-2.0-flash' => [
                 'class' => Gemini::class,
                 'capabilities' => [
                     Capability::INPUT_MESSAGES,
                     Capability::INPUT_IMAGE,
                     Capability::INPUT_AUDIO,
-                    Capability::INPUT_PDF,
                     Capability::INPUT_VIDEO,
-                    Capability::OUTPUT_STREAMING,
-                    Capability::OUTPUT_STRUCTURED,
-                    Capability::OUTPUT_TEXT,
-                    Capability::TOOL_CALLING,
-                    Capability::THINKING,
-                ],
-            ],
-            'gemini-3-flash-preview' => [
-                'class' => Gemini::class,
-                'capabilities' => [
-                    Capability::INPUT_MESSAGES,
-                    Capability::INPUT_IMAGE,
-                    Capability::INPUT_AUDIO,
                     Capability::INPUT_PDF,
+                    Capability::OUTPUT_TEXT,
                     Capability::OUTPUT_STREAMING,
                     Capability::OUTPUT_STRUCTURED,
                     Capability::TOOL_CALLING,
                 ],
             ],
-            'gemini-3-pro-preview' => [
+            'gemini-2.0-flash-lite' => [
                 'class' => Gemini::class,
                 'capabilities' => [
                     Capability::INPUT_MESSAGES,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
+                    Capability::OUTPUT_STRUCTURED,
                     Capability::INPUT_IMAGE,
-                    Capability::INPUT_AUDIO,
                     Capability::INPUT_PDF,
-                    Capability::INPUT_VIDEO,
-                    Capability::OUTPUT_TEXT,
-                    Capability::OUTPUT_STREAMING,
-                    Capability::OUTPUT_STRUCTURED,
-                    Capability::TOOL_CALLING,
-                    Capability::THINKING,
-                ],
-            ],
-            'gemini-3-pro-image-preview' => [
-                'class' => Gemini::class,
-                'capabilities' => [
-                    Capability::INPUT_MESSAGES,
-                    Capability::INPUT_IMAGE,
-                    Capability::OUTPUT_IMAGE,
-                    Capability::OUTPUT_TEXT,
-                    Capability::OUTPUT_STRUCTURED,
-                    Capability::THINKING,
-                ],
-            ],
-            'gemini-2.5-flash-image' => [
-                'class' => Gemini::class,
-                'capabilities' => [
-                    Capability::INPUT_MESSAGES,
-                    Capability::INPUT_IMAGE,
-                    Capability::OUTPUT_IMAGE,
-                    Capability::OUTPUT_TEXT,
-                    Capability::OUTPUT_STRUCTURED,
+                    Capability::INPUT_AUDIO,
                 ],
             ],
             'gemini-2.5-flash' => [
@@ -103,7 +69,17 @@ final class ModelCatalog extends AbstractModelCatalog
                     Capability::THINKING,
                 ],
             ],
-            'gemini-2.5-pro' => [
+            'gemini-2.5-flash-image' => [
+                'class' => Gemini::class,
+                'capabilities' => [
+                    Capability::INPUT_MESSAGES,
+                    Capability::INPUT_IMAGE,
+                    Capability::OUTPUT_IMAGE,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STRUCTURED,
+                ],
+            ],
+            'gemini-2.5-flash-lite' => [
                 'class' => Gemini::class,
                 'capabilities' => [
                     Capability::INPUT_MESSAGES,
@@ -133,38 +109,6 @@ final class ModelCatalog extends AbstractModelCatalog
                     Capability::THINKING,
                 ],
             ],
-            'gemini-2.5-flash-lite' => [
-                'class' => Gemini::class,
-                'capabilities' => [
-                    Capability::INPUT_MESSAGES,
-                    Capability::INPUT_IMAGE,
-                    Capability::INPUT_AUDIO,
-                    Capability::INPUT_PDF,
-                    Capability::INPUT_VIDEO,
-                    Capability::OUTPUT_TEXT,
-                    Capability::OUTPUT_STREAMING,
-                    Capability::OUTPUT_STRUCTURED,
-                    Capability::TOOL_CALLING,
-                    Capability::THINKING,
-                ],
-            ],
-            // 01/06/2026
-            // https://ai.google.dev/gemini-api/docs/changelog?hl=en#02-18-2026
-            'gemini-2.0-flash' => [
-                'class' => Gemini::class,
-                'capabilities' => [
-                    Capability::INPUT_MESSAGES,
-                    Capability::INPUT_IMAGE,
-                    Capability::INPUT_AUDIO,
-                    Capability::INPUT_VIDEO,
-                    Capability::INPUT_PDF,
-                    Capability::OUTPUT_TEXT,
-                    Capability::OUTPUT_STREAMING,
-                    Capability::OUTPUT_STRUCTURED,
-                    Capability::TOOL_CALLING,
-                ],
-            ],
-            // TTS
             'gemini-2.5-flash-native-audio-preview-12-2025' => [
                 'class' => Gemini::class,
                 'capabilities' => [
@@ -183,6 +127,21 @@ final class ModelCatalog extends AbstractModelCatalog
                     Capability::TEXT_TO_SPEECH,
                 ],
             ],
+            'gemini-2.5-pro' => [
+                'class' => Gemini::class,
+                'capabilities' => [
+                    Capability::INPUT_MESSAGES,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_AUDIO,
+                    Capability::INPUT_PDF,
+                    Capability::INPUT_VIDEO,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                    Capability::THINKING,
+                ],
+            ],
             'gemini-2.5-pro-preview-tts' => [
                 'class' => Gemini::class,
                 'capabilities' => [
@@ -191,7 +150,127 @@ final class ModelCatalog extends AbstractModelCatalog
                     Capability::TEXT_TO_SPEECH,
                 ],
             ],
-            // Embeddings
+            'gemini-3-flash-preview' => [
+                'class' => Gemini::class,
+                'capabilities' => [
+                    Capability::INPUT_MESSAGES,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_AUDIO,
+                    Capability::INPUT_PDF,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
+            'gemini-3-pro-image-preview' => [
+                'class' => Gemini::class,
+                'capabilities' => [
+                    Capability::INPUT_MESSAGES,
+                    Capability::INPUT_IMAGE,
+                    Capability::OUTPUT_IMAGE,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::THINKING,
+                ],
+            ],
+            'gemini-3-pro-preview' => [
+                'class' => Gemini::class,
+                'capabilities' => [
+                    Capability::INPUT_MESSAGES,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_AUDIO,
+                    Capability::INPUT_PDF,
+                    Capability::INPUT_VIDEO,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                    Capability::THINKING,
+                ],
+            ],
+            'gemini-3.1-flash-image-preview' => [
+                'class' => Gemini::class,
+                'capabilities' => [
+                    Capability::INPUT_MESSAGES,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::THINKING,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_PDF,
+                    Capability::OUTPUT_IMAGE,
+                ],
+            ],
+            'gemini-3.1-flash-lite' => [
+                'class' => Gemini::class,
+                'capabilities' => [
+                    Capability::INPUT_MESSAGES,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::THINKING,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_PDF,
+                    Capability::INPUT_AUDIO,
+                ],
+            ],
+            'gemini-3.1-flash-lite-preview' => [
+                'class' => Gemini::class,
+                'capabilities' => [
+                    Capability::INPUT_MESSAGES,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::THINKING,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_PDF,
+                    Capability::INPUT_AUDIO,
+                ],
+            ],
+            'gemini-3.1-pro-preview' => [
+                'class' => Gemini::class,
+                'capabilities' => [
+                    Capability::INPUT_MESSAGES,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_AUDIO,
+                    Capability::INPUT_PDF,
+                    Capability::INPUT_VIDEO,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::OUTPUT_TEXT,
+                    Capability::TOOL_CALLING,
+                    Capability::THINKING,
+                ],
+            ],
+            'gemini-3.1-pro-preview-customtools' => [
+                'class' => Gemini::class,
+                'capabilities' => [
+                    Capability::INPUT_MESSAGES,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::THINKING,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_PDF,
+                    Capability::INPUT_AUDIO,
+                ],
+            ],
+            'gemini-3.5-flash' => [
+                'class' => Gemini::class,
+                'capabilities' => [
+                    Capability::INPUT_MESSAGES,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::THINKING,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_PDF,
+                    Capability::INPUT_AUDIO,
+                ],
+            ],
             'gemini-embedding-001' => [
                 'class' => Embeddings::class,
                 'capabilities' => [
@@ -199,7 +278,60 @@ final class ModelCatalog extends AbstractModelCatalog
                     Capability::EMBEDDINGS,
                 ],
             ],
+            'gemini-flash-latest' => [
+                'class' => Gemini::class,
+                'capabilities' => [
+                    Capability::INPUT_MESSAGES,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::THINKING,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_PDF,
+                    Capability::INPUT_AUDIO,
+                ],
+            ],
+            'gemini-flash-lite-latest' => [
+                'class' => Gemini::class,
+                'capabilities' => [
+                    Capability::INPUT_MESSAGES,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::THINKING,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_PDF,
+                    Capability::INPUT_AUDIO,
+                ],
+            ],
+            'gemma-4-26b-a4b-it' => [
+                'class' => Gemini::class,
+                'capabilities' => [
+                    Capability::INPUT_MESSAGES,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::THINKING,
+                    Capability::INPUT_IMAGE,
+                ],
+            ],
+            'gemma-4-31b-it' => [
+                'class' => Gemini::class,
+                'capabilities' => [
+                    Capability::INPUT_MESSAGES,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::THINKING,
+                    Capability::INPUT_IMAGE,
+                ],
+            ],
         ];
+        // STATIC LIST END
 
         $this->models = array_merge($defaultModels, $additionalModels);
     }
