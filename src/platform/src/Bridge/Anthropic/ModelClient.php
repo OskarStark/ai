@@ -25,6 +25,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 final class ModelClient implements ModelClientInterface
 {
     use JsonBodyEncodingTrait;
+    use JsonSchemaSanitizerTrait;
 
     private readonly EventSourceHttpClient $httpClient;
 
@@ -76,10 +77,11 @@ final class ModelClient implements ModelClientInterface
         }
 
         if (isset($options['response_format'])) {
+            $schema = $options['response_format']['json_schema']['schema'] ?? [];
             $options['output_config'] = [
                 'format' => [
                     'type' => 'json_schema',
-                    'schema' => $options['response_format']['json_schema']['schema'] ?? [],
+                    'schema' => \is_array($schema) ? $this->normalizeStructuredOutputSchema($schema) : $schema,
                 ],
             ];
             unset($options['response_format']);
