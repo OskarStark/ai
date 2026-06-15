@@ -116,6 +116,18 @@ final class ModelCatalog extends AbstractModelCatalog
                     Capability::INPUT_PDF,
                 ],
             ],
+            'claude-fable-5' => [
+                'class' => Claude::class,
+                'capabilities' => [
+                    Capability::INPUT_MESSAGES,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
+                    Capability::THINKING,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_PDF,
+                ],
+            ],
             'claude-haiku-4-5' => [
                 'class' => Claude::class,
                 'capabilities' => [
