@@ -15,6 +15,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\AI\Platform\Bridge\VertexAi\Gemini\ResultConverter;
 use Symfony\AI\Platform\Exception\ExceedContextSizeException;
+use Symfony\AI\Platform\Exception\RuntimeException;
 use Symfony\AI\Platform\Result\BinaryResult;
 use Symfony\AI\Platform\Result\CodeExecutionResult;
 use Symfony\AI\Platform\Result\ExecutableCodeResult;
@@ -517,5 +518,18 @@ final class ResultConverterTest extends TestCase
         $this->assertSame(40, $items[2]->getTotalTokens());
         $this->assertInstanceOf(TextDelta::class, $items[3]);
         $this->assertSame('!', $items[3]->getText());
+    }
+
+    public function testThrowsOnUnhandledHttpErrorStatusBeforeStreaming()
+    {
+        $converter = new ResultConverter();
+        $httpResponse = $this->createMock(ResponseInterface::class);
+        $httpResponse->method('getStatusCode')->willReturn(500);
+        $httpResponse->method('getContent')->willReturn('Service Unavailable');
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Unexpected response code 500');
+
+        $converter->convert(new RawHttpResult($httpResponse), ['stream' => true]);
     }
 }

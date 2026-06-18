@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+0.11
+----
+
+ * Raise a `RuntimeException` on unhandled HTTP error statuses before streaming, instead of returning an empty stream
+
 0.10
 ----
 

@@ -59,12 +59,12 @@ final class ResultConverter implements ResultConverterInterface
 
         $this->throwOnHttpError($httpResponse);
 
-        if ($options['stream'] ?? false) {
-            return new StreamResult($this->convertStream($result));
+        if (($code = $httpResponse->getStatusCode()) >= 400) {
+            throw new RuntimeException(\sprintf('Unexpected response code %d: "%s"', $code, $httpResponse->getContent(false)));
         }
 
-        if (200 !== $code = $httpResponse->getStatusCode()) {
-            throw new RuntimeException(\sprintf('Unexpected response code %d: "%s"', $code, $httpResponse->getContent(false)));
+        if ($options['stream'] ?? false) {
+            return new StreamResult($this->convertStream($result));
         }
 
         $data = $result->getData();

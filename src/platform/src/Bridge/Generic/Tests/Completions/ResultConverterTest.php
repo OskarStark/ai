@@ -336,6 +336,32 @@ class ResultConverterTest extends TestCase
         $converter->convert(new RawHttpResult($httpResponse));
     }
 
+    public function testThrowsOnUnhandledErrorStatusBeforeStreaming()
+    {
+        $converter = new ResultConverter();
+        $httpResponse = $this->createMock(ResponseInterface::class);
+        $httpResponse->method('getStatusCode')->willReturn(404);
+        $httpResponse->method('getContent')->willReturn('404 page not found');
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Unexpected response code 404: "404 page not found"');
+
+        $converter->convert(new RawHttpResult($httpResponse), ['stream' => true]);
+    }
+
+    public function testThrowsOnServerErrorStatus()
+    {
+        $converter = new ResultConverter();
+        $httpResponse = $this->createMock(ResponseInterface::class);
+        $httpResponse->method('getStatusCode')->willReturn(503);
+        $httpResponse->method('getContent')->willReturn('service unavailable');
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Unexpected response code 503: "service unavailable"');
+
+        $converter->convert(new RawHttpResult($httpResponse), ['stream' => true]);
+    }
+
     public function testThrowsDetailedErrorException()
     {
         $converter = new ResultConverter();

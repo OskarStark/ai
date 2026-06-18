@@ -68,6 +68,10 @@ class ResultConverter implements ResultConverterInterface
         }
 
         if ($options['stream'] ?? false) {
+            if (($code = $response->getStatusCode()) >= 400) {
+                throw new RuntimeException(\sprintf('Unexpected response code %d: "%s"', $code, $response->getContent(false)));
+            }
+
             return new StreamResult($this->convertStream($result));
         }
 

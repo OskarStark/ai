@@ -314,4 +314,17 @@ final class ResultConverterTest extends TestCase
 
         $this->assertNotNull($converter->getTokenUsageExtractor());
     }
+
+    public function testThrowsOnUnhandledHttpErrorStatusBeforeStreaming()
+    {
+        $converter = new ResultConverter();
+        $httpResponse = $this->createMock(ResponseInterface::class);
+        $httpResponse->method('getStatusCode')->willReturn(500);
+        $httpResponse->method('getContent')->willReturn('Service Unavailable');
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Unexpected response code 500');
+
+        $converter->convert(new RawHttpResult($httpResponse), ['stream' => true]);
+    }
 }

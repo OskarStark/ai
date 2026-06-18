@@ -243,4 +243,16 @@ final class ResultConverterTest extends TestCase
 
         $converter->convert(new RawHttpResult($httpResponse));
     }
+
+    public function testThrowsOnUnhandledHttpErrorStatusBeforeStreaming()
+    {
+        $httpClient = new MockHttpClient(new JsonMockResponse(['error' => 'Service Unavailable'], ['http_code' => 500]));
+        $httpResponse = $httpClient->request('POST', 'https://example.com');
+        $converter = new ResultConverter();
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Unexpected response code 500');
+
+        $converter->convert(new RawHttpResult($httpResponse), ['stream' => true]);
+    }
 }

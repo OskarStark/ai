@@ -60,6 +60,10 @@ final class ResultConverter implements ResultConverterInterface
         }
 
         if ($options['stream'] ?? false) {
+            if ($result instanceof RawHttpResult && ($status = $result->getObject()->getStatusCode()) >= 400) {
+                throw new RuntimeException(\sprintf('Unexpected response code %d: "%s"', $status, $result->getObject()->getContent(false)));
+            }
+
             return new StreamResult($this->convertStream($result));
         }
 
