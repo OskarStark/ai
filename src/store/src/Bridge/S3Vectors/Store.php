@@ -199,7 +199,8 @@ final class Store implements ManagedStoreInterface, StoreInterface
             'returnDistance' => $options['returnDistance'] ?? true,
         ]);
 
-        foreach ($result->getVectors() as $outputVector) {
+        // the result set is already bounded by topK, so only the current page is iterated to avoid auto-pagination
+        foreach ($result->getVectors(true) as $outputVector) {
             $metadata = $outputVector->getMetadata();
 
             /** @var array<string, mixed> $metadataArray */
