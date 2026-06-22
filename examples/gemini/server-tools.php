@@ -10,9 +10,6 @@
  */
 
 use Symfony\AI\Agent\Agent;
-use Symfony\AI\Agent\Bridge\Clock\Clock;
-use Symfony\AI\Agent\Toolbox\AgentProcessor;
-use Symfony\AI\Agent\Toolbox\Toolbox;
 use Symfony\AI\Platform\Bridge\Gemini\Factory;
 use Symfony\AI\Platform\Message\Message;
 use Symfony\AI\Platform\Message\MessageBag;
