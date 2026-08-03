@@ -71,6 +71,24 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                     Capability::OUTPUT_STREAMING,
                 ],
             ],
+            'aion-labs/aion-3.0' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
+            'aion-labs/aion-3.0-mini' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
             'aion-labs/aion-rp-llama-3.1-8b' => [
                 'class' => CompletionsModel::class,
                 'capabilities' => [
@@ -302,6 +320,30 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                     Capability::TOOL_CALLING,
                 ],
             ],
+            'anthropic/claude-opus-5' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_PDF,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
+            'anthropic/claude-opus-5-fast' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_PDF,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
             'anthropic/claude-sonnet-4' => [
                 'class' => CompletionsModel::class,
                 'capabilities' => [
@@ -326,6 +368,18 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                 ],
             ],
             'anthropic/claude-sonnet-4.6' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_PDF,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
+            'anthropic/claude-sonnet-5' => [
                 'class' => CompletionsModel::class,
                 'capabilities' => [
                     Capability::INPUT_TEXT,
@@ -522,6 +576,14 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                     Capability::OUTPUT_STREAMING,
                 ],
             ],
+            'cognitivecomputations/dolphin-mistral-24b-venice-edition' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                ],
+            ],
             'cognitivecomputations/dolphin-mistral-24b-venice-edition:free' => [
                 'class' => CompletionsModel::class,
                 'capabilities' => [
@@ -567,6 +629,15 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                     Capability::OUTPUT_TEXT,
                     Capability::OUTPUT_STREAMING,
                     Capability::OUTPUT_STRUCTURED,
+                ],
+            ],
+            'cohere/north-mini-code:free' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
                 ],
             ],
             'deepcogito/cogito-v2.1-671b' => [
@@ -685,6 +756,16 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                 ],
             ],
             'deepseek/deepseek-v4-flash' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
+            'deepseek/deepseek-v4-flash-0731' => [
                 'class' => CompletionsModel::class,
                 'capabilities' => [
                     Capability::INPUT_TEXT,
@@ -859,7 +940,30 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                     Capability::TOOL_CALLING,
                 ],
             ],
+            'google/gemini-3-pro-image' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_TEXT,
+                    Capability::OUTPUT_IMAGE,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
             'google/gemini-3-pro-image-preview' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_TEXT,
+                    Capability::OUTPUT_IMAGE,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                ],
+            ],
+            'google/gemini-3.1-flash-image' => [
                 'class' => CompletionsModel::class,
                 'capabilities' => [
                     Capability::INPUT_IMAGE,
@@ -893,6 +997,16 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                     Capability::OUTPUT_STREAMING,
                     Capability::OUTPUT_STRUCTURED,
                     Capability::TOOL_CALLING,
+                ],
+            ],
+            'google/gemini-3.1-flash-lite-image' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_TEXT,
+                    Capability::OUTPUT_IMAGE,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
                 ],
             ],
             'google/gemini-3.1-flash-lite-preview' => [
@@ -938,6 +1052,34 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                 ],
             ],
             'google/gemini-3.5-flash' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_VIDEO,
+                    Capability::INPUT_PDF,
+                    Capability::INPUT_AUDIO,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
+            'google/gemini-3.5-flash-lite' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_VIDEO,
+                    Capability::INPUT_PDF,
+                    Capability::INPUT_AUDIO,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
+            'google/gemini-3.6-flash' => [
                 'class' => CompletionsModel::class,
                 'capabilities' => [
                     Capability::INPUT_TEXT,
@@ -1144,6 +1286,15 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                     Capability::TOOL_CALLING,
                 ],
             ],
+            'inclusionai/ling-3.0-flash:free' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
             'inclusionai/ring-2.6-1t' => [
                 'class' => CompletionsModel::class,
                 'capabilities' => [
@@ -1190,7 +1341,27 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                     Capability::EMBEDDINGS,
                 ],
             ],
+            'kwaipilot/kat-coder-air-v2.5' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
             'kwaipilot/kat-coder-pro-v2' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
+            'kwaipilot/kat-coder-pro-v2.5' => [
                 'class' => CompletionsModel::class,
                 'capabilities' => [
                     Capability::INPUT_TEXT,
@@ -1230,6 +1401,15 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                     Capability::INPUT_TEXT,
                     Capability::OUTPUT_TEXT,
                     Capability::OUTPUT_STREAMING,
+                ],
+            ],
+            'meituan/longcat-2.0' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
                 ],
             ],
             'meta-llama/llama-3-70b-instruct' => [
@@ -1357,6 +1537,20 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                     Capability::INPUT_TEXT,
                     Capability::OUTPUT_TEXT,
                     Capability::OUTPUT_STREAMING,
+                ],
+            ],
+            'meta/muse-spark-1.1' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_VIDEO,
+                    Capability::INPUT_PDF,
+                    Capability::INPUT_AUDIO,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
                 ],
             ],
             'microsoft/phi-4' => [
@@ -1818,6 +2012,17 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                     Capability::TOOL_CALLING,
                 ],
             ],
+            'moonshotai/kimi-k3' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::INPUT_IMAGE,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
             'morph/morph-v3-fast' => [
                 'class' => CompletionsModel::class,
                 'capabilities' => [
@@ -1841,6 +2046,27 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                     Capability::OUTPUT_TEXT,
                     Capability::OUTPUT_STREAMING,
                     Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
+            'nex-agi/nex-n2-mini' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::INPUT_IMAGE,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
+            'nex-agi/nex-n2-pro' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::INPUT_IMAGE,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
                     Capability::TOOL_CALLING,
                 ],
             ],
@@ -1916,6 +2142,13 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                 ],
             ],
             'nvidia/llama-nemotron-embed-vl-1b-v2:free' => [
+                'class' => EmbeddingsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::EMBEDDINGS,
+                ],
+            ],
+            'nvidia/nemotron-3-embed-1b:free' => [
                 'class' => EmbeddingsModel::class,
                 'capabilities' => [
                     Capability::INPUT_TEXT,
@@ -2563,6 +2796,78 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                     Capability::TOOL_CALLING,
                 ],
             ],
+            'openai/gpt-5.6-luna' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_PDF,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_TEXT,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
+            'openai/gpt-5.6-luna-pro' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_PDF,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_TEXT,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
+            'openai/gpt-5.6-sol' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_PDF,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_TEXT,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
+            'openai/gpt-5.6-sol-pro' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_PDF,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_TEXT,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
+            'openai/gpt-5.6-terra' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_PDF,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_TEXT,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
+            'openai/gpt-5.6-terra-pro' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_PDF,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_TEXT,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
             'openai/gpt-audio' => [
                 'class' => CompletionsModel::class,
                 'capabilities' => [
@@ -2784,6 +3089,21 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                     Capability::EMBEDDINGS,
                 ],
             ],
+            'openrouter/auto-beta' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_AUDIO,
+                    Capability::INPUT_PDF,
+                    Capability::INPUT_VIDEO,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_IMAGE,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
             'openrouter/fusion' => [
                 'class' => CompletionsModel::class,
                 'capabilities' => [
@@ -2880,6 +3200,42 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                 ],
             ],
             'poolside/laguna-m.1:free' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
+            'poolside/laguna-s-2.1' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
+            'poolside/laguna-s-2.1:free' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
+            'poolside/laguna-xs-2.1' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
+            'poolside/laguna-xs-2.1:free' => [
                 'class' => CompletionsModel::class,
                 'capabilities' => [
                     Capability::INPUT_TEXT,
@@ -3412,6 +3768,17 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                     Capability::TOOL_CALLING,
                 ],
             ],
+            'qwen/qwen3.7-flash' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_VIDEO,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
             'qwen/qwen3.7-max' => [
                 'class' => CompletionsModel::class,
                 'capabilities' => [
@@ -3467,6 +3834,17 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                     Capability::INPUT_TEXT,
                     Capability::OUTPUT_TEXT,
                     Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
+            'sakana/fugu-ultra' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::INPUT_IMAGE,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
                     Capability::TOOL_CALLING,
                 ],
             ],
@@ -3587,6 +3965,16 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                     Capability::OUTPUT_STRUCTURED,
                 ],
             ],
+            'tencent/hy3' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
             'tencent/hy3-preview' => [
                 'class' => CompletionsModel::class,
                 'capabilities' => [
@@ -3646,6 +4034,28 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                     Capability::EMBEDDINGS,
                 ],
             ],
+            'thinkingmachines/inkling' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_AUDIO,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
+            'thinkingmachines/inkling-small' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_AUDIO,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
             'undi95/remm-slerp-l2-13b' => [
                 'class' => CompletionsModel::class,
                 'capabilities' => [
@@ -3663,6 +4073,34 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                     Capability::OUTPUT_STREAMING,
                     Capability::OUTPUT_STRUCTURED,
                     Capability::TOOL_CALLING,
+                ],
+            ],
+            'voyageai/voyage-4' => [
+                'class' => EmbeddingsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::EMBEDDINGS,
+                ],
+            ],
+            'voyageai/voyage-4-large' => [
+                'class' => EmbeddingsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::EMBEDDINGS,
+                ],
+            ],
+            'voyageai/voyage-4-lite' => [
+                'class' => EmbeddingsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::EMBEDDINGS,
+                ],
+            ],
+            'voyageai/voyage-multimodal-3.5' => [
+                'class' => EmbeddingsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::EMBEDDINGS,
                 ],
             ],
             'writer/palmyra-x5' => [
@@ -3701,6 +4139,18 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                 'capabilities' => [
                     Capability::INPUT_TEXT,
                     Capability::INPUT_IMAGE,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
+            'x-ai/grok-4.5' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_PDF,
                     Capability::OUTPUT_TEXT,
                     Capability::OUTPUT_STREAMING,
                     Capability::OUTPUT_STRUCTURED,
@@ -3886,6 +4336,16 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                     Capability::TOOL_CALLING,
                 ],
             ],
+            'z-ai/glm-5.2' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
             'z-ai/glm-5v-turbo' => [
                 'class' => CompletionsModel::class,
                 'capabilities' => [
@@ -3939,6 +4399,16 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                     Capability::INPUT_TEXT,
                     Capability::INPUT_IMAGE,
                     Capability::INPUT_PDF,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
+            '~deepseek/deepseek-v4-flash-latest' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
                     Capability::OUTPUT_TEXT,
                     Capability::OUTPUT_STREAMING,
                     Capability::OUTPUT_STRUCTURED,
@@ -4002,6 +4472,18 @@ final class ModelCatalog extends AbstractOpenRouterModelCatalog
                     Capability::INPUT_PDF,
                     Capability::INPUT_IMAGE,
                     Capability::INPUT_TEXT,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::TOOL_CALLING,
+                ],
+            ],
+            '~x-ai/grok-latest' => [
+                'class' => CompletionsModel::class,
+                'capabilities' => [
+                    Capability::INPUT_TEXT,
+                    Capability::INPUT_IMAGE,
+                    Capability::INPUT_PDF,
                     Capability::OUTPUT_TEXT,
                     Capability::OUTPUT_STREAMING,
                     Capability::OUTPUT_STRUCTURED,
