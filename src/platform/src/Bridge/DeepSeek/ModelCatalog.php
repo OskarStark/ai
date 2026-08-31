@@ -56,6 +56,18 @@ final class ModelCatalog extends AbstractModelCatalog
                     Capability::THINKING,
                 ],
             ],
+            'deepseek-v4-flash-vision-exp' => [
+                'class' => DeepSeek::class,
+                'capabilities' => [
+                    Capability::INPUT_MESSAGES,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::THINKING,
+                    Capability::INPUT_IMAGE,
+                ],
+            ],
             'deepseek-v4-pro' => [
                 'class' => DeepSeek::class,
                 'capabilities' => [
