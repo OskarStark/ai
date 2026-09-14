@@ -371,6 +371,15 @@ final class ModelCatalog extends AbstractModelCatalog
                     Capability::TOOL_CALLING,
                 ],
             ],
+            'voxtral-mini-tts-latest' => [
+                'class' => Mistral::class,
+                'capabilities' => [
+                    Capability::INPUT_MESSAGES,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::OUTPUT_AUDIO,
+                ],
+            ],
             'voxtral-small-latest' => [
                 'class' => Mistral::class,
                 'capabilities' => [
@@ -380,6 +389,17 @@ final class ModelCatalog extends AbstractModelCatalog
                     Capability::OUTPUT_STRUCTURED,
                     Capability::INPUT_AUDIO,
                     Capability::TOOL_CALLING,
+                ],
+            ],
+            'zai-glm-5-2' => [
+                'class' => Mistral::class,
+                'capabilities' => [
+                    Capability::INPUT_MESSAGES,
+                    Capability::OUTPUT_TEXT,
+                    Capability::OUTPUT_STREAMING,
+                    Capability::TOOL_CALLING,
+                    Capability::OUTPUT_STRUCTURED,
+                    Capability::THINKING,
                 ],
             ],
         ];
